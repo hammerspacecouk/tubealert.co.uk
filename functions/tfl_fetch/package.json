@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "lines": "file:./../../shared/lines/"
+  }
+}

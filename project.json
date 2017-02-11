@@ -1,0 +1,9 @@
+{
+  "name": "tubealertcouk",
+  "description": "tubealert.co.uk",
+  "memory": 128,
+  "timeout": 5,
+  "role": "arn:aws:iam::323441517494:role/tubealertcouk_lambda_function",
+  "handler": "index.handler",
+  "environment": {}
+}
