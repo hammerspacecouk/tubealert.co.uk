@@ -1,0 +1,93 @@
+@import "../setup/_setup";
+/* Global page layout */
+
+body {
+    padding-top: 52px;
+}
+
+.app {
+
+}
+
+.app__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.app__main {
+}
+
+
+.statusbox {
+    min-height: 80px;
+}
+body[data-view="homepage"] {
+    .page,
+    #js-back {
+        display: none;
+    }
+}
+body[data-view="line"],
+body[data-view="settings"] {
+    .app__nav {
+        display: none;
+    }
+}
+
+body[data-view="settings"] {
+    #js-settings {
+        display: none;
+    }
+}
+
+@include mq($from: l) {
+    body {
+        padding-top: 0;
+    }
+
+    body[data-view="homepage"] .page {
+        display: block;
+    }
+    .app {
+        @include flex-fill();
+        @include flex-wrap();
+        @include flex-direction(row);
+        @include flex-align(stretch);
+    }
+    .app__header {
+        position: relative;
+    }
+    .app__nav {
+        @include order(1);
+        @include flex(0 0 320px);
+    }
+    .app__main {
+        @include order(2);
+        @include flex(1);
+    }
+    .statusbox {
+        height: (100/14) * 1vh;
+        min-height: 48px;
+    }
+    #js-back {
+        display: none;
+    }
+    body[data-view="line"],
+    body[data-view="settings"] {
+        .app__nav {
+            display: block;
+        }
+    }
+}
+
+@media (min-height: 42em) and (min-width: 768px) {
+    .app__nav-list {
+        position: fixed;
+        width: 320px;
+        top: 0;
+        left: 0;
+    }
+}
