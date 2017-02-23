@@ -1,18 +1,25 @@
 'use strict';
 
-const React = require('react');
-const ReactRouter = require('react-router');
+import React from 'react';
+import * as ReactRouter from 'react-router';
+import Layout from '../views/Layout.jsx';
+import Index from '../views/Index.jsx';
+import Settings from '../views/Settings.jsx';
+import Line from '../views/Line.jsx';
+
 const Router = ReactRouter.Router;
 const Route = ReactRouter.Route;
 const IndexRoute = ReactRouter.IndexRoute;
 const browserHistory = ReactRouter.browserHistory;
 
-module.exports = (
+const routes = (
     <Router history={browserHistory}>
-        <Route path='/' component={require('../views/Layout.jsx')}>
-            <IndexRoute component={require('../views/Index.jsx')}/>
-            <Route path='settings' component={require('../views/Settings.jsx')} />
-            <Route path=':line' component={require('../views/Line.jsx')} />
+        <Route path='/' component={Layout}>
+            <IndexRoute component={Index}/>
+            <Route path='settings' component={Settings} />
+            <Route path=':line' component={Line} />
         </Route>
     </Router>
 );
+
+export default routes;

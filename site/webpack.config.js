@@ -1,3 +1,34 @@
+const testMatch = /\.jsx$/;
+const excludeMatch = /node_modules/;
+
+module.exports = {
+    entry: './client.js',
+    output: {
+        path: './public',
+        filename: 'bundle.js'
+    },
+    module: {
+        rules: [
+            {
+                enforce: 'pre',
+                test: testMatch,
+                exclude: excludeMatch,
+                loader: 'eslint-loader',
+            },
+            {
+                test: testMatch,
+                exclude: excludeMatch,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['react'],
+                    plugins: ['transform-runtime']
+                }
+            }
+        ]
+    }
+};
+
+/*
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -28,3 +59,4 @@ module.exports = {
         new ExtractTextPlugin('public/styles.css')
     ]
 };
+    */

@@ -1,12 +1,9 @@
 'use strict';
 
-const React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-    getInitialState: function() {
-        return {};
-    },
-    loadPixels: function() {
+export default class Index extends React.Component {
+    loadPixels() {
         // console.log('run me');
         // if (this.state.pixels.length > 0) {
         //     return;
@@ -19,15 +16,17 @@ module.exports = React.createClass({
         // }).catch((err) => {
         //     throw new Error(err);
         // });
-    },
-    componentDidMount: function() {
+    }
+
+    componentDidMount() {
         // this.loadPixels();
-    },
-    render: function() {
+    }
+
+    render() {
         return (
             <div>
                 Nothing here yet
             </div>
         )
     }
-});
+}

@@ -1,13 +1,13 @@
 'use strict';
 
-const React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-    render: function() {
+export default class Settings extends React.Component {
+    render() {
         return (
             <div>
                 Settings
             </div>
         )
     }
-});
+}

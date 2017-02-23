@@ -1,12 +1,10 @@
 'use strict';
 
-require('../../scss/core/_layout.scss');
+import React from 'react';
+import {Link} from 'react-router';
 
-const React = require('react');
-const Link = require('react-router').Link;
-
-module.exports = React.createClass({
-    render: function() {
+export default class Layout extends React.Component {
+    render() {
         return (
             <div>
                 <h1>TubeAlert</h1>
@@ -17,4 +15,8 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}
+
+Layout.propTypes = {
+    children: React.PropTypes.element.isRequired
+};

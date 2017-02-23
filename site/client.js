@@ -1,7 +1,7 @@
 'use strict';
 
-const ReactDOM = require('react-dom');
-const routes = require('./src/routes/routes.jsx');
+import ReactDOM from 'react-dom';
+import Routes from './src/routes/routes.jsx';
 
 // ReactDOM.render(routes, document);
-ReactDOM.render(routes, document.getElementById('app'));
+ReactDOM.render(Routes, document.getElementById('app'));

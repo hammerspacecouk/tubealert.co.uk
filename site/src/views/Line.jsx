@@ -1,13 +1,13 @@
 'use strict';
 
-const React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-    render: function() {
+export default class Line extends React.Component {
+    render() {
         return (
             <div>
-                Nothing here yet
+                Allthe lines, line lines lines,!
             </div>
         )
     }
-});
+}
