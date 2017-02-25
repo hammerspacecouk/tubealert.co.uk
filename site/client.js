@@ -1,7 +1,11 @@
 'use strict';
 
+// setup react and routing
 import ReactDOM from 'react-dom';
-import Routes from './src/routes/routes.jsx';
+import App from './app/app.jsx';
 
-// ReactDOM.render(routes, document);
-ReactDOM.render(Routes, document.getElementById('app'));
+// only modern browsers that support fetch will run this JS app
+if (window.fetch) {
+    // ReactDOM.render(App, document);
+    ReactDOM.render(App, document.getElementById('app'));
+}

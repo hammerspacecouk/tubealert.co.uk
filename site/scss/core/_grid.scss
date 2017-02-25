@@ -1,5 +1,3 @@
-@import "../setup/setup";
-
 .grid {
   @include flexbox(block);
   @include flex-wrap();

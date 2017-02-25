@@ -4,16 +4,21 @@
   ],
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "globals": {
-    "require": true
+    "console":false,
+    "window": false,
+    "document": false,
+    "fetch": false
   },
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true,
-      "classes": true
+      "classes": true,
+      "experimentalObjectRestSpread": true
     }
   },
   "rules": {
+    "no-console":0
   }
 }
