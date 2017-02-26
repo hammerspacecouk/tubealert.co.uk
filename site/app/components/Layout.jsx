@@ -6,26 +6,59 @@ import {Link} from 'react-router';
 // ensure the overall page has the core css
 // individual modules will then pull in atoms, molecules and organisms as they need them
 import 'scss/core/_core.scss';
+import 'scss/atoms/_list.scss';
 import 'scss/molecules/_linebox.scss';
+import 'scss/organisms/_header.scss';
+import 'scss/organisms/_statusbox.scss';
 
 const createLine = line => {
-    const className = `linebox linebox--${line.urlKey}`;
+    const className = `statusbox linebox linebox--${line.urlKey}`;
     return (
         <li key={line.urlKey}>
-            <Link to={'/' + line.urlKey} className={className}>{line.name} ({line.statusSummary})</Link>
+            <Link to={'/' + line.urlKey} className={className}>
+                <div className="statusbox__name">
+                    {line.name}
+                    <br />
+                    <span>{line.statusSummary}</span>
+                </div>
+            </Link>
         </li>
     );
 };
 
 const Layout = ({innerChildren, lines}) => (
-    <div>
-        <h1><Link to={'/'}>TubeAlert</Link></h1>
-        <p><Link to={'/settings'}>Setting</Link></p>
-        <p><Link to={'/bakerloo-line'}>Bakerloo</Link></p>
-        <ul className="lines">
-            {lines.map(createLine)}
-        </ul>
-        {innerChildren}
+    <div className="app">
+        <div className="app__main">
+            <div className="app__header header">
+                <header>
+                    <div className="header__logo">
+                        <Link to={'/'}>TubeAlert</Link>
+                    </div>
+                    {/*<div class="header__back">*/}
+                        {/*<a href="/" id="js-back">*/}
+                            {/*<svg><use xlink:href="#icon-chevron-left"></use></svg>*/}
+                        {/*</a>*/}
+                    {/*</div>*/}
+                    {/*<div class="header__settings">*/}
+                        {/*<Link to="/settings" id="js-settings">*/}
+                            {/*<svg><use xlink:href="#icon-settings"></use></svg>*/}
+                        {/*</Link>*/}
+                    {/*</div>*/}
+                </header>
+            </div>
+            <div className="page" id="page">
+                <main className="main">
+                    <div id="main-body">
+                        {innerChildren}
+                    </div>
+                </main>
+            </div>
+        </div>
+        <nav className="app__nav">
+            <ol className="app__nav-list list--unstyled">
+                {lines.map(createLine)}
+            </ol>
+        </nav>
     </div>
 );
 
