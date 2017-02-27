@@ -2,6 +2,8 @@
 
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
+import Alert from './Icons/Alert.jsx';
+import Chevron from './Icons/Chevron.jsx';
 
 // ensure the overall page has the core css
 // individual modules will then pull in atoms, molecules and organisms as they need them
@@ -13,6 +15,10 @@ import 'scss/organisms/_statusbox.scss';
 
 const createLine = line => {
     const className = `statusbox linebox linebox--${line.urlKey}`;
+    let alert = null;
+    if (line.isDisrupted) {
+        alert = <div className="statusbox__alert"><Alert /></div>;
+    }
     return (
         <li key={line.urlKey}>
             <Link to={'/' + line.urlKey} className={className}>
@@ -21,6 +27,8 @@ const createLine = line => {
                     <br />
                     <span>{line.statusSummary}</span>
                 </div>
+                {alert}
+                <div className="statusbox__chevron"><Chevron /></div>
             </Link>
         </li>
     );

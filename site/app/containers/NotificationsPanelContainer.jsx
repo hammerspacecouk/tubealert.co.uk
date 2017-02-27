@@ -2,27 +2,29 @@
 
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import Line from '../components/Line.jsx';
 
-class LineContainer extends Component {
+class NotificationsPanelContainer extends Component {
     static propTypes() {
         return {
             line: PropTypes.array.isRequired
         }
     }
 
+    componentDidMount() {
+
+    }
+
     render() {
-        if (!this.props.line) {
-            return null;
-        }
         return (
-            <Line line={this.props.line} />
+            <div>
+                THIS IS TO BE THE DATE PANEL (TO BE ABSTRACTED)
+            </div>
         );
     }
 }
 
 export default connect(
     (state, props) => ({
-        line: state.linesState.lines.find(line => line.urlKey === props.params.lineKey)
+        line: props.line
     })
-)(LineContainer);
+)(NotificationsPanelContainer);

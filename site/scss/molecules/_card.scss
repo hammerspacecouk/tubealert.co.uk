@@ -20,12 +20,14 @@
     @include flex-grow(1);
 }
 .card__logo {
-    position: absolute;
-    right: -40%;
-    bottom: -40%;
-    fill: $color-header-text;
     opacity: 0.3;
-    height: 180%;
+    .icon {
+        fill: $color-header-text;
+        height: 180%;
+        position: absolute;
+        right: -40%;
+        bottom: -40%;
+    }
 }
 
 .card__foot {
