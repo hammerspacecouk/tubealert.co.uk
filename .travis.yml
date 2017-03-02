@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - "4"
-script:
+before_script:
   - cd site
+script:
   - yarn run prod
