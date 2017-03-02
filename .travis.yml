@@ -1,7 +1,15 @@
 language: node_js
+cache:
+  directories:
+    - $HOME/.npm
+    - $HOME/.yarn-cache
+    - site/node_modules
 node_js:
   - "4"
-before_script:
+before_install:
   - cd site
+  - time npm i -g yarn --cache-min 999999999
+install:
+  - time yarn
 script:
-  - yarn run prod
+  - time yarn run prod
