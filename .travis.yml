@@ -17,4 +17,4 @@ deploy:
   secret_access_key: $AWS_SECRET_KEY
   bucket: "tubealert.co.uk"
   skip_cleanup: true
-  local_dir: site/public
+  local_dir: public
