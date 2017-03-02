@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
+import DateTime from '../Helpers/DateTime.jsx';
 
 import 'scss/molecules/_card.scss';
 
@@ -18,12 +19,15 @@ const Line = ({line}) => {
         <div className="card">
             <div className="card__body card--padded">
                 <h2 className="g-unit">{line.latestStatus.title}</h2>
+                <div>
                 {disruptions(line)}
+                </div>
             </div>
             <div className="card__foot">
                 <p className="f card__foot-line">
                     <strong>Last updated: </strong>
-                    <span>{line.latestStatus.updatedAt}</span></p>
+                    <DateTime date={new Date(line.latestStatus.updatedAt)} />
+                </p>
             </div>
         </div>
     );

@@ -22,7 +22,9 @@ const settings = {
     },
     resolve: {
         alias: {
-            scss: path.resolve(__dirname, 'scss')
+            'scss': path.resolve(__dirname, 'scss'),
+            'react': path.resolve(__dirname, 'node_modules/react'),
+            'react-dom': path.resolve(__dirname, 'node_modules/react-dom')
         }
     },
     module: {
