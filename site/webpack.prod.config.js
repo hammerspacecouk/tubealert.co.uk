@@ -1,7 +1,6 @@
 'use strict';
 
 const webpack = require('webpack');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const config = require('./webpack.base.config.js');
@@ -26,10 +25,5 @@ config.plugins.push(
 // minify the code
 config.plugins.push(new webpack.optimize.UglifyJsPlugin());
 config.plugins.push(new OptimizeCssAssetsPlugin());
-
-// generate a manifest for the hashed file paths
-config.plugins.push(
-    new ManifestPlugin()
-);
 
 module.exports = config;

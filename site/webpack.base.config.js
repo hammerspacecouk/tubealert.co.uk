@@ -9,6 +9,7 @@ try {
 
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const testMatch = /\.jsx?$/;
 const excludeMatch = /node_modules/;
@@ -18,7 +19,8 @@ const settings = {
         app: path.resolve(__dirname, 'client.js')
     },
     output: {
-        path: path.resolve(__dirname, 'public')
+        path: path.resolve(__dirname, 'public'),
+        publicPath: '/'
     },
     resolve: {
         alias: {
@@ -54,7 +56,11 @@ const settings = {
             }
         ]
     },
-    plugins: []
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'index.html')
+        })
+    ]
 };
 
 module.exports = settings;
