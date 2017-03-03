@@ -7,9 +7,9 @@ try {
     require('os').networkInterfaces = () => ({})
 }
 
-const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const path = require('path');
 
 const testMatch = /\.jsx?$/;
 const excludeMatch = /node_modules/;
@@ -19,7 +19,7 @@ const settings = {
         app: path.resolve(__dirname, 'client.js')
     },
     output: {
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, 'public/static'),
         publicPath: '/'
     },
     resolve: {
@@ -57,9 +57,7 @@ const settings = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'index.html')
-        })
+
     ]
 };
 

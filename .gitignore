@@ -1,3 +1,5 @@
 .env.json
 /**/node_modules
-site/public/all.json
+site/public/html/all.json
+site/public/html/index.html
+site/public/static
