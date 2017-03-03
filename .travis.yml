@@ -14,20 +14,20 @@ script:
 deploy:
   # Deploy the HTML (10 mins lifetime)
   - provider: s3
-    region: "eu-west-2"
+    region: $AWS_REGION
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: "tubealert.co.uk"
+    bucket: $AWS_BUCKET
     skip_cleanup: true
     acl: public_read
     cache_control: "max-age=600"
     local_dir: public/html
   # Deploy the static assets (1 year lifetime)
   - provider: s3
-    region: "eu-west-2"
+    region: $AWS_REGION
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: "tubealert.co.uk"
+    bucket: $AWS_BUCKET
     skip_cleanup: true
     acl: public_read
     cache_control: "max-age=31536000"

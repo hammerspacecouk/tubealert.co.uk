@@ -57,7 +57,7 @@ fetcher.handleData = (data, callback) => {
 fetcher.store = (data, callback) => {
     const s3 = new AWS.S3();
     const params = {
-        'Bucket': 'tubealert.co.uk',
+        'Bucket': process.env.BUCKET_NAME,
         'Key': 'all.json',
         'Body': JSON.stringify(data),
         'ContentType' : 'application/json',
