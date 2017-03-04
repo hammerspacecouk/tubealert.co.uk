@@ -40,7 +40,9 @@ fetcher.handleData = (data, callback) => {
     // work through all of the lines we want in order
     // and build up a JSON object of their statuses
     console.info("Manipulating result into preferred format");
+    console.log(data);
     const statusData = Lines.all().map((lineData) => {
+        console.log(lineData);
         const lineStatus = data.find((status) => {
             return status.id === lineData.tflKey;
         });
@@ -55,11 +57,15 @@ fetcher.handleData = (data, callback) => {
 };
 
 fetcher.store = (data, callback) => {
+
+    console.log('Deploying to bucket', process.env.BUCKET_NAME, data);
+
     const s3 = new AWS.S3();
     const params = {
         'Bucket': process.env.BUCKET_NAME,
         'Key': 'all.json',
         'Body': JSON.stringify(data),
+        'ACL': 'public-read',
         'ContentType' : 'application/json',
         'CacheControl' : 'public, max-age=120'
     };
@@ -87,6 +93,7 @@ fetcher.addStatusData = (lineData, lineStatus) => {
         descriptions : null
     };
 
+    console.log(lineStatus);
     if (lineStatus) {
         const severities = Lines.severities();
         const sortedStatuses = lineStatus.lineStatuses.sort((a, b) => {

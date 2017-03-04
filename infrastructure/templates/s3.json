@@ -1,0 +1,24 @@
+{
+    "Description": "S3 Bucket for Tube Alert content",
+    "Parameters": {
+        "BucketName": {
+            "Description": "The name of the bucket. Must be the hostname",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "Bucket": {
+            "Properties": {
+                "AccessControl": "PublicRead",
+                "BucketName": {
+                    "Ref": "BucketName"
+                },
+                "WebsiteConfiguration": {
+                    "ErrorDocument": "error.html",
+                    "IndexDocument": "index.html"
+                }
+            },
+            "Type": "AWS::S3::Bucket"
+        }
+    }
+}

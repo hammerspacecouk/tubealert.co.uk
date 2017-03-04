@@ -204,5 +204,5 @@ const STATUS_SEVERITIES_DATA = {
     }
 };
 
-exports.all = () => LINE_DATA;
-exports.severities = () => STATUS_SEVERITIES_DATA;
+exports.all = () => JSON.parse(JSON.stringify(LINE_DATA));
+exports.severities = () => JSON.parse(JSON.stringify(STATUS_SEVERITIES_DATA));
