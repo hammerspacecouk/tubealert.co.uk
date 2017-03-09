@@ -95,7 +95,7 @@ fetcher.addStatusData = (lineData, lineStatus) => {
 
     console.log(lineStatus);
     if (lineStatus) {
-        const severities = Lines.severities();
+        const severities = Lines.severities;
         const sortedStatuses = lineStatus.lineStatuses.sort((a, b) => {
             return severities[a.statusSeverity-1].displayOrder - severities[b.statusSeverity-1].displayOrder;
         });
@@ -109,7 +109,7 @@ fetcher.addStatusData = (lineData, lineStatus) => {
         }).filter((value, index, self) => { return (value !== null && self.indexOf(value) === index) });
 
         lineData.latestStatus.isDisrupted = sortedStatuses.reduce((value, status) => {
-            if (severities[status.statusSeverity-1].disrupted) {
+            if (severities[status.statusSeverity].disrupted) {
                 value = true;
             }
             return value;

@@ -5,14 +5,6 @@ import {Link} from 'react-router';
 import Alert from './Icons/Alert.jsx';
 import Chevron from './Icons/Chevron.jsx';
 
-// ensure the overall page has the core css
-// individual modules will then pull in atoms, molecules and organisms as they need them
-import 'scss/core/_core.scss';
-import 'scss/atoms/_list.scss';
-import 'scss/molecules/_linebox.scss';
-import 'scss/organisms/_header.scss';
-import 'scss/organisms/_statusbox.scss';
-
 const createLine = line => {
     const className = `statusbox linebox linebox--${line.urlKey}`;
     let alert = null;

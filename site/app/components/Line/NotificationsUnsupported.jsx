@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import 'scss/molecules/_card.scss';
-
 const NotificationsUnsupported = () => {
     return (
         <div className="card--padded" >

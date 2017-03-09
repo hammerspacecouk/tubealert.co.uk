@@ -22,12 +22,30 @@ config.devServer = {
     }
 };
 
+// load images
+config.module.rules.push({
+    test: /\.(png|svg)$/,
+    loader: 'file-loader?name=[name].[ext]'
+});
+
 // add source maps
 config.devtool = 'source-map';
 
 config.plugins.push(
     new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'index.html')
+        filename: 'index.html',
+        template: path.resolve(__dirname, 'templates/index.html'),
+        xhtml: true
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'manifest.json',
+        template: path.resolve(__dirname, 'templates/manifest.json'),
+        inject: false
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'browserconfig.xml',
+        template: path.resolve(__dirname, 'templates/browserconfig.xml'),
+        inject: false
     })
 );
 

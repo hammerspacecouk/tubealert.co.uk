@@ -3,8 +3,6 @@
 import React, {PropTypes} from 'react';
 import DateTime from '../Helpers/DateTime.jsx';
 
-import 'scss/molecules/_card.scss';
-
 const disruptions = line => {
     if (!line.isDisrupted) {
         return null;

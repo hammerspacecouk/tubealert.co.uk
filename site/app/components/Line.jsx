@@ -4,9 +4,6 @@ import React, {PropTypes} from 'react';
 import Disruptions from './Line/Disruptions.jsx';
 // import NotificationsContainer from '../containers/NotificationsContainer.jsx';
 
-import 'scss/molecules/_island.scss';
-import 'scss/molecules/_linebox.scss';
-
 const Line = ({line}) => {
     const className = `g-unit island linebox linebox--${line.urlKey}`;
     return (

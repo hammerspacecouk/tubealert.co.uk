@@ -3,8 +3,6 @@
 import React, {PropTypes} from 'react';
 import Alert from '../Icons/Alert.jsx';
 
-import 'scss/molecules/_card.scss';
-
 const Line = ({line, children}) => {
     return (
         <div className="card">

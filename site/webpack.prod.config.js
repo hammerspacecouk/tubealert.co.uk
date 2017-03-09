@@ -20,10 +20,27 @@ config.plugins.push(
     })
 );
 
+// images now get hashed
+config.module.rules.push({
+    test: /\.(png|svg)$/,
+    loader: 'file-loader?name=[hash].[name].[ext]'
+});
+
 config.plugins.push(
     new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'index.html'),
+        template: path.resolve(__dirname, 'templates/index.html'),
         filename: path.resolve(__dirname, 'public/html/index.html'),
+        xhtml: true
+    }),
+    new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'templates/manifest.json'),
+        filename: path.resolve(__dirname, 'public/html/manifest.json'),
+        inject: false
+    }),
+    new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'templates/browserconfig.xml'),
+        filename: path.resolve(__dirname, 'public/html/browserconfig.xml'),
+        inject: false
     })
 );
 
