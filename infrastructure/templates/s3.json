@@ -13,6 +13,15 @@
                 "BucketName": {
                     "Ref": "BucketName"
                 },
+                "LifecycleConfiguration": {
+                    "Rules": [
+                        {
+                            "ExpirationInDays": 30,
+                            "Id": "S3BucketRule001",
+                            "Status": "Enabled"
+                        }
+                    ]
+                },
                 "WebsiteConfiguration": {
                     "ErrorDocument": "error.html",
                     "IndexDocument": "index.html"

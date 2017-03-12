@@ -1,5 +1,5 @@
 from troposphere import Template, Parameter, Join, Ref, Equals
-from troposphere.s3 import Bucket, BucketPolicy, PublicRead, WebsiteConfiguration
+from troposphere.s3 import Bucket, BucketPolicy, PublicRead, WebsiteConfiguration, LifecycleConfiguration, LifecycleRule
 from awacs.aws import Statement, Allow, Principal, Policy, Action, Condition, StringEquals
 
 t = Template()
@@ -18,7 +18,14 @@ Bucket = t.add_resource(Bucket(
     WebsiteConfiguration=WebsiteConfiguration(
         IndexDocument="index.html",
         ErrorDocument="error.html"
-    )
+    ),
+    LifecycleConfiguration=LifecycleConfiguration(Rules=[
+        LifecycleRule(
+            Id="S3BucketRule001",
+            Status="Enabled",
+            ExpirationInDays=30
+        ),
+    ])
 ))
 
 print(t.to_json())
