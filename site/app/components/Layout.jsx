@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import {Link, Route} from 'react-router-dom';
 import Alert from './Icons/Alert.jsx';
 import Chevron from './Icons/Chevron.jsx';
 
@@ -26,7 +26,7 @@ const createLine = line => {
     );
 };
 
-const Layout = ({innerChildren, lines}) => (
+const Layout = ({routes, lines}) => (
     <div className="app">
         <div className="app__main">
             <div className="app__header header">
@@ -49,7 +49,14 @@ const Layout = ({innerChildren, lines}) => (
             <div className="page" id="page">
                 <main className="main">
                     <div id="main-body">
-                        {innerChildren}
+                        {routes.map((route, index) => (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                exact={route.exact}
+                                component={route.component}
+                            />
+                        ))}
                     </div>
                 </main>
             </div>
@@ -63,7 +70,7 @@ const Layout = ({innerChildren, lines}) => (
 );
 
 Layout.propTypes = {
-    innerChildren: PropTypes.element.isRequired,
+    routes: PropTypes.array.isRequired,
     lines: PropTypes.array.isRequired
 };
 

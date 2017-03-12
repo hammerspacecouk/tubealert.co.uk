@@ -5,11 +5,13 @@ import {connect} from 'react-redux';
 import Layout from '../components/Layout.jsx';
 import store from '../store';
 import {fetchLines} from '../redux/actions/line-actions';
+import Index from '../components/Index.jsx';
+import Settings from '../components/Settings.jsx';
+import LineContainer from '../containers/LineContainer.jsx';
 
 class BaseContainer extends Component {
     static propTypes() {
         return {
-            children: PropTypes.element.isRequired,
             lines: PropTypes.array.isRequired
         }
     }
@@ -30,7 +32,14 @@ class BaseContainer extends Component {
     }
 
     render() {
-        return (<Layout lines={this.props.lines} innerChildren={this.props.children} />);
+        const routes = [
+            {path : "/", exact: true, component: () => <Index />},
+            {path : "/settings", exact: false, component: () => <Settings />},
+            {path : "/:lineKey", exact: false, component: () => <LineContainer />},
+        ];
+        return (
+            <Layout lines={this.props.lines} routes={routes} />
+        );
     }
 }
 
