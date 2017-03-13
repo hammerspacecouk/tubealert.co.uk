@@ -23,20 +23,20 @@ body {
 .statusbox {
     min-height: 80px;
 }
-body[data-view="homepage"] {
+.app--index {
     .page,
     #js-back {
         display: none;
     }
 }
-body[data-view="line"],
-body[data-view="settings"] {
+.app--line,
+.app--settings {
     .app__nav {
         display: none;
     }
 }
 
-body[data-view="settings"] {
+.app--settings {
     #js-settings {
         display: none;
     }
@@ -47,7 +47,7 @@ body[data-view="settings"] {
         padding-top: 0;
     }
 
-    body[data-view="homepage"] .page {
+    .app--index .page {
         display: block;
     }
     .app {
@@ -74,8 +74,8 @@ body[data-view="settings"] {
     #js-back {
         display: none;
     }
-    body[data-view="line"],
-    body[data-view="settings"] {
+    .app--line,
+    .app--settings {
         .app__nav {
             display: block;
         }

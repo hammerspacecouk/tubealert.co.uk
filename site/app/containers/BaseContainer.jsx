@@ -9,6 +9,7 @@ import {fetchLines} from '../redux/actions/line-actions';
 class BaseContainer extends Component {
     static propTypes() {
         return {
+            routes: PropTypes.array.isRequired,
             children: PropTypes.element.isRequired,
             lines: PropTypes.array.isRequired
         }
@@ -30,7 +31,12 @@ class BaseContainer extends Component {
     }
 
     render() {
-        return (<Layout lines={this.props.lines} innerChildren={this.props.children} />);
+        let appClass = 'app';
+        if (this.props.routes[this.props.routes.length - 1]) {
+            const name = this.props.routes[this.props.routes.length - 1].name;
+            appClass += ' app--' + name;
+        }
+        return (<Layout lines={this.props.lines} appClass={appClass} innerChildren={this.props.children} />);
     }
 }
 

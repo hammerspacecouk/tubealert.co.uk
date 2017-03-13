@@ -26,8 +26,8 @@ const createLine = line => {
     );
 };
 
-const Layout = ({innerChildren, lines}) => (
-    <div className="app">
+const Layout = ({innerChildren, lines, appClass}) => (
+    <div className={appClass}>
         <div className="app__main">
             <div className="app__header header">
                 <header>
@@ -63,6 +63,7 @@ const Layout = ({innerChildren, lines}) => (
 );
 
 Layout.propTypes = {
+    appClass: PropTypes.string.isRequired,
     innerChildren: PropTypes.element.isRequired,
     lines: PropTypes.array.isRequired
 };

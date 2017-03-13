@@ -11,9 +11,9 @@ import LineContainer from './containers/LineContainer.jsx';
 const routes = (
     <Router history={browserHistory}>
         <Route path='/' component={BaseContainer}>
-            <IndexRoute component={Index}/>
-            <Route path='/settings' component={Settings} />
-            <Route path='/:lineKey' component={LineContainer} />
+            <IndexRoute name="index" component={Index}/>
+            <Route name="settings" path='/settings' component={Settings} />
+            <Route name="line" path='/:lineKey' component={LineContainer} />
         </Route>
     </Router>
 );
