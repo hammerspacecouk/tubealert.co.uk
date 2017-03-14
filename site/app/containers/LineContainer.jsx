@@ -7,11 +7,12 @@ import Line from '../components/Line.jsx';
 class LineContainer extends Component {
     static propTypes() {
         return {
-            line: PropTypes.array.isRequired
+            line: PropTypes.array
         }
     }
 
     render() {
+        console.log(this.props.line);
         if (!this.props.line) {
             return null;
         }
@@ -23,6 +24,6 @@ class LineContainer extends Component {
 
 export default connect(
     (state, props) => ({
-        line: state.linesState.lines.find(line => line.urlKey === props.params.lineKey)
+        line: state.linesState.lines.find(line => line.urlKey === props.match.params.lineKey)
     })
 )(LineContainer);

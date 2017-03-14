@@ -1,7 +1,13 @@
 'use strict';
 
-// import React from 'react';
+import React from 'react';
+import {Link} from 'react-router-dom';
 
-const Index = () => null;
+const Index = () => (
+    <div>
+        <h1>Home</h1>
+        <Link to="/settings">Settings</Link>
+    </div>
+);
 
 export default Index;

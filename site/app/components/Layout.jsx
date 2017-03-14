@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import Alert from './Icons/Alert.jsx';
 import Chevron from './Icons/Chevron.jsx';
 
@@ -64,7 +64,7 @@ const Layout = ({innerChildren, lines, appClass}) => (
 
 Layout.propTypes = {
     appClass: PropTypes.string.isRequired,
-    innerChildren: PropTypes.element.isRequired,
+    innerChildren: PropTypes.array.isRequired,
     lines: PropTypes.array.isRequired
 };
 
