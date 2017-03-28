@@ -12,7 +12,6 @@ class LineContainer extends Component {
     }
 
     render() {
-        console.log(this.props.line);
         if (!this.props.line) {
             return null;
         }
