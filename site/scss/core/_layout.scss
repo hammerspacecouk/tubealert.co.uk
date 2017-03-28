@@ -23,9 +23,11 @@ body {
 .statusbox {
     min-height: 80px;
 }
+
+// hide buttons etc on specific views
 .app--index {
     .page,
-    #js-back {
+    .header__back {
         display: none;
     }
 }
@@ -37,7 +39,7 @@ body {
 }
 
 .app--settings {
-    #js-settings {
+    .header__settings {
         display: none;
     }
 }
@@ -82,7 +84,7 @@ body {
     }
 }
 
-@media (min-height: 42em) and (min-width: 768px) {
+@media (min-height: 42em) and (min-width: 48em) {
     .app__nav-list {
         position: fixed;
         width: 320px;

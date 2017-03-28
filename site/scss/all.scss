@@ -1,10 +1,17 @@
+@import 'setup/setup';
+
 @import 'core/core';
 
-@import 'atoms/list.scss';
+@import 'atoms/list';
+@import 'atoms/loading';
+@import 'atoms/text';
+@import 'atoms/visibility';
 
-@import 'molecules/card.scss';
-@import 'molecules/linebox.scss';
+@import 'molecules/card';
+@import 'molecules/linebox';
 @import 'molecules/island';
 
-@import 'organisms/header.scss';
-@import 'organisms/statusbox.scss';
+@import 'organisms/header';
+@import 'organisms/intro';
+@import 'organisms/statusbox';
+@import 'organisms/out-of-date';

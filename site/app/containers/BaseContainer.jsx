@@ -2,6 +2,7 @@
 
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import OutOfDateWarningContainer from './OutOfDateWarningContainer.jsx';
 import Layout from '../components/Layout.jsx';
 import store from '../store';
 import {fetchLines} from '../redux/actions/line-actions';
@@ -36,7 +37,13 @@ class BaseContainer extends Component {
             const name = this.props.routes[this.props.routes.length - 1].name;
             appClass += ' app--' + name;
         }
-        return (<Layout lines={this.props.lines} appClass={appClass} innerChildren={this.props.children} />);
+        return (
+            <Layout lines={this.props.lines}
+                    appClass={appClass}
+                    innerChildren={this.props.children}
+                    warningMessage={<OutOfDateWarningContainer />}
+            />
+        );
     }
 }
 

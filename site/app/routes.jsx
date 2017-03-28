@@ -8,8 +8,14 @@ import Index from './components/Index.jsx';
 import Settings from './components/Settings.jsx';
 import LineContainer from './containers/LineContainer.jsx';
 
+const handleUpdate = () => {
+    if (window) {
+        window.scrollTo(0, 0);
+    }
+};
+
 const routes = (
-    <Router history={browserHistory}>
+    <Router onUpdate={handleUpdate} history={browserHistory}>
         <Route path='/' component={BaseContainer}>
             <IndexRoute name="index" component={Index}/>
             <Route name="settings" path='/settings' component={Settings} />

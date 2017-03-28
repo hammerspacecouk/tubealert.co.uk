@@ -3,7 +3,8 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import Alert from './Icons/Alert.jsx';
-import Chevron from './Icons/Chevron.jsx';
+import ChevronLeft from './Icons/ChevronLeft.jsx';
+import ChevronRight from './Icons/ChevronRight.jsx';
 
 const createLine = line => {
     const className = `statusbox linebox linebox--${line.urlKey}`;
@@ -20,13 +21,13 @@ const createLine = line => {
                     <span>{line.statusSummary}</span>
                 </div>
                 {alert}
-                <div className="statusbox__chevron"><Chevron /></div>
+                <div className="statusbox__chevron"><ChevronRight /></div>
             </Link>
         </li>
     );
 };
 
-const Layout = ({innerChildren, lines, appClass}) => (
+const Layout = ({innerChildren, lines, appClass, warningMessage}) => (
     <div className={appClass}>
         <div className="app__main">
             <div className="app__header header">
@@ -34,11 +35,9 @@ const Layout = ({innerChildren, lines, appClass}) => (
                     <div className="header__logo">
                         <Link to={'/'}>TubeAlert</Link>
                     </div>
-                    {/*<div class="header__back">*/}
-                        {/*<a href="/" id="js-back">*/}
-                            {/*<svg><use xlink:href="#icon-chevron-left"></use></svg>*/}
-                        {/*</a>*/}
-                    {/*</div>*/}
+                    <div className="header__back">
+                        <Link to={'/'}><ChevronLeft /></Link>
+                    </div>
                     {/*<div class="header__settings">*/}
                         {/*<Link to="/settings" id="js-settings">*/}
                             {/*<svg><use xlink:href="#icon-settings"></use></svg>*/}
@@ -59,13 +58,15 @@ const Layout = ({innerChildren, lines, appClass}) => (
                 {lines.map(createLine)}
             </ol>
         </nav>
+        {warningMessage}
     </div>
 );
 
 Layout.propTypes = {
     appClass: PropTypes.string.isRequired,
     innerChildren: PropTypes.element.isRequired,
-    lines: PropTypes.array.isRequired
+    lines: PropTypes.array.isRequired,
+    warningMessage: PropTypes.element.isRequired
 };
 
 export default Layout;
