@@ -57,7 +57,6 @@ const settings = {
         ]
     },
     plugins: [
-
     ]
 };
 

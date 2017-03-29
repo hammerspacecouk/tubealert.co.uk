@@ -13,7 +13,16 @@ const linesReducer = (state = initialState, action) => {
             return { ...state, isFetching: true };
         }
         case LineActions.LINES_FETCH_RECEIVE: {
-            return {...state, lines: action.lines, isFetching: false};
+            // only update lines data if it is newer
+            let lines = action.lines;
+            if (lines[0] && state.lines[0]) {
+                const originalDate = new Date(state.lines[0].updatedAt);
+                const newDate = new Date(lines[0].updatedAt);
+                if (newDate < originalDate) {
+                    lines = state.lines;
+                }
+            }
+            return {...state, lines: lines, isFetching: false};
         }
         // case LineActions.LINES_FETCH_ERROR: {
         //     return { ...state, isFetching: false };

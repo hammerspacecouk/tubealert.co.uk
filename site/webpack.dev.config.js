@@ -3,6 +3,7 @@
 const Webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const config = require('./webpack.base.config.js');
 const path = require('path');
@@ -46,6 +47,9 @@ config.plugins.push(
         filename: 'browserconfig.xml',
         template: path.resolve(__dirname, 'templates/browserconfig.xml'),
         inject: false
+    }),
+    new ManifestPlugin({
+        fileName : 'assets-manifest.json'
     })
 );
 

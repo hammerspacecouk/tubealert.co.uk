@@ -1,45 +1,45 @@
-const VERSION = 9,
-    CACHE_NAME = 'tubealert-sw-cache-' + VERSION,
-    urlsToCache = [
-        './',
-        'settings',
-        'bakerloo-line',
-        'central-line',
-        'circle-line',
-        'district-line',
-        'hammersmith-city-line',
-        'jubilee-line',
-        'metropolitan-line',
-        'northern-line',
-        'piccadilly-line',
-        'victoria-line',
-        'waterloo-city-line',
-        'dlr',
-        'london-overground',
-        'tfl-rail'
-    ];
+const VERSION = 1;
+const CACHE_NAME = 'tubealertcouk-sw-cache-' + VERSION;
 
-// self.addEventListener('install', function(event) {
-//     // Perform install steps
-//     event.waitUntil(
-//         caches.open(CACHE_NAME)
-//             .then(function(cache) {
-//                 return cache.addAll(urlsToCache);
-//             })
-//     );
-// });
+// Perform install steps (cache statics)
+self.addEventListener('install', event => event.waitUntil(
+    caches.open(CACHE_NAME)
+        .then(cache =>
+            fetch("assets-manifest.json")
+                .then(response => response.json())
+                .then(assets =>
+                    cache.addAll([
+                        "/",
+                        assets["app.js"],
+                        assets["app.css"]
+                    ])
+                )
+        ).then(() => self.skipWaiting())
+));
 
-// self.addEventListener('activate', function(event) {
-//     event.waitUntil(
-//         caches.keys().then(function(keyList) {
-//             return Promise.all(keyList.map(function(key) {
-//                 if (key != CACHE_NAME) {
-//                     return caches.delete(key);
-//                 }
-//             }));
-//         })
-//     );
-// });
+
+// clear old cache
+self.addEventListener('activate', event => event.waitUntil(
+    caches.keys().then(keyList => Promise.all(
+        keyList.map(key => {
+            if (key !== CACHE_NAME) {
+                return caches.delete(key);
+            }
+        })
+    ))
+));
+
+// Check cache for values
+self.addEventListener('fetch', event => event.respondWith(
+    caches.open(CACHE_NAME)
+        .then(cache => cache.match(event.request)
+            .then(response => {
+                return response || fetch(event.request).then(response);
+            })
+        )
+));
+
+
 //
 // self.addEventListener('push', function(event) {
 //     return event.waitUntil(
@@ -90,17 +90,6 @@ const VERSION = 9,
 //     );
 // });
 
-// self.addEventListener('fetch', function(event) {
-//     event.respondWith(
-//         caches.open(CACHE_NAME).then(function(cache) {
-//             return cache.match(event.request).then(function (response) {
-//                 return response || fetch(event.request).then(function(response) {
-//                         return response;
-//                     });
-//             });
-//         })
-//     );
-// });
 
 // function updateStatuses() {
 //     fetch('/all.json')

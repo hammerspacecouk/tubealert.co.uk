@@ -4,6 +4,7 @@ const Webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const config = require('./webpack.base.config.js');
 const path = require('path');
@@ -41,6 +42,9 @@ config.plugins.push(
         template: path.resolve(__dirname, 'templates/browserconfig.xml'),
         filename: path.resolve(__dirname, 'public/html/browserconfig.xml'),
         inject: false
+    }),
+    new ManifestPlugin({
+        fileName : '../html/assets-manifest.json'
     })
 );
 
@@ -50,7 +54,11 @@ config.plugins.push(
 );
 
 // minify the code
-config.plugins.push(new Webpack.optimize.UglifyJsPlugin());
+config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
+    compress: {
+        drop_console: true,
+    }
+}));
 config.plugins.push(new OptimizeCssAssetsPlugin());
 
 module.exports = config;
