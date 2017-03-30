@@ -1,6 +1,7 @@
 {
   "name": "tubealertcouk",
   "description": "tubealert.co.uk",
+  "runtime": "nodejs6.10",
   "memory": 128,
   "timeout": 5,
   "role": "arn:aws:iam::323441517494:role/tubealertcouk_lambda_function",

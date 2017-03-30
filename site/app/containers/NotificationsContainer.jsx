@@ -34,7 +34,7 @@ class NotificationsContainer extends Component {
 
     getPanel() {
         if (this.state.supported) {
-            return <NotificationsPanelContainer />;
+            return <NotificationsPanelContainer line={this.props.line} />;
         }
         return <NotificationsUnsupported />
     }

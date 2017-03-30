@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "web-push": "^3.2.2"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.34.0"
+  }
+}

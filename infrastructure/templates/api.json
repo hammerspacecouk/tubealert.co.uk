@@ -1,0 +1,113 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "API Gateway as proxy to lambda functions (subscribe, unsubscribe)",
+    "Parameters": {
+        "SubscribeLambdaArn": {
+            "Description": "The name of Lambda Function for subscribing",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "APILambdaPermission": {
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Ref": "SubscribeLambdaArn"
+                },
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "arn:aws:execute-api:",
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            ":",
+                            {
+                                "Ref": "AWS::AccountId"
+                            },
+                            ":",
+                            {
+                                "Ref": "TubeAlertApi"
+                            },
+                            "/*/*/*"
+                        ]
+                    ]
+                }
+            },
+            "Type": "AWS::Lambda::Permission"
+        },
+        "Deployment": {
+            "DependsOn": "LambdaMethod",
+            "Properties": {
+                "RestApiId": {
+                    "Ref": "TubeAlertApi"
+                },
+                "StageName": "prod"
+            },
+            "Type": "AWS::ApiGateway::Deployment"
+        },
+        "LambdaMethod": {
+            "Properties": {
+                "ApiKeyRequired": false,
+                "AuthorizationType": "NONE",
+                "HttpMethod": "POST",
+                "Integration": {
+                    "IntegrationHttpMethod": "POST",
+                    "Type": "AWS_PROXY",
+                    "Uri": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/",
+                                {
+                                    "Ref": "SubscribeLambdaArn"
+                                },
+                                "/invocations"
+                            ]
+                        ]
+                    }
+                },
+                "MethodResponses": [
+                    {
+                        "ResponseParameters": {
+                            "method.response.header.Access-Control-Allow-Credentials": false,
+                            "method.response.header.Access-Control-Allow-Origin": false,
+                            "method.response.header.Set-Cookie": false
+                        },
+                        "StatusCode": "200"
+                    }
+                ],
+                "ResourceId": {
+                    "Ref": "TubeAlertApiSubscribeResource"
+                },
+                "RestApiId": {
+                    "Ref": "TubeAlertApi"
+                }
+            },
+            "Type": "AWS::ApiGateway::Method"
+        },
+        "TubeAlertApi": {
+            "Properties": {
+                "Name": "TubeAlertApi"
+            },
+            "Type": "AWS::ApiGateway::RestApi"
+        },
+        "TubeAlertApiSubscribeResource": {
+            "Properties": {
+                "ParentId": {
+                    "Fn::GetAtt": [
+                        "TubeAlertApi",
+                        "RootResourceId"
+                    ]
+                },
+                "PathPart": "subscribe",
+                "RestApiId": {
+                    "Ref": "TubeAlertApi"
+                }
+            },
+            "Type": "AWS::ApiGateway::Resource"
+        }
+    }
+}
