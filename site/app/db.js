@@ -1,6 +1,7 @@
 'use strict';
 
 export const ALL_LINES = 'allLines';
+export const SUBSCRIPTIONS = 'subscriptions';
 
 const DBKEY = 'TubeAlert';
 const DBVERSION = 1;

@@ -2,6 +2,7 @@
 
 @import 'core/core';
 
+@import 'atoms/buttons';
 @import 'atoms/list';
 @import 'atoms/loading';
 @import 'atoms/text';
@@ -13,5 +14,6 @@
 
 @import 'organisms/header';
 @import 'organisms/intro';
-@import 'organisms/statusbox';
 @import 'organisms/out-of-date';
+@import 'organisms/statusbox';
+@import 'organisms/times';

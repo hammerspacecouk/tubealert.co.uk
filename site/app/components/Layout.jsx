@@ -5,6 +5,7 @@ import {Link} from 'react-router';
 import Alert from './Icons/Alert.jsx';
 import ChevronLeft from './Icons/ChevronLeft.jsx';
 import ChevronRight from './Icons/ChevronRight.jsx';
+import SettingsIcon from './Icons/Settings.jsx';
 
 const createLine = line => {
     const className = `statusbox linebox linebox--${line.urlKey}`;
@@ -33,16 +34,16 @@ const Layout = ({innerChildren, lines, appClass, warningMessage}) => (
             <div className="app__header header">
                 <header>
                     <div className="header__logo">
-                        <Link to={'/'}>TubeAlert</Link>
+                        <Link to="/">TubeAlert</Link>
                     </div>
                     <div className="header__back">
-                        <Link to={'/'}><ChevronLeft /></Link>
+                        <Link to="/"><ChevronLeft /></Link>
                     </div>
-                    {/*<div class="header__settings">*/}
-                        {/*<Link to="/settings" id="js-settings">*/}
-                            {/*<svg><use xlink:href="#icon-settings"></use></svg>*/}
-                        {/*</Link>*/}
-                    {/*</div>*/}
+                    <div className="header__settings">
+                        <Link to="/settings">
+                            <SettingsIcon />
+                        </Link>
+                    </div>
                 </header>
             </div>
             <div className="page" id="page">

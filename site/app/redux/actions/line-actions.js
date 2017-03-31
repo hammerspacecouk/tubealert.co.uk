@@ -19,7 +19,6 @@ export const receiveLinesUpdate = (data) => {
 
 export const readLines = () => {
     return dispatch => {
-        // todo - fetch the data from the embedded script (use whichever is newest)
         // try to fetch the data from the indexdb database
         getKey(ALL_LINES, data => {
             dispatch(receiveLinesUpdate(data));
