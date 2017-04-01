@@ -9,7 +9,10 @@ exports.handler = (event, context) => {
         .then(data => {
             context.succeed({
                 "statusCode": 200,
-                "headers": {"access-control-allow-origin" : "*"},
+                "headers": {
+                    "access-control-allow-origin": "*",
+                    "cache-control": "public, max-age: 120"
+                },
                 "body": JSON.stringify(data)
             });
         })

@@ -1,31 +1,29 @@
 'use strict';
 
-import { SUBSCRIPTIONS, getKey, setKey, deleteAllLines } from '../../db.js';
+import { saveLineSubscription, getLineSubscription, deleteAllSubscriptions } from '../../db.js';
 
 export const SUBSCRIPTION_RECEIVE = 'SUBSCRIPTION_RECEIVE';
-export const receiveSubscriptions = (line, data) => {
+export const receiveSubscriptions = (lineID, data) => {
     return {
         type: SUBSCRIPTION_RECEIVE,
-        line: line,
+        line: lineID,
         subscription: data
     }
 };
 
-export const saveSubscription = (line, data) => {
+export const saveSubscription = (lineID, data) => {
     return dispatch => {
-        setKey(SUBSCRIPTIONS + '-' + line, data);
-        dispatch(receiveSubscriptions(line, data));
+        saveLineSubscription(lineID, data);
+        dispatch(receiveSubscriptions(lineID, data));
     };
 };
 
-export const readSubscriptions = (line) => {
+export const readSubscriptions = (lineID) => {
     return dispatch => {
-        getKey(SUBSCRIPTIONS + '-' + line, data => {
-            dispatch(receiveSubscriptions(line, data));
-        });
+        dispatch(receiveSubscriptions(lineID, getLineSubscription(lineID)));
     }
 };
 
-export const unsubscribe = () => deleteAllLines;
+export const unsubscribe = () => deleteAllSubscriptions;
 
 

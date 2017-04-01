@@ -102,6 +102,7 @@ safe-buffer@^5.0.1:
 "tubealert@file:./../../shared/tubealert/":
   version "1.0.0"
   dependencies:
+    node-fetch "^1.6.3"
     web-push "^3.2.2"
 
 urlsafe-base64@^1.0.0, urlsafe-base64@~1.0.0:

@@ -6,6 +6,7 @@
   "author": "Hammerspace",
   "license": "MIT",
   "dependencies": {
+    "node-fetch": "^1.6.3",
     "web-push": "^3.2.2"
   }
 }

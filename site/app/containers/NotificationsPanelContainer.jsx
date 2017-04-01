@@ -136,7 +136,7 @@ class NotificationsPanelContainer extends Component {
         }
 
         const rows = [];
-        for (let i=5;i<=23;i++) {
+        for (let i=0;i<=23;i++) {
             rows.push(this.getRow(i));
         }
 

@@ -1,6 +1,8 @@
 "use strict";
 
 const Webpush = require('web-push');
+const fetch = require("node-fetch");
+const STATIC_HOST = 'https://beta.tubealert.co.uk/';
 
 class Notifications {
     constructor(publicKey, privateKey) {
@@ -10,22 +12,38 @@ class Notifications {
             publicKey,
             privateKey
         );
+        this.manifest = null;
     }
 
-    makePayload(lineData) {
-        return {
+    makePayload(manifest, lineData) {
+        return JSON.stringify({
             title: lineData.name,
             body: lineData.statusSummary,
-            icon: "http://localhost:8080/icon-" + lineData.urlKey + ".png",
+            icon: STATIC_HOST + manifest["icon-" + lineData.urlKey + ".png"],
             tag: "/" + lineData.urlKey
+        })
+    }
+
+    getPayload(lineData) {
+        if (this.manifest) {
+            return this.makePayload(this.manifest, lineData);
         }
-    };
+        return fetch(STATIC_HOST + "assets-manifest.json")
+            .then(res => res.json())
+            .then(manifest => {
+                this.manifest = manifest;
+                return this.makePayload(manifest, lineData)
+            })
+    }
 
     send(subscription, lineData) {
-        return Webpush.sendNotification(
-            subscription,
-            JSON.stringify(this.makePayload(lineData))
-        )
+        return this.getPayload(lineData)
+            .then(payload => {
+                return Webpush.sendNotification(
+                    subscription,
+                    payload
+                )
+            });
     }
 }
 

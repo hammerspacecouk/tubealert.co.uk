@@ -1,6 +1,6 @@
 'use strict';
 
-import { ALL_LINES, getKey, setKey } from '../../db.js';
+import { getLines, saveLines } from '../../db.js';
 import { API_PATH_ALL } from '../../helpers/Api.js';
 
 export const LINES_UPDATE_BEGIN = 'LINES_UPDATE_BEGIN';
@@ -20,10 +20,7 @@ export const receiveLinesUpdate = (data) => {
 
 export const readLines = () => {
     return dispatch => {
-        // try to fetch the data from the indexdb database
-        getKey(ALL_LINES, data => {
-            dispatch(receiveLinesUpdate(data));
-        });
+        dispatch(receiveLinesUpdate(getLines()));
         dispatch(fetchLines());
     }
 };
@@ -35,7 +32,7 @@ export const fetchLines = () => {
         // return fetch('http://tubealert.co.uk.s3-website.eu-west-2.amazonaws.com/all.json')
             .then(response => response.json())
             .then(data => {
-                setKey(ALL_LINES, data);
+                saveLines(data);
                 dispatch(receiveLinesUpdate(data))
             });
     };
