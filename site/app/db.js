@@ -63,3 +63,20 @@ export const setKey = (key, value, callback) => {
         }
     });
 };
+
+export const deleteAllLines = () => {
+    initDB(() => {
+        const tbl = getDatabaseTable();
+        if (tbl) {
+            const request = tbl.getAllKeys();
+            request.onsuccess = (event) => {
+                event.target.result.forEach(key => {
+                   if (key === ALL_LINES) {
+                       return;
+                   }
+                   tbl.delete(key);
+                });
+            };
+        }
+    });
+};

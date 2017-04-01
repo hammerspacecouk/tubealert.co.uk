@@ -27,7 +27,7 @@ writeunits = t.add_parameter(Parameter(
     ConstraintDescription="should be between 5 and 10000"
 ))
 
-myDynamoDB = t.add_resource(Table(
+t.add_resource(Table(
     "TubeAlertSubscriptionsTable",
     TableName="tubealert.co.uk_subscriptions",
     AttributeDefinitions=[
@@ -72,6 +72,35 @@ myDynamoDB = t.add_resource(Table(
             )
         )
     ]
+))
+
+t.add_resource(Table(
+    "TubeAlertStatusesTable",
+    TableName="tubealert.co.uk_statuses",
+    AttributeDefinitions=[
+        AttributeDefinition(
+            AttributeName="TubeDate",
+            AttributeType="S"
+        ),
+        AttributeDefinition(
+            AttributeName="Timestamp",
+            AttributeType="N"
+        ),
+    ],
+    KeySchema=[
+        KeySchema(
+            AttributeName="TubeDate",
+            KeyType="HASH"
+        ),
+        KeySchema(
+            AttributeName="Timestamp",
+            KeyType="RANGE"
+        ),
+    ],
+    ProvisionedThroughput=ProvisionedThroughput(
+        ReadCapacityUnits=Ref(readunits),
+        WriteCapacityUnits=Ref(writeunits)
+    )
 ))
 
 

@@ -1,4 +1,4 @@
-const VERSION = 1;
+const VERSION = 2;
 const CACHE_NAME = 'tubealertcouk-sw-cache-' + VERSION;
 
 // Perform install steps (cache statics)
@@ -41,17 +41,7 @@ self.addEventListener('fetch', event => event.respondWith(
 
 self.addEventListener('push', event => {
     const data = event.data.json();
-    console.log(data);
-
-    console.log('[Service Worker] Push Received.');
-    console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
-
     const title = data.title;
-    // const options = {
-    //     body: data.body,
-    //     icon: 'images/icon.png',
-    //     tag: '/bakerloo-line'
-    // };
 
     event.waitUntil(self.registration.showNotification(title, data));
 

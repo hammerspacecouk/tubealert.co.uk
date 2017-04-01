@@ -55,6 +55,7 @@ class Slots {
     }
 
     getDeletes(currentData) {
+        console.log(currentData);
         currentData = currentData.filter(item => {
             if (this.data[item.Day] && this.data[item.Day][item.Hour]) {
                 // exists. do not delete

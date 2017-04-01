@@ -3,6 +3,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {base64UrlToUint8Array} from '../helpers/Encoding';
+import {API_PATH_SUBSCRIBE} from '../helpers/Api';
 import {saveSubscription, readSubscriptions} from '../redux/actions/subscription-actions';
 
 class NotificationsPanelContainer extends Component {
@@ -14,8 +15,8 @@ class NotificationsPanelContainer extends Component {
         }
     }
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             timeSlots : [],
             isLoading: false,
@@ -32,7 +33,9 @@ class NotificationsPanelContainer extends Component {
             this.props.dispatch(readSubscriptions(nextProps.line.urlKey));
         }
         this.setState({
-            timeSlots: nextProps.subscription
+            timeSlots: nextProps.subscription,
+            isLoading: false,
+            statusText : null
         });
     }
 
@@ -59,14 +62,13 @@ class NotificationsPanelContainer extends Component {
                     timeSlots : this.state.timeSlots,
                     subscription: subscription
                 };
-                return fetch('https://mdw7494b70.execute-api.eu-west-2.amazonaws.com/prod/subscribe', {
+                return fetch(API_PATH_SUBSCRIBE, {
                     method: 'post',
                     body: JSON.stringify(postData)
                 });
             })
             .then(response => response.json())
             .then(() => {
-                // todo - update the status (save in redux)
                 this.props.dispatch(saveSubscription(this.props.line.urlKey, this.state.timeSlots));
                 this.setState({
                     isLoading: false,
@@ -142,7 +144,7 @@ class NotificationsPanelContainer extends Component {
             <table className="times">
                 <thead>
                 <tr>
-                    <th>&nbsp;</th>
+                    <th />
                     <th>M<span className="invisible">onday</span></th>
                     <th>T<span className="invisible">uesday</span></th>
                     <th>W<span className="invisible">ednesday</span></th>
@@ -158,7 +160,7 @@ class NotificationsPanelContainer extends Component {
     }
 
     render() {
-        const loading = (this.state.isLoading) ? (<span className="loading loading--leading"></span>) : null;
+        const loading = (this.state.isLoading) ? (<span className="loading loading--leading" />) : null;
 
         return (
             <div>

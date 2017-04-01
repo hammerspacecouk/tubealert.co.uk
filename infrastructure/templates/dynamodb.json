@@ -19,6 +19,40 @@
         }
     },
     "Resources": {
+        "TubeAlertStatusesTable": {
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "TubeDate",
+                        "AttributeType": "S"
+                    },
+                    {
+                        "AttributeName": "Timestamp",
+                        "AttributeType": "N"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "TubeDate",
+                        "KeyType": "HASH"
+                    },
+                    {
+                        "AttributeName": "Timestamp",
+                        "KeyType": "RANGE"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": {
+                        "Ref": "ReadCapacityUnits"
+                    },
+                    "WriteCapacityUnits": {
+                        "Ref": "WriteCapacityUnits"
+                    }
+                },
+                "TableName": "tubealert.co.uk_statuses"
+            },
+            "Type": "AWS::DynamoDB::Table"
+        },
         "TubeAlertSubscriptionsTable": {
             "Properties": {
                 "AttributeDefinitions": [

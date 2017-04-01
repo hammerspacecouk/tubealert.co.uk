@@ -6,19 +6,6 @@ from troposphere.apigateway import Deployment, QuotaSettings, ThrottleSettings
 from troposphere.apigateway import ApiKey, StageKey, UsagePlan, ApiStage
 from troposphere import awslambda
 
-
-
-'''
-Create OPTIONS method
-Add 200 Method Response with Empty Response Model to OPTIONS method
-Add Mock Integration to OPTIONS method
-Add 200 Integration Response to OPTIONS method
-Add Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin Method Response Headers to OPTIONS method
-Add Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin Integration Response Header Mappings to OPTIONS method
-Add Access-Control-Allow-Origin Method Response Header to POST method
-Add Access-Control-Allow-Origin Integration Response Header Mapping to POST method
-'''
-
 t = Template()
 t.add_description('API Gateway as proxy to lambda functions (subscribe, unsubscribe)')
 t.add_version('2010-09-09')
@@ -28,28 +15,51 @@ SubscribeLambdaArn = t.add_parameter(Parameter(
     Type="String",
     Description="The name of Lambda Function for subscribing",
 ))
+UnsubscribeLambdaArn = t.add_parameter(Parameter(
+    "UnsubscribeLambdaArn",
+    Type="String",
+    Description="The name of Lambda Function for unsubscribing",
+))
+AllLambdaArn = t.add_parameter(Parameter(
+    "AllLambdaArn",
+    Type="String",
+    Description="The name of Lambda Function for getting the current status of all",
+))
 
 # Create the Api Gateway
 rest_api = t.add_resource(RestApi(
     "TubeAlertApi",
-    Name="TubeAlertApi"
+    Name="TubeAlertApi",
+    Description="The API for subscribing and unsubscribing for tubealert.co.uk"
 ))
 
 # Create a resource to map the lambda function to
-resource = t.add_resource(Resource(
+subscribe_resource = t.add_resource(Resource(
     "TubeAlertApiSubscribeResource",
     RestApiId=Ref(rest_api),
     PathPart="subscribe",
     ParentId=GetAtt("TubeAlertApi", "RootResourceId")
 ))
+unsubscribe_resource = t.add_resource(Resource(
+    "TubeAlertApiUnsubscribeResource",
+    RestApiId=Ref(rest_api),
+    PathPart="unsubscribe",
+    ParentId=GetAtt("TubeAlertApi", "RootResourceId")
+))
+all_resource = t.add_resource(Resource(
+    "TubeAlertApiAllResource",
+    RestApiId=Ref(rest_api),
+    PathPart="all",
+    ParentId=GetAtt("TubeAlertApi", "RootResourceId")
+))
 
-# Create a Lambda API method for the Lambda resource
-method = t.add_resource(Method(
-    "LambdaMethod",
+# Create Lambda API methods for the Lambda resource
+t.add_resource(Method(
+    "SubscribePostMethod",
     RestApiId=Ref(rest_api),
     ApiKeyRequired=False,
     AuthorizationType="NONE",
-    ResourceId=Ref(resource),
+    ResourceId=Ref(subscribe_resource),
     HttpMethod="POST",
     Integration=Integration(
         Type="AWS_PROXY",
@@ -63,7 +73,7 @@ method = t.add_resource(Method(
     MethodResponses=[
         MethodResponse(
             "CatResponse",
-            StatusCode='200',
+            StatusCode="200",
             ResponseParameters={
                 "method.response.header.Set-Cookie": False,
                 "method.response.header.Access-Control-Allow-Credentials": False,
@@ -73,19 +83,107 @@ method = t.add_resource(Method(
     ]
 ))
 
+t.add_resource(Method(
+    "UnsubscribePostMethod",
+    RestApiId=Ref(rest_api),
+    ApiKeyRequired=False,
+    AuthorizationType="NONE",
+    ResourceId=Ref(unsubscribe_resource),
+    HttpMethod="POST",
+    Integration=Integration(
+        Type="AWS_PROXY",
+        IntegrationHttpMethod="POST",
+        Uri=Join("", [
+            "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/",
+            Ref(UnsubscribeLambdaArn),
+            "/invocations"
+        ])
+    ),
+    MethodResponses=[
+        MethodResponse(
+            StatusCode="200",
+            ResponseParameters={
+                "method.response.header.Access-Control-Allow-Origin": True
+            }
+        )
+    ]
+))
+
+t.add_resource(Method(
+    "AllGetMethod",
+    RestApiId=Ref(rest_api),
+    ApiKeyRequired=False,
+    AuthorizationType="NONE",
+    ResourceId=Ref(all_resource),
+    HttpMethod="GET",
+    Integration=Integration(
+        Type="AWS_PROXY",
+        IntegrationHttpMethod="POST",
+        Uri=Join("", [
+            "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/",
+            Ref(AllLambdaArn),
+            "/invocations"
+        ])
+    ),
+    MethodResponses=[
+        MethodResponse(
+            StatusCode="200",
+            ResponseParameters={
+                "method.response.header.Access-Control-Allow-Origin": True
+            }
+        )
+    ]
+))
+
 # Create a deployment
 deployment = t.add_resource(Deployment(
     "Deployment",
-    DependsOn="LambdaMethod",
+    DependsOn=[
+        "SubscribePostMethod",
+        "UnsubscribePostMethod",
+        "AllGetMethod"
+    ],
     RestApiId=Ref(rest_api),
     StageName="prod"
 ))
 
 # Make sure this can trigger lambda
 t.add_resource(awslambda.Permission(
-    "APILambdaPermission",
+    "SubscribeLambdaPermission",
     Action="lambda:InvokeFunction",
     FunctionName=Ref(SubscribeLambdaArn),
+    Principal="apigateway.amazonaws.com",
+    SourceArn=Join("", [
+        "arn:aws:execute-api:",
+        Ref("AWS::Region"),
+        ":",
+        Ref("AWS::AccountId"),
+        ":",
+        Ref(rest_api),
+        "/*/*/*"
+    ])
+))
+
+t.add_resource(awslambda.Permission(
+    "UnsubscribeLambdaPermission",
+    Action="lambda:InvokeFunction",
+    FunctionName=Ref(UnsubscribeLambdaArn),
+    Principal="apigateway.amazonaws.com",
+    SourceArn=Join("", [
+        "arn:aws:execute-api:",
+        Ref("AWS::Region"),
+        ":",
+        Ref("AWS::AccountId"),
+        ":",
+        Ref(rest_api),
+        "/*/*/*"
+    ])
+))
+
+t.add_resource(awslambda.Permission(
+    "AllLambdaPermission",
+    Action="lambda:InvokeFunction",
+    FunctionName=Ref(AllLambdaArn),
     Principal="apigateway.amazonaws.com",
     SourceArn=Join("", [
         "arn:aws:execute-api:",

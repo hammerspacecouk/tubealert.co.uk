@@ -1,6 +1,6 @@
 'use strict';
 
-import { SUBSCRIPTIONS, getKey, setKey } from '../../db.js';
+import { SUBSCRIPTIONS, getKey, setKey, deleteAllLines } from '../../db.js';
 
 export const SUBSCRIPTION_RECEIVE = 'SUBSCRIPTION_RECEIVE';
 export const receiveSubscriptions = (line, data) => {
@@ -25,5 +25,7 @@ export const readSubscriptions = (line) => {
         });
     }
 };
+
+export const unsubscribe = () => deleteAllLines;
 
 

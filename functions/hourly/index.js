@@ -1,84 +1,55 @@
 'use strict';
 
-const AWS = require('aws-sdk');
-const Webpush = require('web-push');
-
-console.log(process.env.PUBLIC_KEY,
-    process.env.PRIVATE_KEY);
-
-Webpush.setGCMAPIKey('1049276846959');
-Webpush.setVapidDetails(
-    'mailto:contact@hammerspace.co.uk',
+const Moment = require("moment-timezone");
+const TubeAlert = require("tubealert");
+const Notifications = new TubeAlert.Notifications(
     process.env.PUBLIC_KEY,
     process.env.PRIVATE_KEY
 );
 
-const dynamoParams = {
-    // endpoint: 'http://localhost:8000',
-    region: 'eu-west-2'
-};
+let now = null;
 
-const docClient = new AWS.DynamoDB.DocumentClient(dynamoParams);
-
-const tableName = 'tubealert.co.uk_subscriptions';
-
-function fetcher() {}
-
-const notifyUser = (user) => {
-    const subscription = user.Subscription;
-    Webpush.sendNotification(subscription, 'Yo Dawg')
-        .then(data => {console.log(data)})
-        .catch(err => {console.log(err)});
-};
-
-const notifyUsers = (result, callback) => {
-    const users = result.Items;
+const notifyUsers = (users, lineData) => {
     console.log('Sending to ' + users.length + ' users');
     const notifications = users.map(user => {
         const subscription = user.Subscription;
-        const payload = {
-            title: "oi",
-            body: "pay attention",
-            icon: "http://localhost:8080/icon-bakerloo-line.png",
-            tag: "/bakerloo-line"
-        };
-        return Webpush.sendNotification(subscription, JSON.stringify(payload));
+        return Notifications.send(subscription, lineData);
     });
-    Promise.all(notifications)
-        .then(data => {
-            callback(null, "All success")
+    return Promise.all(notifications);
+};
+
+const checkLines = (data) => {
+    console.log("Checking for disrupted lines");
+    const brokenLines = data.filter(line => {
+       return line.isDisrupted;
+    });
+    console.log(brokenLines.length + " found");
+
+    console.log("Getting subscriptions");
+    return Promise.all(brokenLines.map(lineData => (
+        TubeAlert.Data.getSubscriptionsStartingInLineSlot(lineData.urlKey, now)
+            .then((result) => {
+                return notifyUsers(result, lineData)
+            })
+    )))
+};
+
+exports.handler = (event, context, callback) => {
+
+    // todo - get latest status, and look for currently broken lines
+
+    now = Moment(new Date()).tz('Europe/London');
+    const currentDay = now.day();
+    const currentHour = now.hours();
+
+    console.log("Getting the latest status");
+    TubeAlert.Data.getLatestStatus(now)
+        .then(checkLines)
+        .then(() => {
+            callback(null, "All done");
         })
         .catch(err => {
-            callback(err, "An error occurred")
-        });
+            console.error(err);
+            callback(err, "An error occurred");
+        })
 };
-
-fetcher.handler = (event, context, callback) => {
-
-    const lineId = 'bakerloo-line';
-
-    console.log("Getting relevant users to notify");
-    // todo - restrict to this hour and broken lines
-    const params = {
-        TableName: tableName,
-        IndexName: 'index_lineSlot',
-        KeyConditionExpression: '#line = :line',
-        ExpressionAttributeNames: {
-            '#line': 'LineSlot'
-        },
-        ExpressionAttributeValues: {
-            ':line': lineId + '_0000'
-        }
-    };
-    docClient.query(params, function(err, data) {
-        if (err) {
-            console.log(err);
-            callback(err);
-            return;
-        }
-
-        return notifyUsers(data, callback);
-    });
-};
-
-exports.handler = fetcher.handler;

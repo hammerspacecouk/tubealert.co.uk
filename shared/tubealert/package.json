@@ -1,8 +1,11 @@
 {
-  "name": "lines",
+  "name": "tubealert",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "null",
   "author": "Hammerspace",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "web-push": "^3.2.2"
+  }
 }
