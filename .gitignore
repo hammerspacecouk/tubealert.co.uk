@@ -7,3 +7,8 @@ site/public/html/assets-manifest.json
 site/public/html/manifest.json
 site/public/html/browserconfig.xml
 site/public/static
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
