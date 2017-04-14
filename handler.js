@@ -1,5 +1,8 @@
 'use strict';
 
+const DI = require("./src/DI");
+
+// handlers
 module.exports.webapp = (event, context, callback) => {
     const response = {
         statusCode: 200,
@@ -12,20 +15,7 @@ module.exports.webapp = (event, context, callback) => {
     callback(null, response);
 };
 
-module.exports.all = (event, context, callback) => {
-    const response = {
-        "statusCode": 200,
-        "headers": {
-          "access-control-allow-origin": "*",
-          "cache-control": "public, max-age: 120"
-        },
-        "body": JSON.stringify({
-            "message": 'All data',
-        }),
-    };
-
-    callback(null, response);
-};
+module.exports.latest = (event, context, callback) => DI.controllers.status(callback).latestAction();
 
 module.exports.subscribe = (event, context, callback) => {
     const response = {

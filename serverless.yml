@@ -52,11 +52,11 @@ functions:
           path: /
           method: get
 
-  all:
-    handler: handler.all
+  latest:
+    handler: handler.latest
     events:
       - http:
-          path: /all
+          path: /latest
           method: get
 
   subscribe:

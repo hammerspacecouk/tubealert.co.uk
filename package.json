@@ -1,7 +1,16 @@
 {
   "dependencies": {
+    "aws-sdk": "^2.41.0",
+    "moment-timezone": "^0.5.13",
     "serverless": "^1.11.0"
   },
-  "devDependencies": {},
-  "scripts": {}
+  "devDependencies": {
+    "jest": "^19.0.2"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
 }

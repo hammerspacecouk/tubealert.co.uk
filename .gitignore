@@ -1,5 +1,6 @@
 .env.json
 build
+coverage
 /**/node_modules
 site/public/html/all.json
 site/public/html/index.html
