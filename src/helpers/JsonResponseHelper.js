@@ -19,6 +19,7 @@ class JsonResponseHelper {
     static createErrorResponse(message) {
         return {
             "statusCode": 500,
+            // will not use the default headers as we don't want to cache errors
             "headers": {"access-control-allow-origin": "*"},
             "body": JSON.stringify({
                 "status": "error",

@@ -1,6 +1,13 @@
 "use strict";
 
 class StatusController {
+    /**
+     * @param callback
+     * @param dateTimeHelper
+     * @param status
+     * @param jsonResponseHelper
+     * @param logger
+     */
     constructor(callback, dateTimeHelper, status, jsonResponseHelper, logger) {
         this.callback = callback;
         this.dateTimeHelper = dateTimeHelper;
@@ -9,6 +16,10 @@ class StatusController {
         this.logger = logger;
     }
 
+    /**
+     * Fetch the latest statues for all lines
+     * @returns {Promise.<TResult>}
+     */
     latestAction() {
         return this.status.getAllLatest(this.dateTimeHelper.getNow())
             .then(data => {

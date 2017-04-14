@@ -15,7 +15,8 @@ module.exports.webapp = (event, context, callback) => {
     callback(null, response);
 };
 
-module.exports.latest = (event, context, callback) => DI.controllers.status(callback).latestAction();
+module.exports.latest = (event, context, callback) =>
+    DI.controllers.status(callback).latestAction();
 
 module.exports.subscribe = (event, context, callback) => {
     const response = {
@@ -27,15 +28,8 @@ module.exports.subscribe = (event, context, callback) => {
     callback(null, response);
 };
 
-module.exports.unsubscribe = (event, context, callback) => {
-    const response = {
-        "statusCode": 200,
-        "headers": {"access-control-allow-origin" : "*"},
-        "body": JSON.stringify({status : "ok"}),
-    };
-
-    callback(null, response);
-};
+module.exports.unsubscribe = (event, context, callback) =>
+    DI.controllers.subscriptions(callback).unsubscribeAction(event);
 
 module.exports.fetch = (event, context, callback) => {
     callback(null, "Done");

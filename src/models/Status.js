@@ -23,7 +23,6 @@ class Status {
     };
 
     getAllLatest(date) {
-        this.logger.info(this.dateTimeHelper);
         const tubeDate = this.dateTimeHelper.getTubeDate(date);
         this.logger.info("Getting current status for " + tubeDate);
         const params = {
