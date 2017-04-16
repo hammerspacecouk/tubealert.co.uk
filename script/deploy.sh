@@ -7,4 +7,5 @@ fi
 
 echo 'Starting deploy'
 
+yarn global add serverless
 serverless deploy
