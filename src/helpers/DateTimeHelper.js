@@ -20,7 +20,7 @@ class DateTimeHelper {
             date.subtract(1, "days");
         }
         return date.format("DD-MM-YYYY");
-    };
+    }
 }
 
 module.exports = DateTimeHelper;

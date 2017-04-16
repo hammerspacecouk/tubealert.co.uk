@@ -1,16 +1,32 @@
 "use strict";
 
 class SubscriptionsController {
-    constructor(callback, subscription, jsonResponseHelper, logger) {
+    constructor(callback, subscription, dateTimeHelper, jsonResponseHelper, logger) {
         this.callback = callback;
         this.subscription = subscription;
+        this.dateTimeHelper = dateTimeHelper;
         this.jsonResponseHelper = jsonResponseHelper;
         this.logger = logger;
     }
 
-    subscribeAction() {
-        const data = {"message": "All data"};
-        this.callback(null, this.jsonResponseHelper.createResponse(data));
+    subscribeAction(event) {
+        const body = JSON.parse(event.body);
+        const userID = body.userID;
+        const lineID = body.lineID;
+        const timeSlots = body.timeSlots;
+        const subscription = body.subscription;
+
+        return this.subscription.subscribeUser(userID, lineID, timeSlots, subscription, this.dateTimeHelper.getNow())
+            .then(() => {
+                this.logger.info("Successfully subscribed");
+                return this.callback(null, this.jsonResponseHelper.createResponse({status : "ok"}));
+            })
+            .catch(err => {
+                this.logger.error(err);
+                return this.callback(true, this.jsonResponseHelper.createErrorResponse(
+                    "Failed to subscribe"
+                ));
+            });
     }
 
     unsubscribeAction(event) {

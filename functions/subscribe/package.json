@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "tubealert": "file:./../../shared/tubealert/"
-  }
-}

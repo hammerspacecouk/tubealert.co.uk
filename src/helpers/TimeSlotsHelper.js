@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-class Slots {
+class TimeSlotsHelper {
     constructor(data) {
         this.data = data;
     }
@@ -11,9 +11,8 @@ class Slots {
         return pad.substring(0, pad.length - str.length) + str;
     }
 
-    getPuts(subscription, lineID) {
+    getPuts(subscription, lineID, now) {
         const puts = [];
-        const now = Date.now();
         const userID = subscription.endpoint;
 
         // loop through all of the data generating slot items
@@ -40,7 +39,7 @@ class Slots {
                     Day: day,
                     Hour: hour,
                     WindowStart: start,
-                    Created: now,
+                    Created: now.toISOString(),
                     Subscription: subscription,
                 };
                 puts.push({
@@ -55,28 +54,17 @@ class Slots {
     }
 
     getDeletes(currentData) {
-        console.log(currentData);
-        currentData = currentData.filter(item => {
-            if (this.data[item.Day] && this.data[item.Day][item.Hour]) {
-                // exists. do not delete
-                return false;
-            }
-            // can be deleted
-            return true;
-        });
-        const deletes = currentData.map(item => {
-            return {
-                DeleteRequest : {
-                    Key: {
-                        UserID: item.UserID,
-                        LineSlot: item.LineSlot
-                    }
+        // return only the ones that don't exist in the new data set
+        const deletable = currentData.filter(item => !(this.data[item.Day] && this.data[item.Day][item.Hour]));
+        return deletable.map(item => ({
+            DeleteRequest : {
+                Key: {
+                    UserID: item.UserID,
+                    LineSlot: item.LineSlot
                 }
             }
-        });
-
-        return deletes;
+        }));
     }
-};
+}
 
-module.exports = Slots;
+module.exports = TimeSlotsHelper;

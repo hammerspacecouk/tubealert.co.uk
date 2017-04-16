@@ -6,7 +6,7 @@ class JsonResponseHelper {
             "access-control-allow-origin": "*",
             "cache-control": "public, max-age: 120"
         }
-    };
+    }
 
     static createResponse(data, status = 200) {
         return {
@@ -14,7 +14,7 @@ class JsonResponseHelper {
             "headers": JsonResponseHelper.DEFAULT_HEADERS(),
             "body": JSON.stringify(data),
         }
-    };
+    }
 
     static createErrorResponse(message) {
         return {

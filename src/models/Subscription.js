@@ -3,9 +3,31 @@
 const TABLE_NAME_SUBSCRIPTIONS = "tubealert.co.uk_subscriptions";
 
 class Subscription {
-    constructor(documentClient, logger) {
+    constructor(documentClient, batchWriteHelper, timeSlotsHelper, logger) {
         this.documentClient = documentClient;
+        this.batchWriteHelper = batchWriteHelper;
+        this.timeSlotsHelper = timeSlotsHelper;
         this.logger = logger;
+
+        this.batchWriter = new this.batchWriteHelper(this.documentClient, TABLE_NAME_SUBSCRIPTIONS, this.logger);
+    }
+
+    subscribeUser(userID, lineID, timeSlots, subscription, now) {
+        // process the time slots
+        const slots = new this.timeSlotsHelper(timeSlots);
+
+        // create the PUT items
+        const puts = slots.getPuts(subscription, lineID, now);
+        this.logger.info(puts.length + " puts");
+
+        // find out any that need to be deleted
+        return this.getUserSubscriptions(userID, lineID)
+            .then(data => {
+                const deletes = slots.getDeletes(data);
+                this.logger.info(deletes.length + " deletes");
+                return puts.concat(deletes);
+            })
+            .then(requests => this.batchWriter.makeRequests(requests));
     }
 
     unsubscribeUser(userID) {
@@ -15,19 +37,8 @@ class Subscription {
                 this.logger.info(requests.length + ' items total');
                 return requests;
             })
-            .then(requests => this.batchWrite(requests, requests.length));
+            .then(requests => this.batchWriter.makeRequests(requests));
     }
-
-    createDeleteRequest(item) {
-        return {
-            DeleteRequest: {
-                Key: {
-                    UserID: item.UserID,
-                    LineSlot: item.LineSlot
-                }
-            }
-        }
-    };
 
     getUserSubscriptions(userID) {
         const params = {
@@ -45,34 +56,60 @@ class Subscription {
             .then(result => result.Items);
     }
 
-
-    batchWrite(requests, total) {
-        if (requests.length === 0) {
-            // nothing to do. get out and return the original count
-            return total;
-        }
-
-        // can only process 25 at a time
-        const toProcess = requests.slice(0, 25);
-        const remaining = requests.slice(25);
-        this.logger.info("Processing " + toProcess.length + " items");
-
-        // perform the batch request
+    getSubscriptionsForLineSlot(lineID, date) {
+        const lineSlot = this.makeLineSlot(lineID, date);
+        this.logger.info("Line slot: " + lineSlot);
         const params = {
-            RequestItems : {}
+            TableName: TABLE_NAME_SUBSCRIPTIONS,
+            IndexName: "index_lineSlot",
+            KeyConditionExpression: "#line = :line",
+            ExpressionAttributeNames: {
+                "#line": "LineSlot"
+            },
+            ExpressionAttributeValues: {
+                ":line": lineSlot
+            }
         };
-        params.RequestItems[TABLE_NAME_SUBSCRIPTIONS] = toProcess;
+        return this.documentClient.query(params).promise()
+            .then(result => (result.Items));
+    }
 
-        return this.documentClient.batchWrite(params).promise()
-            .then(data => {
-                // put any UnprocessedItems back onto remaining list
-                if ("UnprocessedItems" in data && TABLE_NAME_SUBSCRIPTIONS in data.UnprocessedItems) {
-                    remaining.push(data.UnprocessedItems[TABLE_NAME_SUBSCRIPTIONS]);
+    getSubscriptionsStartingInLineSlot(lineID, date) {
+        const hour = date.hours();
+        const lineSlot = this.makeLineSlot(lineID, date);
+        this.logger.info("Line slot: " + lineSlot);
+        const params = {
+            TableName: TABLE_NAME_SUBSCRIPTIONS,
+            IndexName: "index_lineSlot",
+            KeyConditionExpression: "#line = :line",
+            FilterExpression : "#start = :start",
+            ExpressionAttributeNames: {
+                "#line": "LineSlot",
+                "#start": "WindowStart"
+            },
+            ExpressionAttributeValues: {
+                ":line": lineSlot,
+                ":start": hour
+            }
+        };
+        return this.documentClient.query(params).promise()
+            .then(result => (result.Items));
+    }
+
+    makeLineSlot(lineID, date) {
+        return lineID + "_0" + date.day() + date.format('HH');
+    }
+
+    createDeleteRequest(item) {
+        return {
+            DeleteRequest: {
+                Key: {
+                    UserID: item.UserID,
+                    LineSlot: item.LineSlot
                 }
-                return remaining;
-            })
-            .then(remaining => this.batchWrite(remaining, total));
-    };
+            }
+        }
+    }
 }
 
 module.exports = Subscription;

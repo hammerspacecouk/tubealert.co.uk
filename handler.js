@@ -1,39 +1,28 @@
-'use strict';
+"use strict";
 
-const DI = require("./src/DI");
+const Controllers = require("./src/DI").controllers;
 
 // handlers
-module.exports.webapp = (event, context, callback) => {
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-          message: 'Go Serverless v1.0! Your function executed successfully!',
-          input: event,
-        }),
-    };
-
-    callback(null, response);
-};
-
-module.exports.latest = (event, context, callback) =>
-    DI.controllers.status(callback).latestAction();
-
-module.exports.subscribe = (event, context, callback) => {
-    const response = {
-        "statusCode": 200,
-        "headers": {"access-control-allow-origin" : "*"},
-        "body": JSON.stringify({status : "ok"}),
-    };
-
-    callback(null, response);
-};
-
-module.exports.unsubscribe = (event, context, callback) =>
-    DI.controllers.subscriptions(callback).unsubscribeAction(event);
-
-module.exports.fetch = (event, context, callback) => {
-    callback(null, "Done");
-
-    // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-    // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+module.exports = {
+    // data feed
+    latest: (event, context, callback) => Controllers.status(callback).latestAction(),
+    // user actions
+    subscribe: (event, context, callback) => Controllers.subscriptions(callback).subscribeAction(event),
+    unsubscribe: (event, context, callback) => Controllers.subscriptions(callback).unsubscribeAction(event),
+    // cron jobs
+    fetch: (event, context, callback) => Controllers.data(callback).fetchAction(),
+    hourly: (event, context, callback) => Controllers.data(callback).hourlyAction(),
+    // stream handler
+    notify: (event, context, callback) => Controllers.data(callback).notifyAction(event),
+    // website
+    webapp: (event, context, callback) => {
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify({
+                message: 'Go Serverless v1.0! Your function executed successfully!',
+                input: event,
+            }),
+        };
+        callback(null, response);
+    }
 };

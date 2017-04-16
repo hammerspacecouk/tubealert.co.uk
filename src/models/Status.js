@@ -3,10 +3,14 @@
 const TABLE_NAME_STATUSES = "tubealert.co.uk_statuses";
 
 class Status {
-    constructor(documentClient, dateTimeHelper, logger) {
+    constructor(documentClient, dateTimeHelper, lineModel, config, logger) {
         this.documentClient = documentClient;
         this.dateTimeHelper = dateTimeHelper;
+        this.config = config;
+        this.lineModel = lineModel;
         this.logger = logger;
+
+        this.severities = this.lineModel.getSeverities();
     }
 
     storeStatus(date, data) {
@@ -19,8 +23,82 @@ class Status {
                 Statuses: data
             }
         };
-        return this.documentClient.put(params).promise();
-    };
+        this.logger.info("Storing data for " + tubeDate);
+        return this.documentClient.put(params).promise()
+            .then(() => data);
+    }
+
+    fetchNewLatest() {
+        const now = this.dateTimeHelper.getNow();
+        const url = "https://api.tfl.gov.uk/Line/Mode/tube,dlr,tflrail,overground/Status" +
+            "?app_id=" + this.config.TFL_APP_ID +
+            "&app_key=" + this.config.TFL_APP_KEY;
+
+        this.logger.info("Fetching from TFL");
+        return require('node-fetch')(url)
+            .then(response => response.json())
+            .then(this.mutateData.bind(this))
+            .then(data => this.storeStatus(now, data))
+    }
+
+    makeStatusItem(lineData, lineStatus) {
+        const now = this.dateTimeHelper.getNow();
+
+        // set some defaults
+        delete lineData.tflKey;
+        lineData.isDisrupted = null;
+        lineData.updatedAt = now.toISOString();
+        lineData.statusSummary = "No Information";
+        lineData.latestStatus = {
+            updatedAt : now.toISOString(),
+            isDisrupted : null,
+            title : "No Information",
+            shortTitle : "No Information",
+            descriptions : null
+        };
+
+        if (lineStatus) {
+            const sortedStatuses = lineStatus.lineStatuses.sort((a, b) => {
+                return this.severities[a.statusSeverity-1].displayOrder - this.severities[b.statusSeverity-1].displayOrder;
+            });
+
+            // get sorted titles and reasons, ensuring unique values
+            const titles = sortedStatuses.map((s) => {
+                return s.statusSeverityDescription;
+            }).filter((value, index, self) => { return (self.indexOf(value) === index) });
+            const reasons = sortedStatuses.map((s) => {
+                return s.reason || null;
+            }).filter((value, index, self) => { return (value !== null && self.indexOf(value) === index) });
+
+            lineData.latestStatus.isDisrupted = sortedStatuses.reduce((value, status) => {
+                if (this.severities[status.statusSeverity].disrupted) {
+                    value = true;
+                }
+                return value;
+            }, false);
+            lineData.latestStatus.title = titles.join(", ");
+            lineData.latestStatus.shortTitle = titles.slice(0, 2).join(", ");
+            lineData.latestStatus.descriptions = reasons;
+
+            lineData.isDisrupted = lineData.latestStatus.isDisrupted;
+            lineData.statusSummary = lineData.latestStatus.shortTitle;
+        }
+
+        return lineData;
+    }
+
+    mutateData(data) {
+        // work through all of the lines we want in order
+        // and build up a JSON object of their statuses
+        this.logger.info("Manipulating result into preferred format");
+        return this.lineModel.getAll().map((lineData) => {
+            const lineStatus = data.find((status) => {
+                return status.id === lineData.tflKey;
+            });
+
+            return this.makeStatusItem(lineData, lineStatus);
+        });
+    }
 
     getAllLatest(date) {
         const tubeDate = this.dateTimeHelper.getTubeDate(date);
@@ -41,9 +119,14 @@ class Status {
                 if (result.Items.length > 0) {
                     return result.Items[0].Statuses
                 }
-                return null;
+                return [];
             })
-    };
+    }
+
+    getLatestDisrupted(date) {
+        return this.getAllLatest(date)
+            .then(statuses => statuses.filter(line => line.isDisrupted));
+    }
 }
 
 module.exports = Status;

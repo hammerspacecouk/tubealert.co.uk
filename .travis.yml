@@ -2,7 +2,7 @@ language: node_js
 cache:
   yarn: true
 node_js:
-  - "4"
+  - "6"
 before_install:
   - cd site
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -10,7 +10,11 @@ before_install:
 install:
   - time yarn
 script:
+  - time yarn test
   - time yarn run prod
+  - time rm -rf ./node_modules
+  - time yarn install --production
+  - time yarn serverless deploy
 deploy:
   # Deploy the HTML (10 mins lifetime)
   - provider: s3

@@ -1,10 +1,12 @@
+## Developing
+The entry point for all invocations/requests is `handler.js`
 
-### Installing
+## Installing
 ```
 yarn install
 ```
 
-### Running Tests
+## Running Tests
 
 ```
 yarn test

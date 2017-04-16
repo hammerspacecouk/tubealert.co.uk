@@ -1,7 +1,5 @@
 .env.json
-build
 coverage
-/**/node_modules
 site/public/html/all.json
 site/public/html/index.html
 site/public/html/assets-manifest.json
@@ -10,6 +8,8 @@ site/public/html/browserconfig.xml
 site/public/static
 node_modules
 jspm_packages
+.env.sh
+assets-manifest.json
 
 # Serverless directories
 .serverless
