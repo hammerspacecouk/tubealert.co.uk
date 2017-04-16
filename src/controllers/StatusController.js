@@ -27,7 +27,7 @@ class StatusController {
       .catch((err) => {
         this.logger.error(err);
         return this.callback(true, this.jsonResponseHelper.createErrorResponse(
-          'Failed to fetch latest status',
+          'Failed to fetch latest status'
         ));
       });
   }

@@ -3,6 +3,9 @@ cache:
   yarn: true
 node_js:
   - "6"
+install:
+  - yarn
+  - serverless
 before_script:
   - chmod +x script/deploy.sh
 script:

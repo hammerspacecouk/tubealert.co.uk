@@ -19,7 +19,7 @@ test('returns result', () => {
     mockDateTime,
     mockStatus,
     mockJsonResponse,
-    mockLogger,
+    mockLogger
   );
   return controller.latestAction()
     .then(() => {
@@ -44,7 +44,7 @@ test('returns error', () => {
     mockDateTime,
     mockStatus,
     mockJsonResponse,
-    mockLogger,
+    mockLogger
   );
   return controller.latestAction()
     .then(() => {

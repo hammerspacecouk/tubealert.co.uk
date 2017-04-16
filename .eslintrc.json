@@ -2,5 +2,15 @@
   "extends": ["airbnb"],
   "env": {
     "jest": true
+  },
+  "rules": {
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "functions": "never"
+      }
+    ]
   }
 }

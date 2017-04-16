@@ -10,7 +10,7 @@ class Notification {
     dateTimeHelper,
     BatchWriteHelper,
     config,
-    logger,
+    logger
   ) {
     this.documentClient = documentClient;
     this.webPush = webPush;
@@ -23,7 +23,7 @@ class Notification {
     this.batchWriter = new this.BatchWriteHelper(
       this.documentClient,
       TABLE_NAME_NOTIFICATIONS,
-      this.logger,
+      this.logger
     );
   }
 

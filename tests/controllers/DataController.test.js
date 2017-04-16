@@ -16,7 +16,7 @@ const createController = (mockCallback, b, c, d, e, f, g) => new DataController(
   d || defMockStatusModel,
   e || defMockSubscriptionModel,
   f || defMockNotificationModel,
-  g || defMockLogger,
+  g || defMockLogger
 );
 
 test('fetchAction when no original status', () => {
@@ -113,7 +113,7 @@ test('fetchAction creates notifications', () => {
     null,
     mockStatusModel,
     mockSubscriptionsModel,
-    mockNotificationModel,
+    mockNotificationModel
   );
 
   return ctl.fetchAction()
@@ -172,7 +172,7 @@ test('notifyAction when error', () => {
     null,
     null,
     null,
-    mockNotificationModel,
+    mockNotificationModel
   );
   return ctl.notifyAction({
     Records: [
@@ -197,7 +197,7 @@ test('notifyAction handles notification', () => {
     null,
     null,
     null,
-    mockNotificationModel,
+    mockNotificationModel
   );
   return ctl.notifyAction({
     Records: [
@@ -241,7 +241,7 @@ test('hourlyAction with no disruptions', () => {
     null,
     mockStatusModel,
     null,
-    mockNotificationModel,
+    mockNotificationModel
   );
   return ctl.hourlyAction()
     .then(() => {
@@ -284,7 +284,7 @@ test('hourlyAction with notifications', () => {
     null,
     mockStatusModel,
     mockSubscriptionsModel,
-    mockNotificationModel,
+    mockNotificationModel
   );
   return ctl.hourlyAction()
     .then(() => {

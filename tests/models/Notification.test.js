@@ -23,7 +23,7 @@ test('createNotifications when empty', () => {
     defMockDateTime,
     defMockBatchWriteHelper,
     defMockConfig,
-    defMockLogger,
+    defMockLogger
   );
   const result = model.createNotifications([]);
   expect(result).toBeNull();
@@ -41,7 +41,7 @@ test('createNotifications', () => {
     defMockDateTime,
     mockBatchWriteHelper,
     defMockConfig,
-    defMockLogger,
+    defMockLogger
   );
   return model.createNotifications([
     {
@@ -88,7 +88,7 @@ test('handleNotification', () => {
     defMockDateTime,
     mockBatchWriteHelper,
     defMockConfig,
-    defMockLogger,
+    defMockLogger
   );
   return model.handleNotification({
     Payload: 'payload',

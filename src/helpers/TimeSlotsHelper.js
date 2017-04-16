@@ -26,7 +26,7 @@ class TimeSlotsHelper {
               start = hour;
             }
             puts.push(
-              TimeSlotsHelper.createHourSlot(lineID, userID, day, hour, start, now, subscription),
+              TimeSlotsHelper.createHourSlot(lineID, userID, day, hour, start, now, subscription)
             );
           } else {
             start = null;

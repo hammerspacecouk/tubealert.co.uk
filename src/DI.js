@@ -35,7 +35,7 @@ WebPush.setGCMAPIKey(process.env.GCM_API_KEY);
 WebPush.setVapidDetails(
   `mailto:${process.env.CONTACT_EMAIL}`,
   process.env.PUBLIC_KEY,
-  process.env.PRIVATE_KEY,
+  process.env.PRIVATE_KEY
 );
 
 // constructors
@@ -48,20 +48,20 @@ const getNotificationModel = () => new Notification(
     getDateTimeHelper(),
     BatchWriteHelper,
     config,
-    console,
+    console
   );
 const getStatusModel = () => new Status(
     documentClient,
     getDateTimeHelper(),
     getLineModel(),
     config,
-    console,
+    console
   );
 const getSubscriptionModel = () => new Subscription(
     documentClient,
     BatchWriteHelper,
     TimeSlotsHelper,
-    console,
+    console
   );
 
 const getDataController = callback => new DataController(
@@ -71,7 +71,7 @@ const getDataController = callback => new DataController(
     getStatusModel(),
     getSubscriptionModel(),
     getNotificationModel(),
-    console,
+    console
   );
 
 const getStatusController = callback => new StatusController(
@@ -79,7 +79,7 @@ const getStatusController = callback => new StatusController(
     getDateTimeHelper(),
     getStatusModel(),
     JsonResponseHelper,
-    console,
+    console
   );
 
 const getSubscriptionsController = callback => new SubscriptionsController(
@@ -87,7 +87,7 @@ const getSubscriptionsController = callback => new SubscriptionsController(
     getSubscriptionModel(),
     getDateTimeHelper(),
     JsonResponseHelper,
-    console,
+    console
   );
 
 module.exports = {

@@ -10,7 +10,7 @@ class Subscription {
     this.batchWriter = new this.BatchWriteHelper(
       this.documentClient,
       TABLE_NAME_SUBSCRIPTIONS,
-      this.logger,
+      this.logger
     );
   }
 

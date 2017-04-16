@@ -18,7 +18,7 @@ class DataController {
     statusModel,
     subscriptionModel,
     notificationModel,
-    logger,
+    logger
   ) {
     this.callback = callback;
     this.dynamoConverter = dynamoConverter;
@@ -87,7 +87,7 @@ class DataController {
         subscription => ({
           lineData,
           subscription,
-        }),
+        })
       ));
   }
 
@@ -114,14 +114,14 @@ class DataController {
         subscriptionsToNotify.push(
           this.subscriptionModel.getSubscriptionsForLineSlot(
             line.urlKey,
-            this.dateTimeHelper.getNow(),
+            this.dateTimeHelper.getNow()
           )
             .then(subscriptions => subscriptions.map(
               subscription => ({
                 lineData: line,
                 subscription,
-              }),
-            )),
+              })
+            ))
         );
       }
     });

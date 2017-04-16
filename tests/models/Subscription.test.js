@@ -27,7 +27,7 @@ test('subscribe user', () => {
     mockDocumentClient,
     mockBatchWriteHelper,
     mockTimeSlotsHelper,
-    defMockLogger,
+    defMockLogger
   );
   return model.subscribeUser('userID1', 'lineID1', 'timeslots', 'subscription1', 'now')
     .then(() => {
@@ -73,7 +73,7 @@ test('unsubscribe user', () => {
     mockDocumentClient,
     mockBatchWriteHelper,
     defMockTimeSlotsHelper,
-    defMockLogger,
+    defMockLogger
   );
   return model.unsubscribeUser('userID1')
     .then(() => {
@@ -121,7 +121,7 @@ test('getSubscriptionsForLineSlot', () => {
     mockDocumentClient,
     defMockBatchWriteHelper,
     defMockTimeSlotsHelper,
-    defMockLogger,
+    defMockLogger
   );
 
   const mockDate = {
@@ -159,7 +159,7 @@ test('getSubscriptionsStartingInLineSlot', () => {
     mockDocumentClient,
     defMockBatchWriteHelper,
     defMockTimeSlotsHelper,
-    defMockLogger,
+    defMockLogger
   );
 
   const mockDate = {

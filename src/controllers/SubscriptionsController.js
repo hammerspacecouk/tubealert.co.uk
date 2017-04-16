@@ -20,7 +20,7 @@ class SubscriptionsController {
       lineID,
       timeSlots,
       subscription,
-      this.dateTimeHelper.getNow(),
+      this.dateTimeHelper.getNow()
     )
       .then(() => {
         this.logger.info('Successfully subscribed');
@@ -48,7 +48,7 @@ class SubscriptionsController {
   fail(err) {
     this.logger.error(err);
     return this.callback(true, this.jsonResponseHelper.createErrorResponse(
-      'Failed to perform action',
+      'Failed to perform action'
     ));
   }
 }

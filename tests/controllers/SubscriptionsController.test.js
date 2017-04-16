@@ -13,7 +13,7 @@ const createController = (mockCallback, b, c, mockJsonResponse, f) => new Subscr
   b || defMockSubscriptionModel,
   c || defMockDateTimeHelper,
   mockJsonResponse,
-  f || defMockLogger,
+  f || defMockLogger
 );
 
 test('subscribeAction with error', () => {

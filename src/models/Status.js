@@ -12,7 +12,7 @@ class Status {
   }
 
   storeStatus(date, data) {
-    const tubeDate = this.dateTimeHelper.getTubeDate(date);
+    const tubeDate = this.dateTimeHelper.constructor.getTubeDate(date);
     const params = {
       TableName: TABLE_NAME_STATUSES,
       Item: {
@@ -99,7 +99,7 @@ class Status {
   }
 
   getAllLatest(date) {
-    const tubeDate = this.dateTimeHelper.getTubeDate(date);
+    const tubeDate = this.dateTimeHelper.constructor.getTubeDate(date);
     this.logger.info(`Getting current status for ${tubeDate}`);
     const params = {
       TableName: TABLE_NAME_STATUSES,

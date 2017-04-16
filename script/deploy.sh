@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if [[ $TRAVIS_TEST_RESULT == 1 ]]; then
   echo 'Skipping deploy due to broken build';

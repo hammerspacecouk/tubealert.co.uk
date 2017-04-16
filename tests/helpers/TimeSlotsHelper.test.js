@@ -44,7 +44,7 @@ test('make puts', () => {
   const result = helper.getPuts(
     { endpoint: 'endpoint' },
     'line',
-    nowMock,
+    nowMock
   );
 
   expect(result).toEqual([

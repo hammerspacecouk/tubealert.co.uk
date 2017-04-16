@@ -2,7 +2,9 @@ const Status = require('../../src/models/Status');
 
 const defMockLogger = { info: jest.fn(), error: jest.fn() };
 const defMockDateTimeHelper = {
-  getTubeDate: () => 'tube-date',
+  constructor: {
+    getTubeDate: () => 'tube-date',
+  },
   getNow: () => ({
     toISOString: () => 'iso',
     unix: () => 12345,
@@ -28,16 +30,16 @@ test('getAllLatest returns result', () => {
     defMockDateTimeHelper,
     defMockLineModel,
     defMockConfig,
-    defMockLogger,
+    defMockLogger
   );
   return model.getAllLatest('now')
     .then((d) => {
       // assertions
       expect(
-        mockQueryFunction.mock.calls[0][0].ExpressionAttributeValues[':date'],
+        mockQueryFunction.mock.calls[0][0].ExpressionAttributeValues[':date']
       ).toBe('tube-date');
       expect(
-        mockQueryFunction.mock.calls[0][0].ScanIndexForward,
+        mockQueryFunction.mock.calls[0][0].ScanIndexForward
       ).toBe(false);
       expect(d).toBe('statuses');
     });
@@ -58,7 +60,7 @@ test('getAllLatest returns empty result', () => {
     defMockDateTimeHelper,
     defMockLineModel,
     defMockConfig,
-    defMockLogger,
+    defMockLogger
   );
   return model.getAllLatest('now')
     .then((d) => {
@@ -88,7 +90,7 @@ test('getLatestDisrupted', () => {
     defMockDateTimeHelper,
     defMockLineModel,
     defMockConfig,
-    defMockLogger,
+    defMockLogger
   );
   return model.getLatestDisrupted('now')
     .then((result) => {
@@ -191,7 +193,7 @@ test('fetch and store', () => {
     defMockDateTimeHelper,
     mockLineModel,
     defMockConfig,
-    defMockLogger,
+    defMockLogger
   );
 
   return model.fetchNewLatest()
