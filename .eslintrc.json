@@ -1,24 +1,6 @@
 {
-  "plugins": [
-    "react"
-  ],
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": ["airbnb"],
   "env": {
-    "browser": true,
-    "node": true,
-    "jest": true,
-    "es6": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "classes": true,
-      "experimentalObjectRestSpread": true
-    }
-  },
-  "rules": {
-    "no-console":0
+    "jest": true
   }
 }
