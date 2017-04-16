@@ -4,7 +4,7 @@ cache:
 node_js:
   - "6"
 before_script:
-  - chmod +x script/deploy
+  - chmod +x script/deploy.sh
 script:
   - yarn install
   - yarn test
