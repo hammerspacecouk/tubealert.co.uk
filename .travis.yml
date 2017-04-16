@@ -3,12 +3,13 @@ cache:
   yarn: true
 node_js:
   - "6"
+before_script:
+  - chmod +x script/deploy
 script:
   - yarn install
   - yarn test
   - yarn install --production --ignore-scripts --prefer-offline
   - ./script/deploy.sh
-#  - yarn serverless deploy
 #deploy:
 #  # Deploy the HTML (10 mins lifetime)
 #  - provider: s3
