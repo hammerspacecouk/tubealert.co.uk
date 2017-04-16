@@ -29,7 +29,6 @@ provider:
     TFL_APP_ID: ${env:TFL_APP_ID}
     TFL_APP_KEY: ${env:TFL_APP_KEY}
     GCM_API_KEY: ${env:GCM_API_KEY}
-    BUCKET_NAME: ${env:BUCKET_NAME}
     CONTACT_EMAIL: ${env:CONTACT_EMAIL}
     STATIC_HOST: ${env:STATIC_HOST}
     PRIVATE_KEY: ${env:PRIVATE_KEY}

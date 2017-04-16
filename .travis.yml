@@ -9,11 +9,13 @@ before_install:
 #  - export PATH=$HOME/.yarn/bin:$PATH
 install:
   - yarn
+  - serverless
 script:
   - yarn test
 #  - yarn run prod
   - rm -rf ./node_modules
   - yarn install --production
+  - ./script/deploy.sh
 #  - yarn serverless deploy
 #deploy:
 #  # Deploy the HTML (10 mins lifetime)
