@@ -9,7 +9,6 @@ site/public/static
 node_modules
 jspm_packages
 .env.sh
-assets-manifest.json
 
 # Serverless directories
 .serverless
