@@ -6,6 +6,13 @@ test('has correct status and headers', () => {
   expect(response.headers).toEqual(JsonResponseHelper.DEFAULT_HEADERS());
 });
 
+
+test('sends cache control header', () => {
+  const response = JsonResponseHelper.createResponse({}, 320);
+  expect(response.statusCode).toBe(200);
+  expect(response.headers["cache-control"]).toEqual('public, max-age:320');
+});
+
 test('can send an error', () => {
   const failMessage = 'it failed';
   const response = JsonResponseHelper.createErrorResponse(failMessage);

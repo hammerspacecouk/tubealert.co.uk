@@ -21,3 +21,5 @@ deploy:
     acl: public_read
     cache_control: "max-age=31536000"
     local_dir: static
+    on:
+      branch: serverless

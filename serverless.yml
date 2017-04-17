@@ -212,6 +212,8 @@ resources:
       Properties:
         BucketName: ${env:STATIC_BUCKET}
         AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
         LifecycleConfiguration:
           Rules:
             - Id: S3ExpireMonthly

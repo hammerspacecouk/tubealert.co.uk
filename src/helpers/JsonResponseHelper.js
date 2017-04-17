@@ -2,14 +2,19 @@ class JsonResponseHelper {
   static DEFAULT_HEADERS() {
     return {
       'access-control-allow-origin': '*',
-      'content-type': 'application/json',
+      'content-type': 'application/json'
     };
   }
 
-  static createResponse(data, status = 200) {
+  static createResponse(data, cacheSeconds = null) {
+    const headers = JsonResponseHelper.DEFAULT_HEADERS();
+    if (cacheSeconds) {
+      headers["cache-control"] = `public, max-age:${cacheSeconds}`;
+    }
+
     return {
-      statusCode: status,
-      headers: JsonResponseHelper.DEFAULT_HEADERS(),
+      statusCode: 200,
+      headers: headers,
       body: JSON.stringify(data),
     };
   }

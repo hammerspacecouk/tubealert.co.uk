@@ -22,7 +22,7 @@ class StatusController {
     return this.status.getAllLatest(this.dateTimeHelper.getNow())
       .then((data) => {
         this.logger.info('Successfully fetched latest statuses');
-        return this.callback(null, this.jsonResponseHelper.createResponse(data));
+        return this.callback(null, this.jsonResponseHelper.createResponse(data, 120));
       })
       .catch((err) => {
         this.logger.error(err);

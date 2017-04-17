@@ -2,11 +2,11 @@ const StatusController = require('../../src/controllers/StatusController');
 
 const mockLogger = { info: jest.fn(), error: jest.fn() };
 const mockResponse = 'response';
-const mockCreateResponse = jest.fn(() => mockResponse);
 const mockDateTime = { getNow: jest.fn(() => 'now') };
 
 test('returns result', () => {
   // setup mocks
+  const mockCreateResponse = jest.fn(() => mockResponse);
   const mockJsonResponse = { createResponse: mockCreateResponse };
   const mockCallback = jest.fn();
 
@@ -25,13 +25,14 @@ test('returns result', () => {
     .then(() => {
       // assertions
       expect(mockGetLatest).toBeCalledWith('now');
-      expect(mockCreateResponse).toBeCalledWith('data');
+      expect(mockCreateResponse).toBeCalledWith('data', 120);
       expect(mockCallback).toBeCalledWith(null, mockResponse);
     });
 });
 
 test('returns error', () => {
   // setup mocks
+  const mockCreateResponse = jest.fn(() => mockResponse);
   const mockJsonResponse = { createErrorResponse: mockCreateResponse };
   const mockCallback = jest.fn();
 
@@ -50,7 +51,7 @@ test('returns error', () => {
     .then(() => {
       // assertions
       expect(mockGetLatest).toBeCalledWith('now');
-      expect(mockCreateResponse).toBeCalledWith('data');
+      expect(mockCreateResponse).toBeCalledWith('Failed to fetch latest status');
       expect(mockCallback).toBeCalledWith(true, mockResponse);
     });
 });
