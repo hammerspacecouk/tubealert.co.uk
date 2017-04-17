@@ -1,7 +1,6 @@
 class JsonResponseHelper {
   static DEFAULT_HEADERS() {
     return {
-      'access-control-allow-origin': '*',
       'content-type': 'application/json'
     };
   }
