@@ -10,24 +10,14 @@ script:
   - yarn test
   - yarn install --production --ignore-scripts --prefer-offline
   - ./script/deploy.sh
-#deploy:
-#  # Deploy the HTML (10 mins lifetime)
-#  - provider: s3
-#    region: $AWS_REGION
-#    access_key_id: $AWS_ACCESS_KEY
-#    secret_access_key: $AWS_SECRET_KEY
-#    bucket: $AWS_BUCKET
-#    skip_cleanup: true
-#    acl: public_read
-#    cache_control: "max-age=600"
-#    local_dir: public/html
-#  # Deploy the static assets (1 year lifetime)
-#  - provider: s3
-#    region: $AWS_REGION
-#    access_key_id: $AWS_ACCESS_KEY
-#    secret_access_key: $AWS_SECRET_KEY
-#    bucket: $AWS_BUCKET
-#    skip_cleanup: true
-#    acl: public_read
-#    cache_control: "max-age=31536000"
-#    local_dir: public/static
+deploy:
+  # Deploy the static assets (1 year lifetime)
+  - provider: s3
+    region: $AWS_REGION
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: $STATIC_BUCKET
+    skip_cleanup: true
+    acl: public_read
+    cache_control: "max-age=31536000"
+    local_dir: static

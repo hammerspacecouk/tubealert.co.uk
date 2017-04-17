@@ -1,5 +1,5 @@
 /**
- * This controller handles the routine jobs for fetching and storyi
+ * This controller handles the routine jobs for fetching and storing
  */
 class DataController {
   /**

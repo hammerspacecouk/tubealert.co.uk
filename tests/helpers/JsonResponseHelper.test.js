@@ -1,5 +1,3 @@
-
-
 const JsonResponseHelper = require('../../src/helpers/JsonResponseHelper');
 
 test('has correct status and headers', () => {
@@ -12,7 +10,7 @@ test('can send an error', () => {
   const failMessage = 'it failed';
   const response = JsonResponseHelper.createErrorResponse(failMessage);
   expect(response.statusCode).toBe(500);
-  expect(response.headers).toEqual({ 'access-control-allow-origin': '*' });
+  expect(response.headers).toEqual({ 'content-type': 'application/json' });
   expect(response.body).toEqual(`{"status":"error","message":"${failMessage}"}`);
 });
 

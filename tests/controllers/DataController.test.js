@@ -1,5 +1,3 @@
-
-
 const DataController = require('../../src/controllers/DataController');
 
 const defMockConverter = jest.fn();

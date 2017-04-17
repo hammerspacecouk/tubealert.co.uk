@@ -1,10 +1,8 @@
-
-
 class JsonResponseHelper {
   static DEFAULT_HEADERS() {
     return {
       'access-control-allow-origin': '*',
-      'cache-control': 'public, max-age: 120',
+      'content-type': 'application/json',
     };
   }
 
@@ -20,7 +18,7 @@ class JsonResponseHelper {
     return {
       statusCode: 500,
       // will not use the default headers as we don't want to cache errors
-      headers: { 'access-control-allow-origin': '*' },
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         status: 'error',
         message,
