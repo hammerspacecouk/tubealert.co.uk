@@ -4,12 +4,12 @@ cache:
 node_js:
   - "6"
 before_script:
-  - chmod +x script/deploy.sh
+  - yarn global add serverless
 script:
   - yarn install
   - yarn test
   - yarn install --production --ignore-scripts --prefer-offline
-  - ./script/deploy.sh
+  - serverless deploy
 deploy:
   # Deploy the static assets (1 year lifetime)
   - provider: s3

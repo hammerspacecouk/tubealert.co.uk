@@ -9,12 +9,12 @@ class JsonResponseHelper {
   static createResponse(data, cacheSeconds = null) {
     const headers = JsonResponseHelper.DEFAULT_HEADERS();
     if (cacheSeconds) {
-      headers["cache-control"] = `public, max-age:${cacheSeconds}`;
+      headers['cache-control'] = `public, max-age:${cacheSeconds}`;
     }
 
     return {
       statusCode: 200,
-      headers: headers,
+      headers,
       body: JSON.stringify(data),
     };
   }

@@ -10,7 +10,7 @@ test('has correct status and headers', () => {
 test('sends cache control header', () => {
   const response = JsonResponseHelper.createResponse({}, 320);
   expect(response.statusCode).toBe(200);
-  expect(response.headers["cache-control"]).toEqual('public, max-age:320');
+  expect(response.headers['cache-control']).toEqual('public, max-age:320');
 });
 
 test('can send an error', () => {
