@@ -5,6 +5,7 @@ const mockResponse = 'response';
 const mockDateTime = { getNow: jest.fn(() => 'now') };
 
 test('returns result', () => {
+  StatusController.clearCache();
   // setup mocks
   const mockCreateResponse = jest.fn(() => mockResponse);
   const mockJsonResponse = { createResponse: mockCreateResponse };
@@ -30,7 +31,31 @@ test('returns result', () => {
     });
 });
 
+test('returns result from cache', () => {
+  // setup mocks
+  const mockCreateResponse = jest.fn(() => mockResponse);
+  const mockJsonResponse = { createResponse: mockCreateResponse };
+  const mockCallback = jest.fn();
+
+  const mockGetLatest = jest.fn(() => new Promise(resolve => resolve('uncacheddata')));
+  const mockStatus = { getAllLatest: mockGetLatest };
+
+  // setup and run controller
+  const controller = new StatusController(
+    mockCallback,
+    mockDateTime,
+    mockStatus,
+    mockJsonResponse,
+    mockLogger
+  );
+  controller.latestAction();
+  // assertions
+  expect(mockCreateResponse).toBeCalledWith('data', 120);
+  expect(mockCallback).toBeCalledWith(null, mockResponse);
+});
+
 test('returns error', () => {
+  StatusController.clearCache();
   // setup mocks
   const mockCreateResponse = jest.fn(() => mockResponse);
   const mockJsonResponse = { createErrorResponse: mockCreateResponse };
