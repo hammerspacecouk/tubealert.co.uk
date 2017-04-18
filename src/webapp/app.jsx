@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 export default class App extends Component {
   static propTypes() {
     return {
-      assetsHelper: PropTypes.object.isRequired
+      assetsHelper: PropTypes.object
     };
   }
 
@@ -12,11 +12,22 @@ export default class App extends Component {
   }
 
   render() {
+    let css = null;
+    let script = null;
+    if (this.props.assetsHelper) {
+      css = (<link rel="stylesheet" href={this.props.assetsHelper.get('app.css')} />);
+      script = (<script
+        src={this.props.assetsHelper.get('app.js')}
+        data-props=""
+        id="js-bundle"
+      />);
+    }
+
     return (
       <html lang="en-GB">
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="stylesheet" href={this.props.assetsHelper.get('app.css')} />
+          {css}
           <title>My Title</title>
         </head>
         <body>
@@ -25,11 +36,7 @@ export default class App extends Component {
             <p>Marvelous server side rendering</p>
             <button onClick={App.handleClick}>Click Me</button>
           </div>
-          <script
-            src={this.props.assetsHelper.get('app.js')}
-            data-props=""
-            id="js-bundle"
-          />
+          {script}
         </body>
       </html>
     );
