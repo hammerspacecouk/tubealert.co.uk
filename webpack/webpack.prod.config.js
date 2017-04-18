@@ -49,7 +49,7 @@ config.plugins.push(
 // minify the code
 config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
     compress: {
-        drop_console: true,
+        // drop_console: true,
     }
 }));
 config.plugins.push(new OptimizeCssAssetsPlugin());
