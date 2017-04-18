@@ -7,13 +7,16 @@ export default class App extends Component {
     };
   }
 
-  static handleClick() {
-    window.alert('me me me ');
-  }
-
   constructor() {
     super();
     this.nothing = () => 'yes';
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.nothing();
+    console.log('clicked');
+    window.alert('me me me ');
   }
 
   render() {
@@ -23,7 +26,7 @@ export default class App extends Component {
       <div>
         <h1>My Title</h1>
         <p>Marvelous server side rendering</p>
-        <button onClick={App.handleClick}>Click Me</button>
+        <button onClick={this.handleClick}>Click Me</button>
       </div>
     );
   }

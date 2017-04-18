@@ -11,6 +11,7 @@ import '../src/imgs';
 
 // only modern browsers that support fetch will run this JS app
 if (window.fetch) {
+    console.log('mounting');
     ReactDOM.render(<App />, document.getElementById('webapp'));
 }
 
