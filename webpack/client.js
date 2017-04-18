@@ -1,6 +1,7 @@
 'use strict';
 
 // setup react and routing
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../src/webapp/app.jsx';
 
