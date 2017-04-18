@@ -14,12 +14,9 @@ class WebappController {
     const path = event.path;
 
     // get the data
-    const props = {
-      assetsHelper: this.assetsHelper
-    };
 
     // call the react app
-    const body = ReactDOMServer.renderToString(React.createFactory(App)(props));
+    const body = ReactDOMServer.renderToString(React.createFactory(App)());
 
     // return a response
     return this.callback(null, {
@@ -27,7 +24,22 @@ class WebappController {
       headers: {
         'content-type': 'text/html'
       },
-      body: `<!DOCTYPE html>\n${body}`,
+      body: `<!DOCTYPE html>
+      <html lang="en-GB">
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="stylesheet" href=${this.assetsHelper.get('app.css')} />
+          <title>My Title</title>
+        </head>
+        <body>
+          <div id="webapp">${body}</div>
+          <script
+        src=${this.assetsHelper.get('app.js')}
+        data-props=""
+        id="js-bundle"
+      />
+        </body>
+      </html>`,
     }
     );
   }
