@@ -15,14 +15,5 @@ module.exports = {
   notify:
     (evt, ctx, cb) => Controllers.data(cb).notifyAction(evt),
   webapp:
-    (evt, ctx, cb) => {
-      const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-          message: 'Go Serverless v1.0! Your function executed successfully!',
-          input: evt,
-        }),
-      };
-      cb(null, response);
-    },
+    (evt, ctx, cb) => Controllers.webapp(cb).invokeAction(evt),
 };

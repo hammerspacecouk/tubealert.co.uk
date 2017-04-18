@@ -1,0 +1,31 @@
+.statusbox {
+    padding: 0 76px 0 $grid-unit-small;
+    margin: 0;
+    position: relative;
+    text-decoration: none;
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: none;
+        opacity: 0.7;
+    }
+    @include flexbox();
+    @include flex-align(center);
+}
+.statusbox__chevron {
+    position: absolute;
+    right: $grid-unit-small;
+    top: 50%;
+    margin-top: -6px;
+    height: 12px;
+    width: 8px;
+    opacity: 0.5;
+}
+.statusbox__alert {
+    position: absolute;
+    right: 42px;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    margin-top: -12px;
+}

@@ -1,4 +1,3 @@
-
 class SubscriptionsController {
   constructor(callback, subscription, dateTimeHelper, jsonResponseHelper, logger) {
     this.callback = callback;

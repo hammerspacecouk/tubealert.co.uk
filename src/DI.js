@@ -1,5 +1,5 @@
 // config
-const assetManifest = require('../assets-manifest.json');
+const assetManifest = require('../build/assets-manifest.json');
 
 // dependencies (note AWS is already installed in Lambda environment)
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
@@ -11,8 +11,10 @@ const WebPush = require('web-push');
 const DataController = require('./controllers/DataController');
 const StatusController = require('./controllers/StatusController');
 const SubscriptionsController = require('./controllers/SubscriptionsController');
+const WebappController = require('./controllers/WebappController');
 
 // helpers
+const AssetsHelper = require('./helpers/AssetsHelper');
 const BatchWriteHelper = require('./helpers/BatchWriteHelper');
 const DateTimeHelper = require('./helpers/DateTimeHelper');
 const JsonResponseHelper = require('./helpers/JsonResponseHelper');
@@ -90,10 +92,17 @@ const getSubscriptionsController = callback => new SubscriptionsController(
     console
   );
 
+const getWebappController = callback => new WebappController(
+  callback,
+  console,
+  new AssetsHelper(assetManifest, config.STATIC_HOST)
+);
+
 module.exports = {
   controllers: {
     data: getDataController,
     status: getStatusController,
     subscriptions: getSubscriptionsController,
+    webapp: getWebappController,
   },
 };

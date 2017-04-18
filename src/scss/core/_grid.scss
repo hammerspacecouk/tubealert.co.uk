@@ -1,0 +1,66 @@
+.grid {
+  @include flexbox(block);
+  @include flex-wrap();
+  @include flex-direction(row);
+  margin: 0 0 0 (-$grid-unit-small); // need brackets or Scss combines with the zero
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+.g {
+  @include flexbox(inline-block);
+  @include flex-wrap();
+  @include flex-align(stretch);
+  width: 100%; // will be overridden with fractions
+  vertical-align: top;
+  padding-left: $grid-unit-small;
+
+  > * {
+    @include flex(0 0 100%);
+    overflow: hidden;
+    // immediate child of grid_item MUST be 100% width, as that was the point of the grid
+    width: 100%;
+  }
+}
+
+.g,
+.g-unit {
+  margin-bottom: $grid-unit-small;
+}
+
+
+@include mq($from: m) {
+  .grid {
+    margin-left: -$grid-unit-large;
+  }
+
+  .g {
+    padding-left: $grid-unit-large;
+  }
+
+  .g,
+  .g-unit {
+    margin-bottom: $grid-unit-large;
+  }
+}
+
+.grid--flush {
+  margin-left: 0;
+
+  > .g {
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+}
+
+
+// include fractions unprefixed
+@include fractions();
+
+// include fractions with all the breakpoint suffixes
+@each $key, $value in $breakpoint-suffixes {
+  @include mq($from: $key) {
+    @include fractions($value);
+  }
+}

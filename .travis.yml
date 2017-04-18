@@ -8,6 +8,8 @@ before_script:
 script:
   - yarn install
   - yarn test
+  - yarn build
+  - yarn prod
   - yarn install --production --ignore-scripts --prefer-offline
   - serverless deploy
 deploy:
@@ -20,6 +22,6 @@ deploy:
     skip_cleanup: true
     acl: public_read
     cache_control: "max-age=31536000"
-    local_dir: static
+    local_dir: build/static
     on:
       branch: serverless

@@ -1,0 +1,94 @@
+// sizes
+// @todo - mixins for sizes, plus line height
+.a {
+    font-size: 35.2px;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    letter-spacing: -2px;
+}
+.b {
+    font-size: 35.2px;
+    font-size: 2.2rem;
+    line-height: 1.4;
+    letter-spacing: -1px;
+}
+.c {
+    font-size: 28.8px;
+    font-size: 1.8rem;
+    letter-spacing: 0;
+}
+.d {
+    font-size: 22.4px;
+    font-size: 1.4rem;
+    letter-spacing: 0;
+}
+.e {
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+}
+.f {
+    font-size: 14px;
+    font-size: 0.875rem;
+    letter-spacing: 0;
+}
+
+@include mq($from: m) {
+    .a {
+        font-size: 48px;
+        font-size: 3rem;
+    }
+    .b {
+        font-size: 38.4px;
+        font-size: 2.4rem;
+    }
+}
+
+// specific heading types
+h1,
+.h-a {
+    @extend .a;
+    font-weight: lighter;
+    margin: 0;
+}
+
+h2,
+.h-b {
+    @extend .b;
+    font-weight: lighter;
+    margin: 0;
+}
+
+h3,
+.h-c {
+    @extend .c;
+    font-weight: lighter;
+    margin: 0;
+}
+
+h4,
+.h-d {
+    @extend .d;
+    margin: 0;
+}
+
+p {
+    @extend .e;
+    margin: 0;
+    max-width: 760px;
+}
+
+h5,
+.h-e {
+    @extend .e;
+    font-weight: bold;
+    margin: 0;
+}
+
+h6,
+.h-f {
+    @extend .f;
+    text-transform: uppercase;
+    margin: 0;
+}

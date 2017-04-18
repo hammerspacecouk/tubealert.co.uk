@@ -1,0 +1,33 @@
+@-webkit-keyframes loading-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg); }
+}
+@keyframes loading-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg); }
+}
+
+.loading::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+    border-radius: 100%;
+    border: solid 4px $color-text;
+    border-bottom-color: transparent;
+    -webkit-animation: loading-rotate 1s linear infinite;
+    animation: loading-rotate 1s linear infinite;
+}
+.loading--leading {
+    margin-right: $grid-unit-small;
+    &::before {
+        margin-top: 4px;
+    }
+}
+
+.loading--invert::before {
+    border-left-color: #fff;
+    border-top-color: #fff;
+    border-right-color: #fff;
+}

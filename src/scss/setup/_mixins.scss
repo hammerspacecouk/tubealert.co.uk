@@ -1,0 +1,125 @@
+// flexbox
+@mixin flexbox($fallback: block) {
+    display: $fallback;
+    display: -ms-flexbox;      /* IE 10 */
+    display: -webkit-flex;     /* Chrome */
+    display: flex;             /* Spec  */
+}
+
+@mixin flex-wrap() {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+@mixin flex-align($value) {
+    -ms-flex-align: $value;
+    align-items: $value;
+}
+
+@mixin flex-align-self($value) {
+    -webkit-align-self: $value;   /* Safari */
+    -ms-align-self: $value;   /* IE */
+    align-self: $value;   /* Spec  */
+}
+
+@mixin flex-grow($size) {
+    // If you omit this line it will go properly mental in IE10
+    //-ms-flex: $size;
+    -webkit-flex-grow: $size;
+    flex-grow: $size;
+}
+
+@mixin flex-direction($direction) {
+    -webkit-flex-direction: $direction;
+    -ms-flex-direction: $direction;
+    flex-direction: $direction;
+}
+
+@mixin flex($values) {
+    -webkit-box-flex: $values;
+    -moz-box-flex:  $values;
+    -webkit-flex:  $values;
+    -ms-flex:  $values;
+    flex:  $values;
+}
+
+@mixin flex-fill() {
+    @include flexbox();
+    @include flex-grow(1);
+}
+
+@mixin order($val) {
+    -webkit-box-ordinal-group: $val;
+    -moz-box-ordinal-group: $val;
+    -ms-flex-order: $val;
+    -webkit-order: $val;
+    order: $val;
+}
+
+@mixin justify-content($value) {
+    -webkit-justify-content: $value;
+    justify-content: $value;
+}
+
+@mixin hidden($suffix: '') {
+    .hidden#{$suffix} {
+        display: none;
+    }
+}
+
+@mixin unhidden($suffix: '') {
+    .unhidden#{$suffix} {
+        display: block;
+    }
+}
+
+@mixin unhidden-inline($suffix: '') {
+    .unhidden-inline#{$suffix} {
+        display: inline;
+    }
+}
+
+@mixin unhidden-inlineblock($suffix: '') {
+    .unhidden-inlineblock#{$suffix} {
+        display: inline-block;
+    }
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ *
+ * This is a mixin rather than an extend because we need to toggle visibility
+ * within breakpoints which we would be unable to do as you can not call @extend
+ * on an element outside a @media block from within a @media block.
+ */
+@mixin invisible($suffix: '') {
+    .invisible#{$suffix} {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+        visibility: hidden;
+    }
+}
+
+@mixin visible($suffix: '') {
+    .visible#{$suffix} {
+        position: static;
+        clip: auto;
+        height: auto;
+        width: auto;
+        overflow: auto;
+        visibility: visible;
+    }
+}
+
+@mixin transition($value) {
+    -webkit-transition: $value;
+    -moz-transition: $value;
+    -o-transition: $value;
+    transition: $value
+}

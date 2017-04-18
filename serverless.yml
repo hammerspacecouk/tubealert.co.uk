@@ -64,6 +64,8 @@ package:
   exclude:
     - site/**
     - tests/**
+    - coverage
+    - build/static/**
 
 functions:
   webapp:
