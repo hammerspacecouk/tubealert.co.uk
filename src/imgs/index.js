@@ -1,4 +1,4 @@
-'use strict';
+
 
 import './android-chrome-192x192.png';
 import './android-chrome-512x512.png';

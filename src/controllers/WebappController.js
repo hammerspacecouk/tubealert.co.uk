@@ -23,12 +23,12 @@ class WebappController {
 
     // return a response
     return this.callback(null, {
-        statusCode: 200,
-        headers: {
-          'content-type': 'text/html'
-        },
-        body: `<!DOCTYPE html>\n${body}`,
-      }
+      statusCode: 200,
+      headers: {
+        'content-type': 'text/html'
+      },
+      body: `<!DOCTYPE html>\n${body}`,
+    }
     );
   }
 }

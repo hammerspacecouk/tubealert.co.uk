@@ -1,15 +1,5 @@
-'use strict';
-
-// Hack for Ubuntu on Windows: interface enumeration fails with EINVAL, so return empty.
-// try {
-//     require('os').networkInterfaces()
-// } catch (e) {
-//     require('os').networkInterfaces = () => ({})
-// }
-
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
 const path = require('path');
+const Webpack = require('webpack');
 
 const testMatch = /\.jsx?$/;
 const excludeMatch = /node_modules/;
@@ -33,12 +23,12 @@ const settings = {
   },
   module: {
     rules: [
-      // {
-      //     enforce: 'pre',
-      //     test: testMatch,
-      //     exclude: excludeMatch,
-      //     loader: 'eslint-loader',
-      // },
+      {
+          enforce: 'pre',
+          test: testMatch,
+          exclude: excludeMatch,
+          loader: 'eslint-loader',
+      },
       {
         test: testMatch,
         exclude: excludeMatch,
@@ -50,6 +40,12 @@ const settings = {
     ]
   },
   plugins: [
+    // ensure we are production mode (for react etc)
+    new Webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
   ]
 };
 
