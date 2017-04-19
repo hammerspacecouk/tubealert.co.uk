@@ -33,11 +33,7 @@ class WebappController {
         </head>
         <body>
           <div id="webapp">${body}</div>
-          <script
-        src="${this.assetsHelper.get('app.js')}"
-        data-props=""
-        id="js-bundle"
-      />
+          <script src="${this.assetsHelper.get('app.js')}" data-props="" id="js-bundle"></script>
         </body>
       </html>`,
     }
