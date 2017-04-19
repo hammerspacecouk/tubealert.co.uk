@@ -11,7 +11,7 @@ import '../src/imgs';
 
 // only modern browsers that support fetch will run this JS app
 if (window.fetch) {
-  ReactDOM.render(<App />, document.getElementById('webapp'));
+  ReactDOM.render(App, document.getElementById('webapp'));
 }
 
 // if ('serviceWorker' in window.navigator) {

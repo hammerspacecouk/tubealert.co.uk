@@ -2,7 +2,7 @@
 
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {base64UrlToUint8Array} from '../helpers/Encoding';
+import base64UrlToUint8Array from '../helpers/Encoding';
 import {API_PATH_SUBSCRIBE} from '../helpers/Api';
 import {saveSubscription, readSubscriptions} from '../redux/actions/subscription-actions';
 

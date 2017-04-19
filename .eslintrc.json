@@ -2,7 +2,8 @@
   "extends": ["airbnb"],
   "env": {
     "jest": true,
-    "browser": true
+    "browser": true,
+    "serviceworker": true
   },
   "rules": {
     "comma-dangle": [
@@ -20,6 +21,7 @@
         "json": "always",
         "jsx": "always"
       }
-    ]
+    ],
+    "react/no-unused-prop-types": [0]
   }
 }

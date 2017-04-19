@@ -27,7 +27,7 @@ const settings = {
           enforce: 'pre',
           test: testMatch,
           exclude: excludeMatch,
-          loader: 'eslint-loader',
+          loader: 'eslint-loader'
       },
       {
         test: testMatch,

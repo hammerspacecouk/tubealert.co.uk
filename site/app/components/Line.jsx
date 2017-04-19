@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
 import Disruptions from './Line/Disruptions.jsx';
 import NotificationsContainer from '../containers/NotificationsContainer.jsx';
 

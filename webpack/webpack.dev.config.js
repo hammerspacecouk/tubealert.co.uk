@@ -34,17 +34,8 @@ config.devtool = 'source-map';
 
 config.plugins.push(
   new HtmlWebpackPlugin({
-    filename: 'manifest.json',
-    template: path.resolve(__dirname, '../src/webapp/templates/manifest.json'),
-    inject: false
-  }),
-  new HtmlWebpackPlugin({
-    filename: 'browserconfig.xml',
-    template: path.resolve(__dirname, '../src/webapp/templates/browserconfig.xml'),
-    inject: false
-  }),
-  new ManifestPlugin({
-    fileName : 'assets-manifest.json'
+    template: path.resolve(__dirname, 'index.html'),
+    filename: 'index.html',
   })
 );
 
