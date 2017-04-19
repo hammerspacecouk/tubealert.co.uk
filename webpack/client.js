@@ -9,6 +9,8 @@ import App from '../src/webapp/app.jsx';
 import '../src/scss/all.scss';
 import '../src/imgs';
 
+console.log('client.js loaded');
+
 // only modern browsers that support fetch will run this JS app
 if (window.fetch) {
     console.log('mounting');
