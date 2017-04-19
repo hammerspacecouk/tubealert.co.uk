@@ -34,28 +34,19 @@ config.devtool = 'source-map';
 
 config.plugins.push(
   new HtmlWebpackPlugin({
-    filename: 'index.html',
-    template: path.resolve(__dirname, 'index.html'),
-    inject: true
+    filename: 'manifest.json',
+    template: path.resolve(__dirname, '../src/webapp/templates/manifest.json'),
+    inject: false
+  }),
+  new HtmlWebpackPlugin({
+    filename: 'browserconfig.xml',
+    template: path.resolve(__dirname, '../src/webapp/templates/browserconfig.xml'),
+    inject: false
+  }),
+  new ManifestPlugin({
+    fileName : 'assets-manifest.json'
   })
 );
-
-//
-// config.plugins.push(
-//   new HtmlWebpackPlugin({
-//     filename: 'manifest.json',
-//     template: path.resolve(__dirname, '../src/webapp/templates/manifest.json'),
-//     inject: false
-//   }),
-//   new HtmlWebpackPlugin({
-//     filename: 'browserconfig.xml',
-//     template: path.resolve(__dirname, '../src/webapp/templates/browserconfig.xml'),
-//     inject: false
-//   }),
-//   new ManifestPlugin({
-//     fileName : 'assets-manifest.json'
-//   })
-// );
 
 // CSS without hash during dev
 config.plugins.push(
