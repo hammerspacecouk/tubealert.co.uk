@@ -14,6 +14,7 @@ const hashString = (input) => {
 const VERSION_FORCE = 3;
 const ASSETS_HASH = hashString(JSON.stringify(assetManifest));
 const CACHE_NAME = `tubealertcouk-sw-cache-${VERSION_FORCE}-${ASSETS_HASH}`;
+const STATIC_HOST = 'https://static.tubealert.co.uk/';
 
 // Perform install steps (cache statics)
 self.addEventListener('install', event => event.waitUntil(
@@ -21,8 +22,8 @@ self.addEventListener('install', event => event.waitUntil(
         .then(cache =>
             cache.addAll([
               '/',
-              assetManifest['app.css'],
-              assetManifest['app.js'],
+              STATIC_HOST + assetManifest['app.css'],
+              STATIC_HOST + assetManifest['app.js'],
             ])
         ).then(() => self.skipWaiting())
 ));
