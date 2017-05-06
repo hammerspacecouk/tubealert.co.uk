@@ -36,11 +36,6 @@ config.plugins.push(
     filename: '../static-low-cache/browserconfig.xml',
     inject: false
   }),
-  // new HtmlWebpackPlugin({
-  //   template: path.resolve(__dirname, '../src/webapp/templates/sw.js'),
-  //   filename: '../static-low-cache/sw.js',
-  //   inject: false
-  // }),
   new ManifestPlugin({
     fileName : '../assets-manifest.json'
   })

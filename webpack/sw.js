@@ -1,11 +1,29 @@
-const VERSION = 3;
-const CACHE_NAME = `tubealertcouk-sw-cache-${VERSION}`;
+const assetManifest = require('../build/assets-manifest.json');
+
+const hashString = (input) => {
+  let hash = 0;
+  if (input.length === 0) return hash;
+  for (let i = 0; i < input.length; i += 1) {
+    const chr = input.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr; // eslint-disable-line no-bitwise
+    hash |= 0; // eslint-disable-line no-bitwise
+  }
+  return hash;
+};
+
+const VERSION_FORCE = 3;
+const ASSETS_HASH = hashString(JSON.stringify(assetManifest));
+const CACHE_NAME = `tubealertcouk-sw-cache-${VERSION_FORCE}-${ASSETS_HASH}`;
 
 // Perform install steps (cache statics)
 self.addEventListener('install', event => event.waitUntil(
     caches.open(CACHE_NAME)
         .then(cache =>
-            cache.addAll([])
+            cache.addAll([
+              '/',
+              assetManifest['app.css'],
+              assetManifest['app.js'],
+            ])
         ).then(() => self.skipWaiting())
 ));
 

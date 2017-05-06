@@ -21,7 +21,6 @@ class NotificationsPanelContainer extends Component {
       isLoading: false,
       statusText: null
     };
-    this.onSave.bind(this);
   }
 
   componentDidMount() {
@@ -173,7 +172,7 @@ class NotificationsPanelContainer extends Component {
         <div className="card__foot text--right">
           {loading}
           {this.state.statusText}
-          <button className="btn" onClick={this.onSave}>Save</button>
+          <button className="btn" onClick={this.onSave.bind(this)}>Save</button>
         </div>
       </div>
     );

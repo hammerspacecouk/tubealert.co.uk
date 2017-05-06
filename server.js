@@ -8,6 +8,14 @@ const port = 8888;
 http.createServer(function(request, response) {
   const path = request.url;
   // handle static
+  if (path === '/sw.js') {
+    fs.readFile('./build/static-low-cache/sw.js', function(error, content) {
+      response.writeHead(200, {'content-type': 'application/javascript'});
+      response.end(content, 'utf-8');
+    });
+    return;
+  }
+
   if (path.startsWith('/static/')) {
     const filePath = './build' + path;
 

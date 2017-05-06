@@ -17,7 +17,7 @@ const DateTime = ({ date }) => (
 );
 
 DateTime.propTypes = {
-  date: PropTypes.shape.isRequired
+  date: PropTypes.object.isRequired
 };
 
 export default DateTime;

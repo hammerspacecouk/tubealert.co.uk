@@ -8,8 +8,8 @@ provider:
   stage: api
   region: eu-west-2
 
-  memorySize: 128
-  timeout: 5
+  memorySize: 256
+  timeout: 10
 
   environment:
     TFL_APP_ID: ${env:TFL_APP_ID}

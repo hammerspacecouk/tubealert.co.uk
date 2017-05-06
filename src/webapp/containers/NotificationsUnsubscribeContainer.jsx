@@ -17,7 +17,6 @@ class NotificationsContainer extends Component {
       isLoading: false,
       statusText: null
     };
-    this.onUnsubscribe.bind(this);
   }
 
   onUnsubscribe() {
@@ -71,7 +70,7 @@ class NotificationsContainer extends Component {
           {loading}
           {this.state.statusText}
           <button
-            onClick={this.onUnsubscribe}
+            onClick={this.onUnsubscribe.bind(this)}
             className="btn"
           >Delete all subscriptions</button>
         </div>

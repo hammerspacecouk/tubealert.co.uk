@@ -17,7 +17,7 @@ const Line = ({ line, children }) => (
     );
 
 Line.propTypes = {
-  line: PropTypes.shape.isRequired,
+  line: PropTypes.object.isRequired,
   children: PropTypes.element.isRequired
 };
 

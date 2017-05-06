@@ -20,31 +20,35 @@ class WebappController {
   }
 
   loadApp(data, path) {
-    return App.default(data, path, this.assetsHelper, body => {
-      return this.callback(null, {
-          statusCode: 200,
-          headers: {
-            'content-type': 'text/html'
-          },
-          body: body,
-        }
-      );
-    });
+    return App.default(data, path, this.assetsHelper, body => this.callback(
+      null,
+      {
+        statusCode: 200,
+        headers: {
+          'content-type': 'text/html'
+        },
+        body,
+      }
+    ));
   }
 
   invokeAction(event) {
     // get the path
     const path = event.path;
+    this.logger.info(`Request for ${path}`);
 
     // stop erroneous favicon requests costing money
     if (path === '/favicon.ico') {
-      return this.callback(null, {
-        statusCode: 404,
-        headers: {
-          'cache-control': `public, max-age=${60 * 60 * 24 * 60}`
-        },
-        body: 'Not found'
-      });
+      return this.callback(
+        null,
+        {
+          statusCode: 404,
+          headers: {
+            'cache-control': `public, max-age=${60 * 60 * 24 * 60}`
+          },
+          body: 'Not found'
+        }
+      );
     }
 
     const now = Date.now();
@@ -66,7 +70,9 @@ class WebappController {
       })
       .catch((err) => {
         this.logger.error(err);
-        return this.callback(true, {
+        return this.callback(
+          true,
+          {
             statusCode: 500,
             headers: {
               'content-type': 'text/html',

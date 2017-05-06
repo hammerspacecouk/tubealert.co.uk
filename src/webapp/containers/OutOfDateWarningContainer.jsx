@@ -26,7 +26,6 @@ class OutOfDateWarningContainer extends Component {
     return (date && (date < halfHourAgo));
   }
 
-
   render() {
     if (!this.isOutOfDate()) {
       return null;
