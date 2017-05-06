@@ -65,7 +65,7 @@ const Layout = ({ innerChildren, lines, appClass, warningMessage }) => (
 Layout.propTypes = {
   appClass: PropTypes.string.isRequired,
   innerChildren: PropTypes.element.isRequired,
-  lines: PropTypes.arrayOf.isRequired,
+  lines: PropTypes.arrayOf(PropTypes.object).isRequired,
   warningMessage: PropTypes.element.isRequired
 };
 

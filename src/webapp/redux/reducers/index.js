@@ -1,5 +1,3 @@
-
-
 import { combineReducers } from 'redux';
 import linesReducer from './lines-reducer';
 import subscriptionsReducer from './subscriptions-reducer';

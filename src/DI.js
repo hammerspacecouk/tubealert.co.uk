@@ -95,7 +95,9 @@ const getSubscriptionsController = callback => new SubscriptionsController(
 const getWebappController = callback => new WebappController(
   callback,
   console,
-  new AssetsHelper(assetManifest, config.STATIC_HOST)
+  new AssetsHelper(assetManifest, config.STATIC_HOST),
+  getDateTimeHelper(),
+  getStatusModel()
 );
 
 module.exports = {

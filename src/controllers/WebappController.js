@@ -1,66 +1,82 @@
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-const App = require('../../build/app.js');
+require('babel-register'); // The main Webapp uses JSX and ES2105.
+const App = require('../webapp/app-server.jsx'); // Load the App entry point
+
+const emptyCache = {
+  expires: 0,
+  data: null
+};
+let statusCache = emptyCache;
 
 class WebappController {
-  constructor(callback, logger, assetsHelper) {
+  constructor(callback, logger, assetsHelper, dateTimeHelper, status) {
     this.callback = callback;
     this.logger = logger;
     this.assetsHelper = assetsHelper;
+    this.dateTimeHelper = dateTimeHelper;
+    this.status = status;
+  }
+
+  static clearCache() {
+    statusCache = emptyCache;
+  }
+
+  loadApp(data, path) {
+    return App.load(data, path, this.assetsHelper, body => {
+      return this.callback(null, {
+          statusCode: 200,
+          headers: {
+            'content-type': 'text/html'
+          },
+          body: body,
+        }
+      );
+    });
   }
 
   invokeAction(event) {
     // get the path
     const path = event.path;
 
+    // stop erroneous favicon requests costing money
     if (path === '/favicon.ico') {
       return this.callback(null, {
         statusCode: 404,
         headers: {
           'cache-control': `public, max-age=${60 * 60 * 24 * 60}`
-        }
+        },
+        body: 'Not found'
       });
     }
 
-    // get the data
-
-    // call the react app
-    const body = ReactDOMServer.renderToString(App);
-
-    // return a response
-    return this.callback(null, {
-      statusCode: 200,
-      headers: {
-        'content-type': 'text/html'
-      },
-      body: `<!DOCTYPE html>
-<html lang="en-GB">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TubeAlert</title>
-    <link rel="stylesheet" href="${this.assetsHelper.get('app.css')}" />
-    <link rel="apple-touch-icon" sizes="180x180" 
-      href="${this.assetsHelper.get('apple-touch-icon.png')}" />
-    <link rel="icon" type="image/png" sizes="32x32" 
-      href="${this.assetsHelper.get('favicon-32x32.png')}" />
-    <link rel="icon" type="image/png" sizes="16x16"
-      href="${this.assetsHelper.get('favicon-16x16.png')}" />
-    <link rel="manifest" href="${this.assetsHelper.get('manifest.json')}" />
-    <link rel="mask-icon" color="#3a3a3f" 
-      href="${this.assetsHelper.get('safari-pinned-tab.svg')}" />
-    <link rel="shortcut icon" href="${this.assetsHelper.get('favicon.ico')}" />
-    <meta name="apple-mobile-web-app-title" content="TubeAlert" />
-    <meta name="application-name" content="TubeAlert" />
-    <meta name="msapplication-config" content="${this.assetsHelper.get('browserconfig.xml')}" />
-    <meta name="theme-color" content="#3a3a3f" />
-  </head>
-  <body>
-    <div id="webapp">${body}</div>
-    <script src="${this.assetsHelper.get('app.js')}" data-props="" id="js-bundle"></script>
-  </body>
-</html>`,
+    const now = Date.now();
+    if (statusCache.expires > now) {
+      // cache locally if the container is still alive
+      this.logger.info('Data is still in cache. Using it');
+      return this.loadApp(statusCache.data, path);
     }
-    );
+
+    return this.status.getAllLatest(this.dateTimeHelper.getNow())
+      .then((data) => {
+        this.logger.info('Successfully fetched latest statuses');
+        this.logger.info('Caching the result');
+        statusCache = {
+          expires: now + (120 * 1000),
+          data
+        };
+        return this.loadApp(data, path);
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        return this.callback(true, {
+            statusCode: 500,
+            headers: {
+              'content-type': 'text/html',
+              'cache-control': `public, max-age=${60 * 15}`
+            },
+            body: 'Failed to fetch data',
+          }
+        );
+      });
   }
 }
 
