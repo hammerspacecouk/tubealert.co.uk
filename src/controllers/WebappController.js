@@ -1,5 +1,4 @@
-require('babel-register'); // The main Webapp uses JSX and ES2105.
-const App = require('../webapp/app-server.jsx'); // Load the App entry point
+const App = require('../../build/app.js'); // Load the compiled App entry point
 
 const emptyCache = {
   expires: 0,
@@ -21,7 +20,7 @@ class WebappController {
   }
 
   loadApp(data, path) {
-    return App.load(data, path, this.assetsHelper, body => {
+    return App.default(data, path, this.assetsHelper, body => {
       return this.callback(null, {
           statusCode: 200,
           headers: {

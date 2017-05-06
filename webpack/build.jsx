@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext, match } from 'react-router';
-import { setLines } from './redux/actions/line-actions';
-import store from './store';
-import routes from './routes.jsx';
+import { setLines } from '../src/webapp/redux/actions/line-actions';
+import store from '../src/webapp/store';
+import routes from '../src/webapp/routes.jsx';
 
-export const load = (originalData, location, assetsHelper, callback) => {
+export default (originalData, location, assetsHelper, callback) => {
   store.dispatch(setLines(originalData));
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     const html = ReactDOMServer.renderToString(
       <Provider store={store}>
-        { <RouterContext {...renderProps}/> }
+        <RouterContext {...renderProps} />
       </Provider>
     );
 

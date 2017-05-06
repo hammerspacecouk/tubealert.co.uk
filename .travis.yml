@@ -8,6 +8,7 @@ before_script:
 script:
   - yarn install
   - yarn test
+  - yarn build
   - yarn prod
   - yarn install --production --ignore-scripts --prefer-offline
   - serverless deploy

@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "babel-register": "^6.24.1",
     "moment-timezone": "^0.5.13",
     "node-fetch": "^1.6.3",
     "prop-types": "^15.5.8",
