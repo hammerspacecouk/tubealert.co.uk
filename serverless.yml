@@ -280,7 +280,7 @@ resources:
           IntegrationResponses:
             - StatusCode: 200
               ResponseParameters:
-                method.response.header.content-type: 'application/javascript'
+                method.response.header.content-type: 'integration.response.header.content-type'
                 method.response.header.content-length: 'integration.response.header.content-length'
         MethodResponses:
           - StatusCode: 200
