@@ -223,7 +223,7 @@ resources:
               Status: Enabled
         CorsConfiguration:
           CorsRules:
-              AllowedMethods:
+            - AllowedMethods:
                 - 'GET'
               AllowedOrigins:
                 - '*'
