@@ -20,7 +20,7 @@ export const fetchLines = () => (dispatch) => {
         saveLines(data);
         dispatch(receiveLinesUpdate(data));
       })
-    .catch((err) => {
+    .catch(() => {
       dispatch(receiveLinesUpdate(null));
     });
 };
