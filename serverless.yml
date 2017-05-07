@@ -262,7 +262,7 @@ resources:
     ServiceWorkerMethod:
       Type: 'AWS::ApiGateway::Method'
       Properties:
-        AuthorizationType": 'NONE'
+        AuthorizationType: 'NONE'
         HttpMethod: 'GET'
         Integration:
           Type: 'AWS'
