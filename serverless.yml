@@ -255,8 +255,7 @@ resources:
       Type: AWS::ApiGateway::Resource
       Properties:
         ParentId:
-          Ref:
-            ApiGatewayResourceAssets
+          Fn::GetAtt: [ ApiGatewayRestApi, 'RootResourceId' ]
         PathPart: 'sw.js'
         RestApiId:
           Ref: ApiGatewayRestApi
