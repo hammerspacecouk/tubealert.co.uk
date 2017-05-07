@@ -50,6 +50,9 @@ self.addEventListener('fetch', event => event.respondWith(
 ));
 
 self.addEventListener('push', (event) => {
+  if (!event.data) {
+    return; // dummy notification, used to update the service worker
+  }
   const data = event.data.json();
   const title = data.title;
 
