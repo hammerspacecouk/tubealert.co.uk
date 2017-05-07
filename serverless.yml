@@ -221,3 +221,38 @@ resources:
             - Id: S3ExpireMonthly
               ExpirationInDays: 30
               Status: Enabled
+        CorsConfiguration:
+          CorsRules:
+              AllowedMethods:
+                - 'GET'
+              AllowedOrigins:
+                - '*'
+    APIRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Policies:
+          - PolicyName: 'ServiceWorkerAPI'
+            PolicyDocument:
+              Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - 's3:GetObject'
+                  Resource:
+                    - Fn::Join:
+                      - '/'
+                      - - Fn::GetAtt: [ StaticBucket, "StreamArn" ]
+                        - 'sw.js'
+        AssumeRolePolicyDocument:
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action:
+              - sts:AssumeRole
+#    ServiceWorkerAPI:
+      #api-tubealert
+      #/sw.js
+      #GET
+      #Integration Request
+

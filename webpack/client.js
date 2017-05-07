@@ -14,7 +14,7 @@ import '../src/imgs';
 const init = () => {
   const savedLines = getLines();
 
-  if (savedLines) {
+  if (savedLines.length > 0) {
     // read the saved lines and go and fetch newer asynchronously
     store.dispatch(readLines(savedLines));
   } else {

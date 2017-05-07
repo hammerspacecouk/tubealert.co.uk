@@ -25,7 +25,7 @@ config.devServer = {
 
 // load images
 config.module.rules.push({
-  test: /\.(png|svg)$/,
+  test: /\.(png|svg|ico)$/,
   loader: 'file-loader?name=[name].[ext]'
 });
 

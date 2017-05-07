@@ -31,7 +31,8 @@ export default (originalData, location, assetsHelper, callback) => {
       <link rel="manifest" href="${assetsHelper.get('manifest.json')}" />
       <link rel="mask-icon" color="#3a3a3f" 
         href="${assetsHelper.get('safari-pinned-tab.svg')}" />
-      <link rel="shortcut icon" href="${assetsHelper.get('favicon.ico')}" />
+      <link rel="shortcut icon" type="image/x-icon" href="${assetsHelper.get('favicon.ico')}" />
+      <link rel="icon" type="image/x-icon" href="${assetsHelper.get('favicon.ico')}" />
       <meta name="apple-mobile-web-app-title" content="TubeAlert" />
       <meta name="application-name" content="TubeAlert" />
       <meta name="msapplication-config" content="${assetsHelper.get('browserconfig.xml')}" />

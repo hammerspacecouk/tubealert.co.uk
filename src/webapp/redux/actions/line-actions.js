@@ -19,7 +19,10 @@ export const fetchLines = () => (dispatch) => {
       .then((data) => {
         saveLines(data);
         dispatch(receiveLinesUpdate(data));
-      });
+      })
+    .catch((err) => {
+      dispatch(receiveLinesUpdate(null));
+    });
 };
 
 export const readLines = () => (dispatch) => {

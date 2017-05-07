@@ -21,7 +21,7 @@ config.plugins.push(
 
 // images now get hashed
 config.module.rules.push({
-  test: /\.(png|svg)$/,
+  test: /\.(png|svg|ico)$/,
   loader: 'file-loader?name=[hash].[name].[ext]'
 });
 
