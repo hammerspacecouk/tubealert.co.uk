@@ -239,9 +239,10 @@ resources:
                     - 's3:GetObject'
                   Resource:
                     - Fn::Join:
-                      - '/'
-                      - - Fn::GetAtt: [ StaticBucket, "StreamArn" ]
-                        - 'sw.js'
+                      - ''
+                      - - 'arn:aws:s3:::'
+                        - Ref: StaticBucket
+                        - '/sw.js'
         AssumeRolePolicyDocument:
           Statement:
           - Effect: Allow
