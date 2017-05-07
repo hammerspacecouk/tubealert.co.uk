@@ -280,12 +280,13 @@ resources:
           IntegrationResponses:
             - StatusCode: 200
               ResponseParameters:
-                method.response.header.content-type: 'integration.response.header.content-type'
-                method.response.header.content-length: 'integration.response.header.content-length'
+                method.response.header.Content-Type: 'integration.response.header.Content-Type'
+                method.response.header.Content-Length: 'integration.response.header.Content-Length'
         MethodResponses:
           - StatusCode: 200
             ResponseParameters:
-              method.response.header.content-type: 'application/javascript'
+              method.response.header.Content-Type: true
+              method.response.header.Content-Length: true
         ResourceId:
           Ref: ServiceWorkerAPI
         RestApiId:
