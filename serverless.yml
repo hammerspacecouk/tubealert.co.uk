@@ -251,9 +251,43 @@ resources:
                 - apigateway.amazonaws.com
             Action:
               - sts:AssumeRole
-#    ServiceWorkerAPI:
-      #api-tubealert
-      #/sw.js
-      #GET
-      #Integration Request
-
+    ServiceWorkerAPI:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        ParentId:
+          Ref:
+            ApiGatewayResourceAssets
+        PathPart: 'sw.js'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+    ServiceWorkerMethod:
+      Type: 'AWS::ApiGateway::Method'
+      Properties:
+        AuthorizationType": 'NONE'
+        HttpMethod: 'GET'
+        Integration:
+          Type: 'AWS'
+          IntegrationHttpMethod: 'GET'
+          Credentials:
+            Fn::GetAtt: [ APIRole, 'Arn' ]
+          Uri:
+            Fn::Join:
+             - ''
+             - - 'arn:aws:apigateway:'
+               - Ref: AWS::Region
+               - ':s3:path/'
+               - Ref: StaticBucket
+               - '/sw.js'
+          IntegrationResponses:
+            - StatusCode: 200
+              ResponseParameters:
+                method.response.header.content-type: 'application/javascript'
+                method.response.header.content-length: 'integration.response.header.content-length'
+        MethodResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.content-type: 'application/javascript'
+        ResourceId:
+          Ref: ServiceWorkerAPI
+        RestApiId:
+          Ref: ApiGatewayRestApi
