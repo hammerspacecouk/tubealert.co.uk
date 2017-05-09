@@ -37,6 +37,14 @@ export default (originalData, location, assetsHelper, callback) => {
       <meta name="application-name" content="TubeAlert" />
       <meta name="msapplication-config" content="${assetsHelper.get('browserconfig.xml')}" />
       <meta name="theme-color" content="#3a3a3f" />
+      <meta name="google-site-verification" content="dSIKzBS-efQho6aWkl9Zuq6E7Mu8bbxaz6yyM64WQPg" />
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-2180325950104033",
+          enable_page_level_ads: true
+        });
+      </script>
     </head>
     <body>
       <div style="display:none">
@@ -67,6 +75,15 @@ export default (originalData, location, assetsHelper, callback) => {
       <div id="webapp">${html}</div>
       <script src="${assetsHelper.get('app.js')}" 
         data-lines="${JSON.stringify(originalData).replace(/"/g, '&quot;')}" id="js-app-bundle"></script>
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      
+        ga('create', 'UA-96252214-2', 'auto');
+        ga('send', 'pageview');
+      </script>
     </body>
   </html>`
     );
