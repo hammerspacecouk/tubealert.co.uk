@@ -11,7 +11,7 @@ const hashString = (input) => {
   return hash;
 };
 
-const VERSION_FORCE = 3;
+const VERSION_FORCE = 4;
 const ASSETS_HASH = hashString(JSON.stringify(assetManifest));
 const CACHE_NAME = `tubealertcouk-sw-cache-${VERSION_FORCE}-${ASSETS_HASH}`;
 const STATIC_HOST = 'https://static.tubealert.co.uk/';
@@ -22,12 +22,21 @@ self.addEventListener('install', event => event.waitUntil(
         .then(cache =>
             cache.addAll([
               '/',
-              STATIC_HOST + assetManifest['app.css'],
-              STATIC_HOST + assetManifest['app.js'],
             ])
-        ).then(() => self.skipWaiting())
+        )
+        .then(cache => {
+          const foreignRequests = [
+            STATIC_HOST + assetManifest['app.css'],
+            STATIC_HOST + assetManifest['app.js'],
+          ];
+          const requests = foreignRequests.map(url => {
+            const request = new Request(url, { mode: 'cors' });
+            return fetch(request).then(response => cache.put(request, response))
+          });
+          return Promise.all(requests);
+        })
+        .then(() => self.skipWaiting())
 ));
-
 
 // clear old cache
 self.addEventListener('activate', event => event.waitUntil(

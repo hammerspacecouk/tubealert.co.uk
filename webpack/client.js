@@ -30,12 +30,12 @@ const init = () => {
     document.getElementById('webapp')
   );
 
-if ('serviceWorker' in window.navigator) {
-    window.navigator.serviceWorker.register(`/sw.js`, {scope:'/'});
-}
+  if ('serviceWorker' in window.navigator) {
+      window.navigator.serviceWorker.register(`/sw.js`, {scope:'/'});
+  }
 };
 
 // only modern browsers that support fetch will run this JS app
 if (window.fetch) {
-  init();
+  init(1); // version number
 }

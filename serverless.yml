@@ -227,6 +227,8 @@ resources:
                 - 'GET'
               AllowedOrigins:
                 - '*'
+              AllowedHeaders:
+                - '*'
     APIRole:
       Type: AWS::IAM::Role
       Properties:
