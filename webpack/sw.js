@@ -22,21 +22,12 @@ self.addEventListener('install', event => event.waitUntil(
         .then(cache =>
             cache.addAll([
               '/',
+              STATIC_HOST + assetManifest['app.css'],
+              STATIC_HOST + assetManifest['app.js'],
             ])
-        )
-        .then(cache => {
-          const foreignRequests = [
-            STATIC_HOST + assetManifest['app.css'],
-            STATIC_HOST + assetManifest['app.js'],
-          ];
-          const requests = foreignRequests.map(url => {
-            const request = new Request(url, { mode: 'cors' });
-            return fetch(request).then(response => cache.put(request, response))
-          });
-          return Promise.all(requests);
-        })
-        .then(() => self.skipWaiting())
+        ).then(() => self.skipWaiting())
 ));
+
 
 // clear old cache
 self.addEventListener('activate', event => event.waitUntil(
