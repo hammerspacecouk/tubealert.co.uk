@@ -264,6 +264,11 @@ resources:
       Properties:
         AuthorizationType: 'NONE'
         HttpMethod: 'GET'
+        MethodResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Content-Type: true
+              method.response.header.Content-Length: true
         Integration:
           Type: 'AWS'
           IntegrationHttpMethod: 'GET'
@@ -279,14 +284,9 @@ resources:
                 - '/sw.js'
           IntegrationResponses:
             - StatusCode: 200
-#              ResponseParameters:
-#                method.response.header.Content-Type: 'integration.response.header.Content-Type'
-#                method.response.header.Content-Length: 'integration.response.header.Content-Length'
-        MethodResponses:
-          - StatusCode: 200
-            ResponseParameters:
-              method.response.header.Content-Type: true
-              method.response.header.Content-Length: true
+              ResponseParameters:
+                method.response.header.Content-Type: 'integration.response.header.Content-Type'
+                method.response.header.Content-Length: 'integration.response.header.Content-Length'
         ResourceId:
           Ref: ServiceWorkerAPI
         RestApiId:
