@@ -284,8 +284,9 @@ resources:
                 - '/sw.js'
           IntegrationResponses:
             - StatusCode: 200
-              ResponseParameters:
-                method.response.header.Content-Type: 'application/javascript'
+              responseParameters:
+                method.response.header.Content-Type: 'integration.response.header.Content-Type'
+                method.response.header.Content-Length: 'integration.response.header.Content-Length'
         ResourceId:
           Ref: ServiceWorkerAPI
         RestApiId:
