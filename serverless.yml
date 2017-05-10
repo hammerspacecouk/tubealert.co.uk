@@ -226,7 +226,6 @@ resources:
             - AllowedMethods:
                 - 'GET'
               AllowedOrigins: ['*']
-              AllowedHeaders: ['*']
     APIRole:
       Type: AWS::IAM::Role
       Properties:
@@ -271,12 +270,12 @@ resources:
             Fn::GetAtt: [ APIRole, 'Arn' ]
           Uri:
             Fn::Join:
-             - ''
-             - - 'arn:aws:apigateway:'
-               - Ref: AWS::Region
-               - ':s3:path/'
-               - Ref: StaticBucket
-               - '/sw.js'
+              - ''
+              - - 'arn:aws:apigateway:'
+                - Ref: AWS::Region
+                - ':s3:path/'
+                - Ref: StaticBucket
+                - '/sw.js'
           IntegrationResponses:
             - StatusCode: 200
               ResponseParameters:
