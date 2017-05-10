@@ -284,7 +284,8 @@ resources:
           IntegrationResponses:
             - StatusCode: 200
               ResponseParameters:
-                method.response.header.Content-Type: 'integration.response.header.Content-Type'
+                method.response.header.Content-Type:
+                  Name: 'integration.response.header.Content-Type'
         ResourceId:
           Ref: ServiceWorkerAPI
         RestApiId:
