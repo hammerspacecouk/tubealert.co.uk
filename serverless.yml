@@ -267,7 +267,7 @@ resources:
         MethodResponses:
           - StatusCode: 200
             ResponseParameters:
-              method.response.header.Content-Type: true
+              method.response.header.Content-Type: integration.response.header.Content-Type
         Integration:
           Type: 'AWS'
           IntegrationHttpMethod: 'GET'
@@ -284,8 +284,7 @@ resources:
           IntegrationResponses:
             - StatusCode: 200
               ResponseParameters:
-                method.response.header.Content-Type:
-                  Name: 'integration.response.header.Content-Type'
+                method.response.header.Content-Type: integration.response.header.Content-Type
         ResourceId:
           Ref: ServiceWorkerAPI
         RestApiId:
