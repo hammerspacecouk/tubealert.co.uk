@@ -225,10 +225,8 @@ resources:
           CorsRules:
             - AllowedMethods:
                 - 'GET'
-              AllowedOrigins:
-                - '*'
-              AllowedHeaders:
-                - '*'
+              AllowedOrigins: '*'
+              AllowedHeaders: '*'
     APIRole:
       Type: AWS::IAM::Role
       Properties:
@@ -282,13 +280,13 @@ resources:
           IntegrationResponses:
             - StatusCode: 200
               ResponseParameters:
-                'method.response.header.Content-Type': 'integration.response.header.Content-Type'
-                'method.response.header.Content-Length': 'integration.response.header.Content-Length'
+                method.response.header.Content-Type: 'integration.response.header.Content-Type'
+                method.response.header.Content-Length: 'integration.response.header.Content-Length'
         MethodResponses:
           - StatusCode: 200
             ResponseParameters:
-              'method.response.header.Content-Type': true
-              'method.response.header.Content-Length': true
+              method.response.header.Content-Type: true
+              method.response.header.Content-Length: true
         ResourceId:
           Ref: ServiceWorkerAPI
         RestApiId:
