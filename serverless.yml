@@ -225,8 +225,8 @@ resources:
           CorsRules:
             - AllowedMethods:
                 - 'GET'
-              AllowedOrigins: '*'
-              AllowedHeaders: '*'
+              AllowedOrigins: ['*']
+              AllowedHeaders: ['*']
     APIRole:
       Type: AWS::IAM::Role
       Properties:
