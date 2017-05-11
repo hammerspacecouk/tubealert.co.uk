@@ -266,15 +266,15 @@ resources:
         HttpMethod: 'GET'
         MethodResponses:
           - StatusCode: 200
-            ResponseParameters: {
+            ResponseParameters: '{
                 "method.response.header.Content-Type": true
-              }
+              }'
         Integration:
           IntegrationResponses:
             - StatusCode: 200
-              ResponseParameters: {
-                "method.response.header.Content-Type": integration.response.header.Content-Type
-              }
+              ResponseParameters: '{
+                "method.response.header.Content-Type": "integration.response.header.Content-Type"
+              }'
           Type: 'AWS'
           IntegrationHttpMethod: 'GET'
           Credentials:
