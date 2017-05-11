@@ -259,37 +259,33 @@ resources:
         PathPart: 'sw.js'
         RestApiId:
           Ref: ApiGatewayRestApi
-    ServiceWorkerMethod:
-      Type: 'AWS::ApiGateway::Method'
-      Properties:
-        AuthorizationType: 'NONE'
-        HttpMethod: 'GET'
-        MethodResponses:
-          - StatusCode: 200
-            ResponseParameters:
-              method.response.header.Content-Type: true
-        Integration:
-          Type: 'AWS'
-          IntegrationHttpMethod: 'GET'
-          Credentials:
-            Fn::GetAtt: [ APIRole, 'Arn' ]
-          Uri:
-            Fn::Join:
-              - ''
-              - - 'arn:aws:apigateway:'
-                - Ref: AWS::Region
-                - ':s3:path/'
-                - Ref: StaticBucket
-                - '/sw.js'
-          IntegrationResponses: [
-            {
-              "StatusCode": 200,
-              "ResponseParameters": {
-                "method.response.header.Content-Type": "integration.response.header.Content-Type"
-              }
-            }
-          ]
-        ResourceId:
-          Ref: ServiceWorkerAPI
-        RestApiId:
-          Ref: ApiGatewayRestApi
+#    ServiceWorkerMethod:
+#      Type: 'AWS::ApiGateway::Method'
+#      Properties:
+#        AuthorizationType: 'NONE'
+#        HttpMethod: 'GET'
+#        MethodResponses:
+#          - StatusCode: 200
+#            ResponseParameters:
+#              method.response.header.Content-Type: true
+#        Integration:
+#          Type: 'AWS'
+#          IntegrationHttpMethod: 'GET'
+#          Credentials:
+#            Fn::GetAtt: [ APIRole, 'Arn' ]
+#          Uri:
+#            Fn::Join:
+#              - ''
+#              - - 'arn:aws:apigateway:'
+#                - Ref: AWS::Region
+#                - ':s3:path/'
+#                - Ref: StaticBucket
+#                - '/sw.js'
+#          IntegrationResponses:
+#            - StatusCode: 200
+#              ResponseParameters:
+#                method.response.header.Content-Type: integration.response.header.Content-Type
+#        ResourceId:
+#          Ref: ServiceWorkerAPI
+#        RestApiId:
+#          Ref: ApiGatewayRestApi
