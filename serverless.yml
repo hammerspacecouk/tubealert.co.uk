@@ -281,10 +281,14 @@ resources:
                 - ':s3:path/'
                 - Ref: StaticBucket
                 - '/sw.js'
-          IntegrationResponses:
-            - StatusCode: 200
-              ResponseParameters:
-                method.response.header.Content-Type: integration.response.header.Content-Type
+          IntegrationResponses: [
+            {
+              "StatusCode": 200,
+              "ResponseParameters": {
+                "method.response.header.Content-Type": "integration.response.header.Content-Type"
+              }
+            }
+          ]
         ResourceId:
           Ref: ServiceWorkerAPI
         RestApiId:
