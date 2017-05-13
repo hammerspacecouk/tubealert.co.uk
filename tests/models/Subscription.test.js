@@ -37,13 +37,16 @@ test('subscribe user', () => {
         TableName: 'tubealert.co.uk_subscriptions',
         KeyConditionExpression: '#user = :user',
         ExpressionAttributeNames: {
+          '#line': 'Line',
           '#user': 'UserID',
         },
         ExpressionAttributeValues: {
+          ':line': 'lineID1',
           ':user': 'userID1',
         },
+        FilterExpression: '#line = :line',
       });
-      expect(mockMakeRequestsMethod).toBeCalledWith([1, 2, 4]);
+      expect(mockMakeRequestsMethod).toBeCalledWith([4, 1, 2]);
     });
 });
 

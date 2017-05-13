@@ -23,11 +23,11 @@ class Subscription {
     this.logger.info(`${puts.length} puts`);
 
     // find out any that need to be deleted
-    return this.getUserSubscriptions(userID, lineID)
+    return this.getUserSubscriptionsForLine(userID, lineID)
       .then((data) => {
         const deletes = slots.getDeletes(data);
         this.logger.info(`${deletes.length} deletes`);
-        return puts.concat(deletes);
+        return deletes.concat(puts);
       })
       .then(requests => this.batchWriter.makeRequests(requests));
   }
@@ -51,6 +51,25 @@ class Subscription {
       },
       ExpressionAttributeValues: {
         ':user': userID,
+      },
+    };
+
+    return this.documentClient.query(params).promise()
+      .then(result => result.Items);
+  }
+
+  getUserSubscriptionsForLine(userID, lineID) {
+    const params = {
+      TableName: TABLE_NAME_SUBSCRIPTIONS,
+      KeyConditionExpression: '#user = :user',
+      FilterExpression: '#line = :line',
+      ExpressionAttributeNames: {
+        '#user': 'UserID',
+        '#line': 'Line',
+      },
+      ExpressionAttributeValues: {
+        ':user': userID,
+        ':line': lineID,
       },
     };
 
