@@ -37,7 +37,7 @@ export default (originalData, location, assetsHelper, callback) => {
       <meta name="application-name" content="TubeAlert" />
       <meta name="msapplication-config" content="${assetsHelper.get('browserconfig.xml')}" />
       <meta name="theme-color" content="#3a3a3f" />
-      <meta name="google-site-verification" content="dSIKzBS-efQho6aWkl9Zuq6E7Mu8bbxaz6yyM64WQPg" />>
+      <meta name="google-site-verification" content="dSIKzBS-efQho6aWkl9Zuq6E7Mu8bbxaz6yyM64WQPg" />
     </head>
     <body>
       <div style="display:none">

@@ -25,7 +25,7 @@ class WebappController {
       {
         statusCode: 200,
         headers: {
-          'content-type': 'text/html'
+          'content-type': 'text/html; charset=utf-8'
         },
         body,
       }
@@ -75,7 +75,7 @@ class WebappController {
           {
             statusCode: 500,
             headers: {
-              'content-type': 'text/html',
+              'content-type': 'text/html; charset=utf-8',
               'cache-control': `public, max-age=${60 * 15}`
             },
             body: 'Failed to fetch data',
