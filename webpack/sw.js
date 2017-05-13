@@ -22,8 +22,8 @@ self.addEventListener('install', event => event.waitUntil(
         .then(cache =>
             cache.addAll([
               '/',
-              STATIC_HOST + assetManifest['app.css'],
-              STATIC_HOST + assetManifest['app.js'],
+              STATIC_HOST + assetManifest['app.css'] + '?sw',
+              STATIC_HOST + assetManifest['app.js'] + '?sw',
             ])
         ).then(() => self.skipWaiting())
 ));
