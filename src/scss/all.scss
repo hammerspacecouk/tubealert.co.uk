@@ -17,3 +17,7 @@
 @import 'organisms/out-of-date';
 @import 'organisms/statusbox';
 @import 'organisms/times';
+
+.version:before {
+  content: '2';
+}
