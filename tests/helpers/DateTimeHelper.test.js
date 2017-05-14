@@ -14,6 +14,7 @@ test('tube day for midday', () => {
     hours: () => 12,
     format: mockFormatMethod,
   };
+  mockMoment.clone = () => mockMoment;
 
   DateTimeHelper.getTubeDate(mockMoment);
 
@@ -28,6 +29,7 @@ test('tube day for night time', () => {
     format: mockFormatMethod,
     subtract: mockSubtractMethod,
   };
+  mockMoment.clone = () => mockMoment;
 
   DateTimeHelper.getTubeDate(mockMoment);
 

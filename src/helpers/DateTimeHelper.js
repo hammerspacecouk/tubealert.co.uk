@@ -11,8 +11,8 @@ class DateTimeHelper {
   }
 
   static getTubeDate(momentDate) {
-    const hour = momentDate.hours();
-    const date = momentDate;
+    const date = momentDate.clone();
+    const hour = date.hours();
     if (hour <= 3) {
       // the tube date is yesterday
       date.subtract(1, 'days');
