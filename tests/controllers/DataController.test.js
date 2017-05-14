@@ -1,7 +1,10 @@
 const DataController = require('../../src/controllers/DataController');
 
+const mockDateTime = {
+  toISOString: jest.fn(() => mockDateTime)
+};
 const defMockConverter = jest.fn();
-const defMockDateTimeHelper = { getNow: jest.fn(() => 'now') };
+const defMockDateTimeHelper = { getNow: jest.fn(() => mockDateTime) };
 const defMockStatusModel = jest.fn();
 const defMockSubscriptionModel = jest.fn();
 const defMockNotificationModel = jest.fn();
@@ -32,7 +35,7 @@ test('fetchAction when no original status', () => {
   return ctl.fetchAction()
     .then(() => {
       // assertions
-      expect(mockGetAllMethod).toBeCalledWith('now');
+      expect(mockGetAllMethod).toBeCalledWith(mockDateTime);
       expect(mockFetchNewLatest).toBeCalled();
       expect(mockCallback).toBeCalledWith(null, 'All done');
     });
@@ -53,7 +56,7 @@ test('fetchAction with error', () => {
   return ctl.fetchAction()
     .then(() => {
       // assertions
-      expect(mockGetAllMethod).toBeCalledWith('now');
+      expect(mockGetAllMethod).toBeCalledWith(mockDateTime);
       expect(mockFetchNewLatest).toBeCalled();
       expect(mockCallback).toBeCalledWith('Failed to complete');
     });
@@ -118,9 +121,9 @@ test('fetchAction creates notifications', () => {
     .then(() => {
       // assertions
       expect(mockSubscriptionsMethod.mock.calls[0][0]).toBe('three');
-      expect(mockSubscriptionsMethod.mock.calls[0][1]).toBe('now');
+      expect(mockSubscriptionsMethod.mock.calls[0][1]).toBe(mockDateTime);
       expect(mockSubscriptionsMethod.mock.calls[1][0]).toBe('five');
-      expect(mockSubscriptionsMethod.mock.calls[1][1]).toBe('now');
+      expect(mockSubscriptionsMethod.mock.calls[1][1]).toBe(mockDateTime);
       expect(mockCreateNotificationsMethod).toBeCalledWith([
         {
           lineData: { name: 'Three', urlKey: 'three', statusSummary: 'notok3' },
@@ -287,9 +290,9 @@ test('hourlyAction with notifications', () => {
   return ctl.hourlyAction()
     .then(() => {
       expect(mockSubscriptionsMethod.mock.calls[0][0]).toEqual('line1');
-      expect(mockSubscriptionsMethod.mock.calls[0][1]).toEqual('now');
+      expect(mockSubscriptionsMethod.mock.calls[0][1]).toEqual(mockDateTime);
       expect(mockSubscriptionsMethod.mock.calls[1][0]).toEqual('line2');
-      expect(mockSubscriptionsMethod.mock.calls[1][1]).toEqual('now');
+      expect(mockSubscriptionsMethod.mock.calls[1][1]).toEqual(mockDateTime);
 
       expect(mockCreateNotificationsMethod.mock.calls[0][0]).toEqual([
         {

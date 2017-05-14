@@ -1,5 +1,3 @@
-
-
 class DateTimeHelper {
   /**
    * @param nowMoment Moment

@@ -34,7 +34,9 @@ class DataController {
    * @returns {Promise.<TResult>}
    */
   fetchAction() {
+    const now = this.dateTimeHelper.getNow();
     this.logger.info('Starting fetch action');
+    this.logger.info(`Current datetime: ${now.toISOString()}`);
     const actions = [
       this.statusModel.getAllLatest(this.dateTimeHelper.getNow()),
       this.statusModel.fetchNewLatest(),
@@ -105,12 +107,15 @@ class DataController {
 
     newStatuses.forEach((line, key) => {
       const prevLine = originalStatuses[key];
+      const disrupted = line.isDisrupted ? 1 : 0;
+      this.logger.info(`[DISRUPTION STATUS] ${line.urlKey} ${disrupted}`);
+
       if (line.urlKey !== prevLine.urlKey) {
         this.logger.error('Previous and Current statuses are in different order. Catch it next time');
         return;
       }
       if (line.statusSummary !== prevLine.statusSummary) {
-        this.logger.info(`${line.name} has changed`);
+        this.logger.info(`${line.name} has changed. Was: ${prevLine.statusSummary}. Now: ${line.statusSummary}`);
         subscriptionsToNotify.push(
           this.subscriptionModel.getSubscriptionsForLineSlot(
             line.urlKey,
