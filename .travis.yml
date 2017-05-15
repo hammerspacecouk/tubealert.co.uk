@@ -4,7 +4,7 @@ cache:
 node_js:
   - "6"
 before_script:
-  - yarn global add serverless@1.12.1
+  - yarn global add serverless
 script:
   - yarn install
   - yarn test

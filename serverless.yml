@@ -165,7 +165,7 @@ resources:
           - AttributeName: Timestamp
             KeyType: RANGE
         ProvisionedThroughput:
-          ReadCapacityUnits: 10
+          ReadCapacityUnits: 5
           WriteCapacityUnits: 4
     TubeAlertSubscriptionsTable:
           Type: AWS::DynamoDB::Table
@@ -192,8 +192,8 @@ resources:
                   ReadCapacityUnits: 5
                   WriteCapacityUnits: 5
             ProvisionedThroughput:
-              ReadCapacityUnits: 5
-              WriteCapacityUnits: 5
+              ReadCapacityUnits: 3
+              WriteCapacityUnits: 3
     TubeAlertNotificationsTable:
           Type: AWS::DynamoDB::Table
           Properties:
@@ -206,7 +206,7 @@ resources:
                 KeyType: HASH
             ProvisionedThroughput:
               ReadCapacityUnits: 1
-              WriteCapacityUnits: 4
+              WriteCapacityUnits: 3
             StreamSpecification:
               StreamViewType: NEW_IMAGE
     StaticBucket:

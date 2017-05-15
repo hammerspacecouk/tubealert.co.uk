@@ -63,7 +63,7 @@ test('createNotifications', () => {
         title: 'Name1',
         body: 'summary',
         icon: 'STATIC_HOST/image',
-        tag: '/key1',
+        tag: '/',
       }));
       expect(item.Created).toBe('iso');
     });

@@ -59,7 +59,7 @@ class Notification {
         title: lineData.name,
         body: lineData.statusSummary,
         icon: this.config.STATIC_HOST + this.assetManifest[`icon-${lineData.urlKey}.png`],
-        tag: `/${lineData.urlKey}`,
+        tag: `/`,
       }),
       Created: this.dateTimeHelper.getNow().toISOString(),
     };
