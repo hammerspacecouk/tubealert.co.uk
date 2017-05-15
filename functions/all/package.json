@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "moment-timezone": "^0.5.11",
-    "tubealert": "file:./../../shared/tubealert/"
-  }
-}

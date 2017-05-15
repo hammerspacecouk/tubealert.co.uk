@@ -1,9 +1,9 @@
 .env.json
+.env.sh
+.serverless
 build
-/**/node_modules
-site/public/html/all.json
-site/public/html/index.html
-site/public/html/assets-manifest.json
-site/public/html/manifest.json
-site/public/html/browserconfig.xml
-site/public/static
+coverage
+site
+static/dist
+node_modules
+webpack/latest

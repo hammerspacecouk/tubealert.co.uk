@@ -2,33 +2,35 @@ language: node_js
 cache:
   yarn: true
 node_js:
-  - "4"
-before_install:
-  - cd site
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-install:
-  - time yarn
+  - "6"
+before_script:
+  - yarn global add serverless
 script:
-  - time yarn run prod
+  - yarn install
+  - yarn test
+  - yarn build
+  - yarn prod
+  - yarn sw
+  - yarn install --production --ignore-scripts --prefer-offline
+  - serverless deploy
 deploy:
-  # Deploy the HTML (10 mins lifetime)
-  - provider: s3
-    region: $AWS_REGION
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-    bucket: $AWS_BUCKET
-    skip_cleanup: true
-    acl: public_read
-    cache_control: "max-age=600"
-    local_dir: public/html
   # Deploy the static assets (1 year lifetime)
   - provider: s3
     region: $AWS_REGION
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-    bucket: $AWS_BUCKET
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: $STATIC_BUCKET
     skip_cleanup: true
     acl: public_read
     cache_control: "max-age=31536000"
-    local_dir: public/static
+    local_dir: build/static
+  # Deploy the static assets (10 mins lifetime)
+  - provider: s3
+    region: $AWS_REGION
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: $STATIC_BUCKET
+    skip_cleanup: true
+    acl: public_read
+    cache_control: "max-age=600"
+    local_dir: build/static-low-cache

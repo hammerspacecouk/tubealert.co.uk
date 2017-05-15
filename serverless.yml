@@ -1,0 +1,291 @@
+service: tubealert
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  deploymentBucket: hammerspace-serverless-applications
+  cfnRole: arn:aws:iam::323441517494:role/cloudformation
+  stage: api
+  region: eu-west-2
+
+  memorySize: 256
+  timeout: 10
+
+  environment:
+    TFL_APP_ID: ${env:TFL_APP_ID}
+    TFL_APP_KEY: ${env:TFL_APP_KEY}
+    GCM_API_KEY: ${env:GCM_API_KEY}
+    CONTACT_EMAIL: ${env:CONTACT_EMAIL}
+    STATIC_HOST: ${env:STATIC_HOST}
+    PRIVATE_KEY: ${env:PRIVATE_KEY}
+    PUBLIC_KEY: ${env:PUBLIC_KEY}
+
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'dynamodb:*'
+      Resource:
+        - Fn::Join:
+          - ''
+          - - 'arn:aws:dynamodb:'
+            - Ref: 'AWS::Region'
+            - ':'
+            - Ref: 'AWS::AccountId'
+            - ':table/'
+            - Ref: TubeAlertStatusesTable
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:dynamodb:'
+              - Ref: 'AWS::Region'
+              - ':'
+              - Ref: 'AWS::AccountId'
+              - ':table/'
+              - Ref: TubeAlertSubscriptionsTable
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:dynamodb:'
+              - Ref: 'AWS::Region'
+              - ':'
+              - Ref: 'AWS::AccountId'
+              - ':table/'
+              - Ref: TubeAlertSubscriptionsTable
+              - '/*'
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:dynamodb:'
+              - Ref: 'AWS::Region'
+              - ':'
+              - Ref: 'AWS::AccountId'
+              - ':table/'
+              - Ref: TubeAlertNotificationsTable
+        - Fn::GetAtt: [ TubeAlertNotificationsTable, "StreamArn" ]
+
+package:
+  exclude:
+    - site/**
+    - tests/**
+    - coverage
+    - build/static/**
+
+functions:
+  webapp:
+    handler: handler.webapp
+    events:
+      - http:
+          path: /
+          method: get
+      - http:
+          path: /{proxy+}
+          method: get
+
+  latest:
+    handler: handler.latest
+    events:
+      - http:
+          path: /latest
+          method: get
+
+  subscribe:
+    handler: handler.subscribe
+    events:
+      - http:
+          path: /subscribe
+          method: post
+
+  unsubscribe:
+    handler: handler.unsubscribe
+    events:
+      - http:
+          path: /unsubscribe
+          method: post
+
+  fetch:
+    handler: handler.fetch
+    events:
+      - schedule: rate(2 minutes)
+
+  hourly:
+    handler: handler.hourly
+    events:
+      - schedule: cron(1 * * * ? *)
+
+  notify:
+    handler: handler.notify
+    events:
+      - stream:
+        type: dynamodb
+        arn:
+          Fn::GetAtt: [ TubeAlertNotificationsTable, "StreamArn" ]
+        batchSize: 1
+        startingPosition: LATEST
+
+resources:
+  Resources:
+    WebappLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "30"
+    LatestLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "30"
+    SubscribeLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "30"
+    UnsubscribeLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "30"
+    FetchLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "30"
+    HourlyLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "30"
+    NotifyLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "30"
+
+    TubeAlertStatusesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: tubealert.co.uk_statuses
+        AttributeDefinitions:
+          - AttributeName: TubeDate
+            AttributeType: S
+          - AttributeName: Timestamp
+            AttributeType: N
+        KeySchema:
+          - AttributeName: TubeDate
+            KeyType: HASH
+          - AttributeName: Timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 4
+    TubeAlertSubscriptionsTable:
+          Type: AWS::DynamoDB::Table
+          Properties:
+            TableName: tubealert.co.uk_subscriptions
+            AttributeDefinitions:
+              - AttributeName: UserID
+                AttributeType: S
+              - AttributeName: LineSlot
+                AttributeType: S
+            KeySchema:
+              - AttributeName: UserID
+                KeyType: HASH
+              - AttributeName: LineSlot
+                KeyType: RANGE
+            GlobalSecondaryIndexes:
+              - IndexName: index_lineSlot
+                KeySchema:
+                  - AttributeName: LineSlot
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
+                ProvisionedThroughput:
+                  ReadCapacityUnits: 5
+                  WriteCapacityUnits: 5
+            ProvisionedThroughput:
+              ReadCapacityUnits: 3
+              WriteCapacityUnits: 3
+    TubeAlertNotificationsTable:
+          Type: AWS::DynamoDB::Table
+          Properties:
+            TableName: tubealert.co.uk_notifications
+            AttributeDefinitions:
+              - AttributeName: NotificationID
+                AttributeType: S
+            KeySchema:
+              - AttributeName: NotificationID
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 3
+            StreamSpecification:
+              StreamViewType: NEW_IMAGE
+    StaticBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${env:STATIC_BUCKET}
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+        LifecycleConfiguration:
+          Rules:
+            - Id: S3ExpireMonthly
+              ExpirationInDays: 30
+              Status: Enabled
+        CorsConfiguration:
+          CorsRules:
+            - AllowedMethods:
+                - 'GET'
+              AllowedOrigins: ['*']
+              AllowedHeaders: ['*']
+    APIRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Policies:
+          - PolicyName: 'ServiceWorkerAPI'
+            PolicyDocument:
+              Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - 's3:GetObject'
+                  Resource:
+                    - Fn::Join:
+                      - ''
+                      - - 'arn:aws:s3:::'
+                        - Ref: StaticBucket
+                        - '/sw.js'
+        AssumeRolePolicyDocument:
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action:
+              - sts:AssumeRole
+    ServiceWorkerAPI:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        ParentId:
+          Fn::GetAtt: [ ApiGatewayRestApi, 'RootResourceId' ]
+        PathPart: 'sw.js'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+    ServiceWorkerMethod:
+      Type: 'AWS::ApiGateway::Method'
+      Properties:
+        AuthorizationType: 'NONE'
+        HttpMethod: 'GET'
+        MethodResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Content-Type: true
+        Integration:
+          IntegrationResponses:
+            - StatusCode: 200
+              ResponseParameters:
+                method.response.header.Content-Type: integration.response.header.Content-Type
+          Type: 'AWS'
+          IntegrationHttpMethod: 'GET'
+          Credentials:
+            Fn::GetAtt: [ APIRole, 'Arn' ]
+          Uri:
+            Fn::Join:
+              - ''
+              - - 'arn:aws:apigateway:'
+                - Ref: AWS::Region
+                - ':s3:path/'
+                - Ref: StaticBucket
+                - '/sw.js'
+        ResourceId:
+          Ref: ServiceWorkerAPI
+        RestApiId:
+          Ref: ApiGatewayRestApi
