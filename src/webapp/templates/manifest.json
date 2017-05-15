@@ -14,7 +14,7 @@
     ],
     "theme_color": "#3a3a3f",
     "background_color": "#3a3a3f",
-    "start_url": "https://w2.tubealert.co.uk/",
+    "start_url": "https://tubealert.co.uk/",
     "display": "standalone",
     "gcm_sender_id": "1049276846959"
 }

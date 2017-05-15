@@ -24,8 +24,6 @@ deploy:
     acl: public_read
     cache_control: "max-age=31536000"
     local_dir: build/static
-    on:
-      branch: serverless
   # Deploy the static assets (10 mins lifetime)
   - provider: s3
     region: $AWS_REGION
@@ -36,5 +34,3 @@ deploy:
     acl: public_read
     cache_control: "max-age=600"
     local_dir: build/static-low-cache
-    on:
-      branch: serverless
