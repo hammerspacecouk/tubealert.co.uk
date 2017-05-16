@@ -75,7 +75,6 @@ class NotificationsPanelContainer extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
         this.setState({
           isLoading: false,
           statusText: 'An error occurred '

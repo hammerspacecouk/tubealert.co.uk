@@ -37,5 +37,5 @@ const init = () => {
 
 // only modern browsers that support fetch will run this JS app
 if (window.fetch) {
-  init(3); // version number
+  init(4); // version number
 }
