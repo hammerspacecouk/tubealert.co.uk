@@ -103,6 +103,7 @@ class Status {
     this.logger.info(`Getting current status for ${tubeDate}`);
     const params = {
       TableName: TABLE_NAME_STATUSES,
+      Limit: 1,
       KeyConditionExpression: '#date = :date',
       ExpressionAttributeNames: {
         '#date': 'TubeDate',
