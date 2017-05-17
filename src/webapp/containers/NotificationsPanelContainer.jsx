@@ -77,7 +77,7 @@ class NotificationsPanelContainer extends Component {
       .catch(() => {
         this.setState({
           isLoading: false,
-          statusText: 'An error occurred '
+          statusText: 'An error occurred. Please try deleting all subscriptions on the settings page and try again '
         });
       });
   }

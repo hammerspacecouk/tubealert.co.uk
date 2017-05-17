@@ -33,6 +33,7 @@ class NotificationsContainer extends Component {
               const postData = {
                 userID: subscription.endpoint
               };
+              subscription.unsubscribe();
               return fetch(API_PATH_UNSUBSCRIBE, {
                 method: 'post',
                 body: JSON.stringify(postData)
