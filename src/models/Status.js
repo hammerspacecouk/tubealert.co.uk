@@ -59,10 +59,14 @@ class Status {
     };
 
     if (lineStatus) {
-      const sortedStatuses = lineStatus.lineStatuses.sort((a, b) => (
-        this.severities[a.statusSeverity].displayOrder -
-        this.severities[b.statusSeverity].displayOrder
-      ));
+      const sortedStatuses = lineStatus.lineStatuses.sort((a, b) => {
+        if (!this.severities[a.statusSeverity] || !this.severities[b.statusSeverity]) {
+          return 0;
+        }
+
+        return this.severities[a.statusSeverity].displayOrder -
+        this.severities[b.statusSeverity].displayOrder;
+      });
 
       // get sorted titles and reasons, ensuring unique values
       const titles = sortedStatuses.map(s => s.statusSeverityDescription)
@@ -71,7 +75,7 @@ class Status {
         .filter((value, index, self) => (value !== null && self.indexOf(value) === index));
 
       lineData.latestStatus.isDisrupted = sortedStatuses.reduce((value, status) => {
-        if (this.severities[status.statusSeverity].disrupted) {
+        if (this.severities[status.statusSeverity] && this.severities[status.statusSeverity].disrupted) {
           return true;
         }
         return value;

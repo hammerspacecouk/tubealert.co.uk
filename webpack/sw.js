@@ -42,12 +42,29 @@ self.addEventListener('activate', event => event.waitUntil(
 ));
 
 // Check cache for values
-self.addEventListener('fetch', event => event.respondWith(
+self.addEventListener('fetch', (event) => {
+  let request = event.request;
+  if (request.url &&
+    request.url.startsWith(STATIC_HOST)
+  ) {
+    request = new Request(`${request.url}?sw`, {
+      method: request.method,
+      headers: request.headers,
+      mode: request.mode,
+      credentials: request.credentials,
+      redirect: request.redirect,
+      referrer: request.referrer,
+      referrerPolicy: request.referrerPolicy
+    });
+  }
+
+  return event.respondWith(
     caches.open(CACHE_NAME)
-        .then(cache => cache.match(event.request)
-            .then(response => response || fetch(event.request).then(response))
-        )
-));
+      .then(cache => cache.match(request)
+        .then(response => response || fetch(request).then(response))
+      )
+  );
+});
 
 self.addEventListener('push', (event) => {
   if (!event.data) {
