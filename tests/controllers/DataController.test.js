@@ -163,7 +163,10 @@ test('notifyAction when invalid', () => {
 test('notifyAction when error', () => {
   const mockCallback = jest.fn();
   const mockConverter = jest.fn(() => 'rowData');
-  const mockHandleNotificationMethod = jest.fn(() => new Promise((resolve, reject) => reject()));
+  const mockDeleteNotificationMethod = jest.fn(() => new Promise((resolve, reject) => resolve()));
+  const mockHandleNotificationMethod = jest.fn(() => new Promise((resolve, reject) => reject({
+    statusCode : 500
+  })));
   const mockNotificationModel = {
     handleNotification: mockHandleNotificationMethod,
   };
@@ -182,6 +185,48 @@ test('notifyAction when error', () => {
   })
     .then(() => {
       expect(mockCallback).toBeCalledWith('Failed to complete');
+    });
+});
+
+test('notifyAction when no longer exists', () => {
+  const mockCallback = jest.fn();
+  const mockConverter = jest.fn(() => {
+    return {
+      Subscription: {
+        endpoint: 'endpointz'
+      },
+      NotificationID: "notID"
+    }
+  });
+  const mockUnsubscribeMethod = jest.fn(() => new Promise((resolve, reject) => resolve()));
+  const mockDeleteNotificationMethod = jest.fn(() => new Promise((resolve, reject) => resolve()));
+  const mockHandleNotificationMethod = jest.fn(() => new Promise((resolve, reject) => reject({
+    statusCode : 410
+  })));
+  const mockSubscriptionsModel = {
+    unsubscribeUser: mockUnsubscribeMethod,
+  };
+  const mockNotificationModel = {
+    handleNotification: mockHandleNotificationMethod,
+    deleteNotification: mockDeleteNotificationMethod,
+  };
+  const ctl = createController(
+    mockCallback,
+    mockConverter,
+    null,
+    null,
+    mockSubscriptionsModel,
+    mockNotificationModel
+  );
+  return ctl.notifyAction({
+    Records: [
+      { eventName: 'INSERT', dynamodb: { NewImage: 'bob' } },
+    ],
+  })
+    .then(() => {
+      expect(mockUnsubscribeMethod.mock.calls[0][0]).toBe('endpointz');
+      expect(mockDeleteNotificationMethod.mock.calls[0][0]).toBe('notID');
+      expect(mockCallback).toBeCalledWith(null, 'All done');
     });
 });
 

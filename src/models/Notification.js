@@ -78,6 +78,21 @@ class Notification {
     const payload = rowData.Payload;
     const subscription = rowData.Subscription;
     const notificationID = rowData.NotificationID;
+
+
+    this.logger.info(`Handling notification ${notificationID}`);
+    return this.webPush.sendNotification(subscription, payload)
+      .then(() => {
+        this.logger.info('Notification sent');
+        return this.deleteNotification(notificationID);
+      });
+  }
+
+  /**
+   * Removes the notification row form the database as we are done with it
+   * @param notificationID
+   */
+  deleteNotification(notificationID) {
     const deleteRequest = {
       DeleteRequest: {
         Key: {
@@ -85,13 +100,8 @@ class Notification {
         },
       },
     };
-
-    this.logger.info(`Handling notification ${notificationID}`);
-    return this.webPush.sendNotification(subscription, payload)
-      .then(() => {
-        this.logger.info('Notification sent. Deleting record');
-        return this.batchWriter.makeRequests([deleteRequest]);
-      });
+    this.logger.info('Deleting notification record');
+    return this.batchWriter.makeRequests([deleteRequest]);
   }
 
   static createID() {

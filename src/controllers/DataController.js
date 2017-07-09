@@ -71,6 +71,7 @@ class DataController {
     const record = event.Records[0];
     // only process INSERTS
     if (record.eventName !== 'INSERT' || !record.dynamodb.NewImage) {
+      this.logger.info('Event was not an INSERT');
       return this.callback(null, 'Event was not an INSERT');
     }
 
@@ -80,7 +81,19 @@ class DataController {
     this.logger.info('Sending a notification');
     return this.notificationModel.handleNotification(rowData)
       .then(this.done.bind(this))
-      .catch(this.error.bind(this));
+      .catch((result) => {
+        const statusCode = result.statusCode;
+        this.logger.info(statusCode + ' response code');
+        if (statusCode !== 404 && statusCode !== 410) {
+          return this.error();
+        }
+
+        // 404 or 410 means the subscription is no longer valid and we should remove it from our database
+        this.logger.info('Subscription no longer exists');
+        return this.removeOldSubscription(rowData)
+          .then(this.done.bind(this))
+          .catch(this.error.bind(this));
+      });
   }
 
   getLineSubscription(lineData, now) {
@@ -91,6 +104,16 @@ class DataController {
           subscription,
         })
       ));
+  }
+
+  removeOldSubscription(rowData) {
+    const userID = rowData.Subscription.endpoint;
+    const notificationID = rowData.NotificationID;
+    this.logger.info("Removing subscriptions");
+    return this.subscriptionModel.unsubscribeUser(userID)
+      .then(_ => {
+        return this.notificationModel.deleteNotification(notificationID);
+      });
   }
 
 
