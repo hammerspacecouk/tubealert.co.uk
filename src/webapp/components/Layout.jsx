@@ -37,13 +37,13 @@ const Layout = ({ innerChildren, lines, appClass, warningMessage }) => (
           </div>
           <div className="header__back">
             <Link to="/">
-              <span class="invisible">Back to home</span>
+              <span className="invisible">Back to home</span>
               <ChevronLeft />
             </Link>
           </div>
           <div className="header__settings">
             <Link to="/settings">
-              <span class="invisible">Settings</span>
+              <span className="invisible">Settings</span>
               <SettingsIcon />
             </Link>
           </div>
