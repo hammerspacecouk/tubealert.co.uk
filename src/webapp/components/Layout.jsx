@@ -36,10 +36,14 @@ const Layout = ({ innerChildren, lines, appClass, warningMessage }) => (
             <Link to="/">TubeAlert</Link>
           </div>
           <div className="header__back">
-            <Link to="/"><ChevronLeft /></Link>
+            <Link to="/">
+              <span class="invisible">Back to home</span>
+              <ChevronLeft />
+            </Link>
           </div>
           <div className="header__settings">
             <Link to="/settings">
+              <span class="invisible">Settings</span>
               <SettingsIcon />
             </Link>
           </div>
