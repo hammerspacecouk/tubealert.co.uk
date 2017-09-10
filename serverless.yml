@@ -62,7 +62,6 @@ provider:
 
 package:
   exclude:
-    - site/**
     - tests/**
     - coverage
     - build/static/**

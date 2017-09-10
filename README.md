@@ -2,6 +2,8 @@ tubealert.co.uk
 
 [![Build Status](https://travis-ci.org/hammerspacecouk/tubealert.co.uk.svg?branch=master)](https://travis-ci.org/hammerspacecouk/tubealert.co.uk)
 
+Read more about the application here 
+[https://www.hammerspace.co.uk/posts/tube-alert-07-2017](https://www.hammerspace.co.uk/posts/tube-alert-07-2017)
 
 
 ## Developing
