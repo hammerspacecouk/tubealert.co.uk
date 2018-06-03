@@ -1,21 +1,425 @@
 {
-    "name": "TubeAlert",
-    "short_name": "TubeAlert",
-    "icons": [
-        {
-            "src": "<%= require('../../imgs/android-chrome-192x192.png') %>",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "<%= require('../../imgs/android-chrome-512x512.png') %>",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#3a3a3f",
-    "background_color": "#3a3a3f",
-    "start_url": "https://tubealert.co.uk/",
-    "display": "standalone",
-    "gcm_sender_id": "1049276846959"
+  "name": "TubeAlert",
+  "short_name": "TubeAlert",
+  "description": "Get the latest status of the London Underground (The Tube) and receive notifications when your line is disrupted",
+  "lang": "en-GB",
+  "theme_color": "#3a3a3f",
+  "background_color": "#3a3a3f",
+  "start_url": "https://tubealert.co.uk/",
+  "display": "standalone",
+  "gcm_sender_id": "1049276846959",
+  "icons": [
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square71x71Logo.scale-400.png') %>",
+      "sizes": "284x284"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square71x71Logo.scale-200.png') %>",
+      "sizes": "142x142"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square71x71Logo.scale-100.png') %>",
+      "sizes": "71x71"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square71x71Logo.scale-150.png') %>",
+      "sizes": "107x107"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square71x71Logo.scale-125.png') %>",
+      "sizes": "89x89"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square150x150Logo.scale-400.png') %>",
+      "sizes": "600x600"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square150x150Logo.scale-200.png') %>",
+      "sizes": "300x300"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square150x150Logo.scale-100.png') %>",
+      "sizes": "150x150"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square150x150Logo.scale-150.png') %>",
+      "sizes": "225x225"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square150x150Logo.scale-125.png') %>",
+      "sizes": "188x188"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Wide310x150Logo.scale-400.png') %>",
+      "sizes": "1240x600"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Wide310x150Logo.scale-200.png') %>",
+      "sizes": "620x300"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Wide310x150Logo.scale-100.png') %>",
+      "sizes": "310x150"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Wide310x150Logo.scale-150.png') %>",
+      "sizes": "465x225"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Wide310x150Logo.scale-125.png') %>",
+      "sizes": "388x188"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square310x310Logo.scale-400.png') %>",
+      "sizes": "1240x1240"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square310x310Logo.scale-200.png') %>",
+      "sizes": "620x620"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square310x310Logo.scale-100.png') %>",
+      "sizes": "310x310"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square310x310Logo.scale-150.png') %>",
+      "sizes": "465x465"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square310x310Logo.scale-125.png') %>",
+      "sizes": "388x388"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.scale-400.png') %>",
+      "sizes": "176x176"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.scale-200.png') %>",
+      "sizes": "88x88"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.scale-100.png') %>",
+      "sizes": "44x44"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.scale-150.png') %>",
+      "sizes": "66x66"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.scale-125.png') %>",
+      "sizes": "55x55"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.targetsize-256.png') %>",
+      "sizes": "256x256"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.targetsize-48.png') %>",
+      "sizes": "48x48"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.targetsize-24.png') %>",
+      "sizes": "24x24"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.targetsize-16.png') %>",
+      "sizes": "16x16"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.targetsize-256_altform-unplated.png') %>",
+      "sizes": "256x256"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.targetsize-48_altform-unplated.png') %>",
+      "sizes": "48x48"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.targetsize-24_altform-unplated.png') %>",
+      "sizes": "24x24"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/Square44x44Logo.targetsize-16_altform-unplated.png') %>",
+      "sizes": "16x16"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/StoreLogo.scale-400.png') %>",
+      "sizes": "200x200"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/StoreLogo.scale-200.png') %>",
+      "sizes": "100x100"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/StoreLogo.scale-150.png') %>",
+      "sizes": "75x75"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/StoreLogo.scale-125.png') %>",
+      "sizes": "63x63"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/StoreLogo.scale-100.png') %>",
+      "sizes": "50x50"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/StoreLogo.png') %>",
+      "sizes": "50x50"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/SplashScreen.scale-400.png') %>",
+      "sizes": "2480x1200"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/SplashScreen.scale-200.png') %>",
+      "sizes": "1240x600"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/SplashScreen.scale-150.png') %>",
+      "sizes": "930x450"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/SplashScreen.scale-125.png') %>",
+      "sizes": "775x375"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/SplashScreen.scale-100.png') %>",
+      "sizes": "620x300"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-smallsquare-24-24.png') %>",
+      "sizes": "24x24"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-smallsquare-30-30.png') %>",
+      "sizes": "30x30"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-smallsquare-42-42.png') %>",
+      "sizes": "42x42"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-smallsquare-54-54.png') %>",
+      "sizes": "54x54"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-splashscreen-1116-540.png') %>",
+      "sizes": "1116x540"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-splashscreen-868-420.png') %>",
+      "sizes": "868x420"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-splashscreen-620-300.png') %>",
+      "sizes": "620x300"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-squarelogo-270-270.png') %>",
+      "sizes": "270x270"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-squarelogo-210-210.png') %>",
+      "sizes": "210x210"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-squarelogo-150-150.png') %>",
+      "sizes": "150x150"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-squarelogo-120-120.png') %>",
+      "sizes": "120x120"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-storelogo-90-90.png') %>",
+      "sizes": "90x90"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-storelogo-70-70.png') %>",
+      "sizes": "70x70"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windows-storelogo-50-50.png') %>",
+      "sizes": "50x50"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-appicon-106-106.png') %>",
+      "sizes": "106x106"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-appicon-62-62.png') %>",
+      "sizes": "62x62"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-appicon-44-44.png') %>",
+      "sizes": "44x44"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-mediumtile-360-360.png') %>",
+      "sizes": "360x360"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-mediumtile-210-210.png') %>",
+      "sizes": "210x210"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-mediumtile-150-150.png') %>",
+      "sizes": "150x150"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-smalltile-170-170.png') %>",
+      "sizes": "170x170"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-smalltile-99-99.png') %>",
+      "sizes": "99x99"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-smalltile-71-71.png') %>",
+      "sizes": "71x71"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-storelogo-120-120.png') %>",
+      "sizes": "120x120"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-storelogo-70-70.png') %>",
+      "sizes": "70x70"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/windowsphone-storelogo-50-50.png') %>",
+      "sizes": "50x50"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/android-launchericon-512-512.png') %>",
+      "sizes": "512x512"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/android-launchericon-192-192.png') %>",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/android-launchericon-144-144.png') %>",
+      "sizes": "144x144"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/android-launchericon-96-96.png') %>",
+      "sizes": "96x96"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/android-launchericon-72-72.png') %>",
+      "sizes": "72x72"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/android-launchericon-48-48.png') %>",
+      "sizes": "48x48"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-appicon-1024-1024.png') %>",
+      "sizes": "1024x1024"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-appicon-180-180.png') %>",
+      "sizes": "180x180"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-appicon-152-152.png') %>",
+      "sizes": "152x152"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-appicon-120-120.png') %>",
+      "sizes": "120x120"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-appicon-76-76.png') %>",
+      "sizes": "76x76"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-750-1334.png') %>",
+      "sizes": "750x1334"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-1334-750.png') %>",
+      "sizes": "1334x750"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-1242-2208.png') %>",
+      "sizes": "1242x2208"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-2208-1242.png') %>",
+      "sizes": "2208x1242"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-640-960.png') %>",
+      "sizes": "640x960"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-640-1136.png') %>",
+      "sizes": "640x1136"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-1536-2048.png') %>",
+      "sizes": "1536x2048"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-2048-1536.png') %>",
+      "sizes": "2048x1536"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-768-1024.png') %>",
+      "sizes": "768x1024"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/ios-launchimage-1024-768.png') %>",
+      "sizes": "1024x768"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/chrome-extensionmanagementpage-48-48.png') %>",
+      "sizes": "48x48"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/chrome-favicon-16-16.png') %>",
+      "sizes": "16x16"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/chrome-installprocess-128-128.png') %>",
+      "sizes": "128x128"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-marketplace-512-512.png') %>",
+      "sizes": "512x512"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-marketplace-128-128.png') %>",
+      "sizes": "128x128"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-general-256-256.png') %>",
+      "sizes": "256x256"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-general-128-128.png') %>",
+      "sizes": "128x128"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-general-90-90.png') %>",
+      "sizes": "90x90"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-general-64-64.png') %>",
+      "sizes": "64x64"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-general-48-48.png') %>",
+      "sizes": "48x48"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-general-32-32.png') %>",
+      "sizes": "32x32"
+    },
+    {
+      "src": "https://static.tubealert.co.uk<%= require('../../imgs/firefox-general-16-16.png') %>",
+      "sizes": "16x16"
+    }
+  ]
 }

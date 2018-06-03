@@ -22,8 +22,10 @@ export default (originalData, location, assetsHelper, callback) => {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>TubeAlert</title>
       <link rel="stylesheet" href="${assetsHelper.get('app.css')}" />
+      <link rel="apple-touch-icon" sizes="1024x1024" 
+        href="${assetsHelper.get('ios-appicon-1024-1024.png')}" />
       <link rel="apple-touch-icon" sizes="180x180" 
-        href="${assetsHelper.get('apple-touch-icon.png')}" />
+        href="${assetsHelper.get('ios-appicon-180-180.png')}" />
       <link rel="icon" type="image/png" sizes="32x32" 
         href="${assetsHelper.get('favicon-32x32.png')}" />
       <link rel="icon" type="image/png" sizes="16x16"
