@@ -85,6 +85,20 @@ body {
     }
 }
 
+@media (min-height: 83em) and (max-width: 47.99999em) {
+    .app__nav-list {
+        display: flex;
+        flex-wrap: wrap;
+        height: calc(100vh - 52px);
+    }
+    .app__nav-list-item {
+        width: 100%;
+    }
+    .statusbox {
+        height: 100%;
+    }
+}
+
 @media (min-height: 42em) and (min-width: 48em) {
     .app__nav-list {
         position: fixed;

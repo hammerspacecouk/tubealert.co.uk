@@ -13,7 +13,7 @@ const createLine = (line) => {
     alert = <div className="statusbox__alert"><Alert /></div>;
   }
   return (
-    <li key={line.urlKey}>
+    <li className="app__nav-list-item" key={line.urlKey}>
       <Link to={`/${line.urlKey}`} className={className}>
         <div className="statusbox__name">
           {line.name}
