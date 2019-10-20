@@ -2,7 +2,7 @@ language: node_js
 cache:
   yarn: true
 node_js:
-  - "8"
+  - "10"
 before_script:
   - yarn global add serverless
 script:
