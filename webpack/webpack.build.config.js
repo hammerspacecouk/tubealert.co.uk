@@ -24,12 +24,6 @@ const settings = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: testMatch,
-        exclude: excludeMatch,
-        loader: 'eslint-loader'
-      },
-      {
         test: testMatch,
         exclude: excludeMatch,
         loader: 'babel-loader',

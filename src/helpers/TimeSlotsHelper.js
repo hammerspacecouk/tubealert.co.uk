@@ -1,12 +1,10 @@
-
-
 class TimeSlotsHelper {
   constructor(data) {
     this.data = data;
   }
 
   static pad(input) {
-    const pad = '00';
+    const pad = "00";
     const str = `${input}`; // converts to string
     return `${pad.substring(0, pad.length - str.length)}${str}`;
   }
@@ -25,9 +23,7 @@ class TimeSlotsHelper {
             if (start === null) {
               start = hour;
             }
-            puts.push(
-              TimeSlotsHelper.createHourSlot(lineID, userID, day, hour, start, now, subscription)
-            );
+            puts.push(TimeSlotsHelper.createHourSlot(lineID, userID, day, hour, start, now, subscription));
           } else {
             start = null;
           }
@@ -58,9 +54,7 @@ class TimeSlotsHelper {
 
   getDeletes(currentData) {
     // return only the ones that don't exist in the new data set
-    const deletable = currentData.filter(item => (
-      !(this.data[item.Day] && this.data[item.Day][item.Hour])
-    ));
+    const deletable = currentData.filter(item => !(this.data[item.Day] && this.data[item.Day][item.Hour]));
     return deletable.map(item => ({
       DeleteRequest: {
         Key: {

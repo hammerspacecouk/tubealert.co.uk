@@ -1,16 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router';
-import Alert from './Icons/Alert.jsx';
-import ChevronLeft from './Icons/ChevronLeft.jsx';
-import ChevronRight from './Icons/ChevronRight.jsx';
-import SettingsIcon from './Icons/Settings.jsx';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router";
+import Alert from "./Icons/Alert.jsx";
+import ChevronLeft from "./Icons/ChevronLeft.jsx";
+import ChevronRight from "./Icons/ChevronRight.jsx";
+import SettingsIcon from "./Icons/Settings.jsx";
 
-const createLine = (line) => {
+const createLine = line => {
   const className = `statusbox linebox linebox--${line.urlKey}`;
   let alert = null;
   if (line.isDisrupted) {
-    alert = <div className="statusbox__alert"><Alert /></div>;
+    alert = (
+      <div className="statusbox__alert">
+        <Alert />
+      </div>
+    );
   }
   return (
     <li className="app__nav-list-item" key={line.urlKey}>
@@ -21,7 +25,9 @@ const createLine = (line) => {
           <span>{line.statusSummary}</span>
         </div>
         {alert}
-        <div className="statusbox__chevron"><ChevronRight /></div>
+        <div className="statusbox__chevron">
+          <ChevronRight />
+        </div>
       </Link>
     </li>
   );
@@ -51,16 +57,12 @@ const Layout = ({ innerChildren, lines, appClass, warningMessage }) => (
       </div>
       <div className="page" id="page">
         <main className="main">
-          <div id="main-body">
-            {innerChildren}
-          </div>
+          <div id="main-body">{innerChildren}</div>
         </main>
       </div>
     </div>
     <nav className="app__nav">
-      <ol className="app__nav-list list--unstyled">
-        {lines.map(createLine)}
-      </ol>
+      <ol className="app__nav-list list--unstyled">{lines.map(createLine)}</ol>
     </nav>
     {warningMessage}
   </div>
@@ -70,7 +72,7 @@ Layout.propTypes = {
   appClass: PropTypes.string.isRequired,
   innerChildren: PropTypes.element.isRequired,
   lines: PropTypes.arrayOf(PropTypes.object).isRequired,
-  warningMessage: PropTypes.element.isRequired
+  warningMessage: PropTypes.element.isRequired,
 };
 
 export default Layout;

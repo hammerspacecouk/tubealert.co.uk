@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Disruptions from './Line/Disruptions.jsx';
-import NotificationsContainer from '../containers/NotificationsContainer.jsx';
+import React from "react";
+import PropTypes from "prop-types";
+import Disruptions from "./Line/Disruptions.jsx";
+import NotificationsContainer from "../containers/NotificationsContainer.jsx";
 
 const Line = ({ line }) => {
   const className = `g-unit island linebox linebox--${line.urlKey}`;
@@ -25,7 +25,7 @@ const Line = ({ line }) => {
 };
 
 Line.propTypes = {
-  line: PropTypes.object.isRequired
+  line: PropTypes.object.isRequired,
 };
 
 export default Line;

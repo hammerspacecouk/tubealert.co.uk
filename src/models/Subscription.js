@@ -1,4 +1,4 @@
-const TABLE_NAME_SUBSCRIPTIONS = 'tubealert.co.uk_subscriptions';
+const TABLE_NAME_SUBSCRIPTIONS = "tubealert.co.uk_subscriptions";
 
 class Subscription {
   constructor(documentClient, BatchWriteHelper, TimeSlotsHelper, logger) {
@@ -7,11 +7,7 @@ class Subscription {
     this.TimeSlotsHelper = TimeSlotsHelper;
     this.logger = logger;
 
-    this.batchWriter = new this.BatchWriteHelper(
-      this.documentClient,
-      TABLE_NAME_SUBSCRIPTIONS,
-      this.logger
-    );
+    this.batchWriter = new this.BatchWriteHelper(this.documentClient, TABLE_NAME_SUBSCRIPTIONS, this.logger);
   }
 
   subscribeUser(userID, lineID, timeSlots, subscription, now) {
@@ -24,7 +20,7 @@ class Subscription {
 
     // find out any that need to be deleted
     return this.getUserSubscriptionsForLine(userID, lineID)
-      .then((data) => {
+      .then(data => {
         const deletes = slots.getDeletes(data);
         this.logger.info(`${deletes.length} deletes`);
         return deletes.concat(puts);
@@ -34,7 +30,7 @@ class Subscription {
 
   unsubscribeUser(userID) {
     return this.getUserSubscriptions(userID)
-      .then((data) => {
+      .then(data => {
         const requests = data.map(Subscription.createDeleteRequest);
         this.logger.info(`${requests.length} items total`);
         return requests;
@@ -45,35 +41,39 @@ class Subscription {
   getUserSubscriptions(userID) {
     const params = {
       TableName: TABLE_NAME_SUBSCRIPTIONS,
-      KeyConditionExpression: '#user = :user',
+      KeyConditionExpression: "#user = :user",
       ExpressionAttributeNames: {
-        '#user': 'UserID',
+        "#user": "UserID",
       },
       ExpressionAttributeValues: {
-        ':user': userID,
+        ":user": userID,
       },
     };
 
-    return this.documentClient.query(params).promise()
+    return this.documentClient
+      .query(params)
+      .promise()
       .then(result => result.Items);
   }
 
   getUserSubscriptionsForLine(userID, lineID) {
     const params = {
       TableName: TABLE_NAME_SUBSCRIPTIONS,
-      KeyConditionExpression: '#user = :user',
-      FilterExpression: '#line = :line',
+      KeyConditionExpression: "#user = :user",
+      FilterExpression: "#line = :line",
       ExpressionAttributeNames: {
-        '#user': 'UserID',
-        '#line': 'Line',
+        "#user": "UserID",
+        "#line": "Line",
       },
       ExpressionAttributeValues: {
-        ':user': userID,
-        ':line': lineID,
+        ":user": userID,
+        ":line": lineID,
       },
     };
 
-    return this.documentClient.query(params).promise()
+    return this.documentClient
+      .query(params)
+      .promise()
       .then(result => result.Items);
   }
 
@@ -82,17 +82,19 @@ class Subscription {
     this.logger.info(`Line slot: ${lineSlot}`);
     const params = {
       TableName: TABLE_NAME_SUBSCRIPTIONS,
-      IndexName: 'index_lineSlot',
-      KeyConditionExpression: '#line = :line',
+      IndexName: "index_lineSlot",
+      KeyConditionExpression: "#line = :line",
       ExpressionAttributeNames: {
-        '#line': 'LineSlot',
+        "#line": "LineSlot",
       },
       ExpressionAttributeValues: {
-        ':line': lineSlot,
+        ":line": lineSlot,
       },
     };
-    return this.documentClient.query(params).promise()
-      .then(result => (result.Items));
+    return this.documentClient
+      .query(params)
+      .promise()
+      .then(result => result.Items);
   }
 
   getSubscriptionsStartingInLineSlot(lineID, date) {
@@ -101,24 +103,26 @@ class Subscription {
     this.logger.info(`Line slot: ${lineSlot}`);
     const params = {
       TableName: TABLE_NAME_SUBSCRIPTIONS,
-      IndexName: 'index_lineSlot',
-      KeyConditionExpression: '#line = :line',
-      FilterExpression: '#start = :start',
+      IndexName: "index_lineSlot",
+      KeyConditionExpression: "#line = :line",
+      FilterExpression: "#start = :start",
       ExpressionAttributeNames: {
-        '#line': 'LineSlot',
-        '#start': 'WindowStart',
+        "#line": "LineSlot",
+        "#start": "WindowStart",
       },
       ExpressionAttributeValues: {
-        ':line': lineSlot,
-        ':start': hour,
+        ":line": lineSlot,
+        ":start": hour,
       },
     };
-    return this.documentClient.query(params).promise()
-      .then(result => (result.Items));
+    return this.documentClient
+      .query(params)
+      .promise()
+      .then(result => result.Items);
   }
 
   static makeLineSlot(lineID, date) {
-    return `${lineID}_0${date.day()}${date.format('HH')}`;
+    return `${lineID}_0${date.day()}${date.format("HH")}`;
   }
 
   static createDeleteRequest(item) {

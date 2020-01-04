@@ -1,7 +1,6 @@
-import * as SubscriptionActions from '../actions/subscription-actions';
+import * as SubscriptionActions from "../actions/subscription-actions";
 
-const initialState = {
-};
+const initialState = {};
 
 const subscriptionsReducer = (state = initialState, action) => {
   switch (action.type) {

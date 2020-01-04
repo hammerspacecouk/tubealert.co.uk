@@ -1,5 +1,3 @@
-
-
 const MAX_BATCH_SIZE = 25;
 
 class BatchWriteHelper {
@@ -28,10 +26,12 @@ class BatchWriteHelper {
     };
     params.RequestItems[this.tableName] = toProcess;
 
-    return this.documentClient.batchWrite(params).promise()
-      .then((data) => {
+    return this.documentClient
+      .batchWrite(params)
+      .promise()
+      .then(data => {
         // put any UnprocessedItems back onto remaining list
-        if ('UnprocessedItems' in data && this.tableName in data.UnprocessedItems) {
+        if ("UnprocessedItems" in data && this.tableName in data.UnprocessedItems) {
           remaining = remaining.concat(data.UnprocessedItems[this.tableName]);
         }
         return remaining;

@@ -15,9 +15,9 @@ class DateTimeHelper {
     const hour = date.hours();
     if (hour <= 3) {
       // the tube date is yesterday
-      date.subtract(1, 'days');
+      date.subtract(1, "days");
     }
-    return date.format('DD-MM-YYYY');
+    return date.format("DD-MM-YYYY");
   }
 }
 

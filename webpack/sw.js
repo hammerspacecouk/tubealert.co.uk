@@ -5,8 +5,8 @@ const hashString = (input) => {
   if (input.length === 0) return hash;
   for (let i = 0; i < input.length; i += 1) {
     const chr = input.charCodeAt(i);
-    hash = ((hash << 5) - hash) + chr; // eslint-disable-line no-bitwise
-    hash |= 0; // eslint-disable-line no-bitwise
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0;
   }
   return hash;
 };

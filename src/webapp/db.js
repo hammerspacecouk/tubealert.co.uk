@@ -1,9 +1,9 @@
-export const ALL_LINES = 'allLines';
-export const SUBSCRIPTIONS = 'subscriptions';
+export const ALL_LINES = "allLines";
+export const SUBSCRIPTIONS = "subscriptions";
 
-const dbIsAvailable = (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined');
+const dbIsAvailable = typeof window !== "undefined" && typeof window.localStorage !== "undefined";
 
-const getItem = (key) => {
+const getItem = key => {
   if (!dbIsAvailable) {
     return null;
   }
@@ -17,7 +17,7 @@ const getItem = (key) => {
 
 export const getAllSubsciptions = () => getItem(SUBSCRIPTIONS) || {};
 
-export const getLineSubscription = (lineID) => {
+export const getLineSubscription = lineID => {
   const subscriptions = getAllSubsciptions();
   return subscriptions[lineID] || [];
 };
@@ -38,7 +38,7 @@ export const saveLineSubscription = (lineID, timeSlots) => {
   }
 };
 
-export const saveLines = (lines) => {
+export const saveLines = lines => {
   if (dbIsAvailable) {
     window.localStorage.setItem(ALL_LINES, JSON.stringify(lines));
   }

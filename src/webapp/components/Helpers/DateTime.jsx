@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const leftPad = (num) => {
+const leftPad = num => {
   let str = num.toString();
   if (str.length < 2) {
     str = `0${str}`;
@@ -17,7 +17,7 @@ const DateTime = ({ date }) => (
 );
 
 DateTime.propTypes = {
-  date: PropTypes.object.isRequired
+  date: PropTypes.object.isRequired,
 };
 
 export default DateTime;

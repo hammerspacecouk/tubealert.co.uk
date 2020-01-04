@@ -1,21 +1,21 @@
-const Notification = require('../../src/models/Notification');
+const Notification = require("../../src/models/Notification");
 
 const defMockAssetManifest = {};
-defMockAssetManifest['icon-key1.png'] = 'image';
+defMockAssetManifest["icon-key1.png"] = "image";
 const defMockBatchWriteHelper = jest.fn();
 const defMockWebPushHelper = jest.fn();
 const defMockDocumentClient = jest.fn();
 const defMockLogger = { info: jest.fn(), error: jest.fn() };
 const defMockDateTime = {
   getNow: jest.fn(() => ({
-    toISOString: () => 'iso',
+    toISOString: () => "iso",
   })),
 };
 const defMockConfig = {
-  STATIC_HOST: 'STATIC_HOST/',
+  STATIC_HOST: "STATIC_HOST/",
 };
 
-test('createNotifications when empty', () => {
+test("createNotifications when empty", () => {
   const model = new Notification(
     defMockDocumentClient,
     defMockWebPushHelper,
@@ -29,7 +29,7 @@ test('createNotifications when empty', () => {
   expect(result).toBeNull();
 });
 
-test('createNotifications', () => {
+test("createNotifications", () => {
   const mockMakeRequestsMethod = jest.fn(() => new Promise(resolve => resolve()));
   const mockBatchWriteHelper = jest.fn();
   mockBatchWriteHelper.prototype.makeRequests = mockMakeRequestsMethod;
@@ -43,33 +43,36 @@ test('createNotifications', () => {
     defMockConfig,
     defMockLogger
   );
-  return model.createNotifications([
-    {
-      lineData: {
-        name: 'Name1',
-        statusSummary: 'summary',
-        urlKey: 'key1',
+  return model
+    .createNotifications([
+      {
+        lineData: {
+          name: "Name1",
+          statusSummary: "summary",
+          urlKey: "key1",
+        },
+        subscription: {
+          Subscription: "subscription",
+        },
       },
-      subscription: {
-        Subscription: 'subscription',
-      },
-    },
-  ])
+    ])
     .then(() => {
       expect(mockMakeRequestsMethod.mock.calls[0][0].length).toBe(1);
       const item = mockMakeRequestsMethod.mock.calls[0][0][0].PutRequest.Item;
-      expect(item.Subscription).toBe('subscription');
-      expect(item.Payload).toEqual(JSON.stringify({
-        title: 'Name1',
-        body: 'summary',
-        icon: 'STATIC_HOST/image',
-        tag: '/',
-      }));
-      expect(item.Created).toBe('iso');
+      expect(item.Subscription).toBe("subscription");
+      expect(item.Payload).toEqual(
+        JSON.stringify({
+          title: "Name1",
+          body: "summary",
+          icon: "STATIC_HOST/image",
+          tag: "/",
+        })
+      );
+      expect(item.Created).toBe("iso");
     });
 });
 
-test('handleNotification', () => {
+test("handleNotification", () => {
   // check webpush sends it
   const mockSendNotification = jest.fn(() => new Promise(resolve => resolve()));
   const mockWebPushHelper = {
@@ -90,18 +93,19 @@ test('handleNotification', () => {
     defMockConfig,
     defMockLogger
   );
-  return model.handleNotification({
-    Payload: 'payload',
-    Subscription: 'subscription',
-    NotificationID: 'notification1',
-  })
+  return model
+    .handleNotification({
+      Payload: "payload",
+      Subscription: "subscription",
+      NotificationID: "notification1",
+    })
     .then(() => {
-      expect(mockSendNotification).toBeCalledWith('subscription', 'payload');
+      expect(mockSendNotification).toBeCalledWith("subscription", "payload");
       expect(mockMakeRequestsMethod).toBeCalledWith([
         {
           DeleteRequest: {
             Key: {
-              NotificationID: 'notification1',
+              NotificationID: "notification1",
             },
           },
         },

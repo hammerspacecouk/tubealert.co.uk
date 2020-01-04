@@ -1,4 +1,4 @@
-const TABLE_NAME_STATUSES = 'tubealert.co.uk_statuses';
+const TABLE_NAME_STATUSES = "tubealert.co.uk_statuses";
 
 class Status {
   constructor(documentClient, dateTimeHelper, lineModel, config, logger) {
@@ -19,23 +19,26 @@ class Status {
         TubeDate: tubeDate,
         Timestamp: date.unix(),
         Statuses: data,
-        Expire: date.unix() + (60 * 60 * 24 * 100)
+        Expire: date.unix() + 60 * 60 * 24 * 100,
       },
     };
     this.logger.info(`Storing data for ${tubeDate}`);
-    return this.documentClient.put(params).promise()
+    return this.documentClient
+      .put(params)
+      .promise()
       .then(() => data);
   }
 
   fetchNewLatest() {
     const now = this.dateTimeHelper.getNow();
-    const url = 'https://api.tfl.gov.uk/Line/Mode/tube,dlr,tflrail,overground/Status' +
+    const url =
+      "https://api.tfl.gov.uk/Line/Mode/tube,dlr,tflrail,overground/Status" +
       `?app_id=${this.config.TFL_APP_ID}` +
       `&app_key=${this.config.TFL_APP_KEY}`;
 
-    this.logger.info('Fetching from TFL');
+    this.logger.info("Fetching from TFL");
     // only include this require on invocation (so the memory is cleared)
-    return require('node-fetch')(url) // eslint-disable-line global-require
+    return require("node-fetch")(url) // eslint-disable-line global-require
       .then(response => response.json())
       .then(this.mutateData.bind(this))
       .then(data => this.storeStatus(now, data));
@@ -50,12 +53,12 @@ class Status {
     delete lineData.tflKey;
     lineData.isDisrupted = null;
     lineData.updatedAt = now.toISOString();
-    lineData.statusSummary = 'No Information';
+    lineData.statusSummary = "No Information";
     lineData.latestStatus = {
       updatedAt: now.toISOString(),
       isDisrupted: null,
-      title: 'No Information',
-      shortTitle: 'No Information',
+      title: "No Information",
+      shortTitle: "No Information",
       descriptions: null,
     };
 
@@ -65,15 +68,16 @@ class Status {
           return 0;
         }
 
-        return this.severities[a.statusSeverity].displayOrder -
-        this.severities[b.statusSeverity].displayOrder;
+        return this.severities[a.statusSeverity].displayOrder - this.severities[b.statusSeverity].displayOrder;
       });
 
       // get sorted titles and reasons, ensuring unique values
-      const titles = sortedStatuses.map(s => s.statusSeverityDescription)
-        .filter((value, index, self) => (self.indexOf(value) === index));
-      const reasons = sortedStatuses.map(s => s.reason || null)
-        .filter((value, index, self) => (value !== null && self.indexOf(value) === index));
+      const titles = sortedStatuses
+        .map(s => s.statusSeverityDescription)
+        .filter((value, index, self) => self.indexOf(value) === index);
+      const reasons = sortedStatuses
+        .map(s => s.reason || null)
+        .filter((value, index, self) => value !== null && self.indexOf(value) === index);
 
       lineData.latestStatus.isDisrupted = sortedStatuses.reduce((value, status) => {
         if (this.severities[status.statusSeverity] && this.severities[status.statusSeverity].disrupted) {
@@ -81,8 +85,8 @@ class Status {
         }
         return value;
       }, false);
-      lineData.latestStatus.title = titles.join(', ');
-      lineData.latestStatus.shortTitle = titles.slice(0, 2).join(', ');
+      lineData.latestStatus.title = titles.join(", ");
+      lineData.latestStatus.shortTitle = titles.slice(0, 2).join(", ");
       lineData.latestStatus.descriptions = reasons;
 
       lineData.isDisrupted = lineData.latestStatus.isDisrupted;
@@ -95,8 +99,8 @@ class Status {
   mutateData(data) {
     // work through all of the lines we want in order
     // and build up a JSON object of their statuses
-    this.logger.info('Manipulating result into preferred format');
-    return this.lineModel.getAll().map((lineData) => {
+    this.logger.info("Manipulating result into preferred format");
+    return this.lineModel.getAll().map(lineData => {
       const lineStatus = data.find(status => status.id === lineData.tflKey);
 
       return this.makeStatusItem(lineData, lineStatus);
@@ -109,17 +113,19 @@ class Status {
     const params = {
       TableName: TABLE_NAME_STATUSES,
       Limit: 1,
-      KeyConditionExpression: '#date = :date',
+      KeyConditionExpression: "#date = :date",
       ExpressionAttributeNames: {
-        '#date': 'TubeDate',
+        "#date": "TubeDate",
       },
       ExpressionAttributeValues: {
-        ':date': tubeDate,
+        ":date": tubeDate,
       },
       ScanIndexForward: false,
     };
-    return this.documentClient.query(params).promise()
-      .then((result) => {
+    return this.documentClient
+      .query(params)
+      .promise()
+      .then(result => {
         if (result.Items.length > 0) {
           return result.Items[0].Statuses;
         }
@@ -128,8 +134,7 @@ class Status {
   }
 
   getLatestDisrupted(date) {
-    return this.getAllLatest(date)
-      .then(statuses => statuses.filter(line => line.isDisrupted));
+    return this.getAllLatest(date).then(statuses => statuses.filter(line => line.isDisrupted));
   }
 }
 

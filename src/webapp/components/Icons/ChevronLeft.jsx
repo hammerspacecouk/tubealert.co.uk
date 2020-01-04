@@ -1,6 +1,4 @@
-
-
-import React from 'react';
+import React from "react";
 
 const ChevronLeft = () => (
   <svg className="icon">

@@ -1,8 +1,8 @@
-import * as LineActions from '../actions/line-actions';
+import * as LineActions from "../actions/line-actions";
 
 const initialState = {
   lines: [],
-  isFetching: false
+  isFetching: false,
 };
 
 const linesReducer = (state = initialState, action) => {
@@ -32,6 +32,6 @@ const linesReducer = (state = initialState, action) => {
   }
 };
 
-export const getLine = lineKey => this.state.filter(line => (line.urlKey === lineKey));
+export const getLine = lineKey => this.state.filter(line => line.urlKey === lineKey);
 
 export default linesReducer;

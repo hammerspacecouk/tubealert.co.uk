@@ -1,14 +1,12 @@
+const DateTimeHelper = require("../../src/helpers/DateTimeHelper");
 
-
-const DateTimeHelper = require('../../src/helpers/DateTimeHelper');
-
-test('sets and gets now', () => {
-  const value = 'now';
+test("sets and gets now", () => {
+  const value = "now";
   const helper = new DateTimeHelper(value);
   expect(helper.getNow()).toBe(value);
 });
 
-test('tube day for midday', () => {
+test("tube day for midday", () => {
   const mockFormatMethod = jest.fn();
   const mockMoment = {
     hours: () => 12,
@@ -18,10 +16,10 @@ test('tube day for midday', () => {
 
   DateTimeHelper.getTubeDate(mockMoment);
 
-  expect(mockFormatMethod.mock.calls[0][0]).toBe('DD-MM-YYYY');
+  expect(mockFormatMethod.mock.calls[0][0]).toBe("DD-MM-YYYY");
 });
 
-test('tube day for night time', () => {
+test("tube day for night time", () => {
   const mockFormatMethod = jest.fn();
   const mockSubtractMethod = jest.fn();
   const mockMoment = {
@@ -33,7 +31,7 @@ test('tube day for night time', () => {
 
   DateTimeHelper.getTubeDate(mockMoment);
 
-  expect(mockFormatMethod.mock.calls[0][0]).toBe('DD-MM-YYYY');
+  expect(mockFormatMethod.mock.calls[0][0]).toBe("DD-MM-YYYY");
   expect(mockSubtractMethod.mock.calls[0][0]).toBe(1);
-  expect(mockSubtractMethod.mock.calls[0][1]).toBe('days');
+  expect(mockSubtractMethod.mock.calls[0][1]).toBe("days");
 });

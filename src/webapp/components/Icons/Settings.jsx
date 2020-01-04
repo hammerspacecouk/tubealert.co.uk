@@ -1,6 +1,4 @@
-
-
-import React from 'react';
+import React from "react";
 
 const Settings = () => (
   <svg className="icon">

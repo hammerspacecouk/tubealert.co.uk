@@ -1,16 +1,14 @@
-
-
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Settings from '../components/Settings.jsx';
-import NotificationsUnsupported from '../components/Line/NotificationsUnsupported.jsx';
-import NotificationsUnsubscribeContainer from './NotificationsUnsubscribeContainer.jsx';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Settings from "../components/Settings.jsx";
+import NotificationsUnsupported from "../components/Line/NotificationsUnsupported.jsx";
+import NotificationsUnsubscribeContainer from "./NotificationsUnsubscribeContainer.jsx";
 
 class SettingsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      supported: false
+      supported: false,
     };
   }
 
@@ -26,23 +24,20 @@ class SettingsContainer extends Component {
   }
 
   checkSupport() {
-    if (typeof window !== 'undefined' &&
-      'navigator' in window &&
-      'serviceWorker' in window.navigator &&
-      'PushManager' in window
+    if (
+      typeof window !== "undefined" &&
+      "navigator" in window &&
+      "serviceWorker" in window.navigator &&
+      "PushManager" in window
     ) {
       this.setState({
-        supported: true
+        supported: true,
       });
     }
   }
 
   render() {
-    return (
-      <Settings>
-        {this.getPanel()}
-      </Settings>
-    );
+    return <Settings>{this.getPanel()}</Settings>;
   }
 }
 

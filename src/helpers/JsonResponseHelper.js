@@ -1,14 +1,14 @@
 class JsonResponseHelper {
   static DEFAULT_HEADERS() {
     return {
-      'content-type': 'application/json'
+      "content-type": "application/json",
     };
   }
 
   static createResponse(data, cacheSeconds = null) {
     const headers = JsonResponseHelper.DEFAULT_HEADERS();
     if (cacheSeconds) {
-      headers['cache-control'] = `public, max-age=${cacheSeconds}`;
+      headers["cache-control"] = `public, max-age=${cacheSeconds}`;
     }
 
     return {
@@ -22,9 +22,9 @@ class JsonResponseHelper {
     return {
       statusCode: 500,
       // will not use the default headers as we don't want to cache errors
-      headers: { 'content-type': 'application/json' },
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        status: 'error',
+        status: "error",
         message,
       }),
     };
