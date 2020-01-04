@@ -152,11 +152,13 @@ resources:
     TubeAlertStatusesTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: tubealert.co.uk_statuses
+        TableName: tubealert.co.uk_status
         AttributeDefinitions:
           - AttributeName: TubeDate
             AttributeType: S
           - AttributeName: Timestamp
+            AttributeType: N
+          - AttributeName: Expire
             AttributeType: N
         KeySchema:
           - AttributeName: TubeDate
@@ -166,6 +168,9 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        TimeToLiveSpecification:
+          AttributeName: Expire
+          Enabled: true
     TubeAlertSubscriptionsTable:
           Type: AWS::DynamoDB::Table
           Properties:

@@ -1,4 +1,4 @@
-const TABLE_NAME_STATUSES = "tubealert.co.uk_statuses";
+const TABLE_NAME_STATUSES = "tubealert.co.uk_status";
 
 class Status {
   constructor(documentClient, dateTimeHelper, lineModel, config, logger) {
