@@ -19,6 +19,7 @@ class Status {
         TubeDate: tubeDate,
         Timestamp: date.unix(),
         Statuses: data,
+        Expire: date.unix() + (60 * 60 * 24 * 100)
       },
     };
     this.logger.info(`Storing data for ${tubeDate}`);
