@@ -158,8 +158,6 @@ resources:
             AttributeType: S
           - AttributeName: Timestamp
             AttributeType: N
-          - AttributeName: Expire
-            AttributeType: N
         KeySchema:
           - AttributeName: TubeDate
             KeyType: HASH
