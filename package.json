@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "moment-timezone": "^0.5.13",
-    "node-fetch": "^1.6.3",
+    "node-fetch": "^2.6.1",
     "prettier": "^1.19.1",
     "prop-types": "^15.5.8",
     "react": "^15.4.2",
