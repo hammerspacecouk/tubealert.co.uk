@@ -2,7 +2,7 @@ service: tubealert
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs14.x
   deploymentBucket: hammerspace-serverless-applications
   cfnRole: arn:aws:iam::323441517494:role/cloudformation
   stage: api
