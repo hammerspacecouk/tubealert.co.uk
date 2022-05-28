@@ -79,10 +79,10 @@ class Line {
         displayOrder: 11,
       },
       {
-        name: "DLR",
-        shortName: "DLR",
-        urlKey: "dlr",
-        tflKey: "dlr",
+        name: "Elizabeth Line",
+        shortName: "Elizabeth",
+        urlKey: "elizabeth-line",
+        tflKey: "elizabeth",
         displayOrder: 12,
       },
       {
@@ -93,10 +93,10 @@ class Line {
         displayOrder: 13,
       },
       {
-        name: "TFL Rail",
-        shortName: "TFL Rail",
-        urlKey: "tfl-rail",
-        tflKey: "tfl-rail",
+        name: "DLR",
+        shortName: "DLR",
+        urlKey: "dlr",
+        tflKey: "dlr",
         displayOrder: 14,
       },
     ];

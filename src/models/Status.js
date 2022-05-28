@@ -32,7 +32,7 @@ class Status {
   fetchNewLatest() {
     const now = this.dateTimeHelper.getNow();
     const url =
-      "https://api.tfl.gov.uk/Line/Mode/tube,dlr,tflrail,overground/Status" +
+      "https://api.tfl.gov.uk/Line/Mode/tube,dlr,elizabeth-line,overground/Status" +
       `?app_id=${this.config.TFL_APP_ID}` +
       `&app_key=${this.config.TFL_APP_KEY}`;
 

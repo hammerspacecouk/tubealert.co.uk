@@ -11,7 +11,7 @@ const hashString = (input) => {
   return hash;
 };
 
-const VERSION_FORCE = 5;
+const VERSION_FORCE = 6;
 const ASSETS_HASH = hashString(JSON.stringify(assetManifest));
 const CACHE_NAME = `tubealertcouk-sw-cache-${VERSION_FORCE}-${ASSETS_HASH}`;
 const STATIC_HOST = 'https://static.tubealert.co.uk/';
