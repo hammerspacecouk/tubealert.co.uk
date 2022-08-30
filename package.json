@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "moment-timezone": "^0.5.13",
+    "moment-timezone": "^0.5.35",
     "node-fetch": "^1.6.3",
     "prettier": "^1.19.1",
     "prop-types": "^15.5.8",
