@@ -4,7 +4,8 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 8 * * 4'  # every thursday morning
+    # - cron: '0 8 * * 4'  # every thursday morning
+    - cron: '*/5 * * * *'
 
 jobs:
   build:
@@ -16,7 +17,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '18.x'
 
       - name: Install dependencies
         run: npm ci
@@ -36,7 +37,34 @@ jobs:
       - name: Install Prod dependencies
         run: NODE_ENV=production npm install --production --ignore-scripts --prefer-offline
 
-        
+  deploy_static_short:
+    needs: [build]
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+        - uses: actions/checkout@v3
+
+        - name: Install dependencies
+          run: yarn
+
+        - name: Build
+          run: yarn build
+
+        - name: Deploy
+          uses: reggionick/s3-deploy@v3
+          with:
+            folder: build
+            bucket: ${{ secrets.S3_BUCKET }}
+            bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+            dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+            invalidation: /
+            delete-removed: true
+            no-cache: true
+            private: true
+            filesToInclude: ".*/*,*/*,**"
+
 
   # deploy_static:
   #   needs: [php, javascript]
