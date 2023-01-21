@@ -45,7 +45,8 @@ class NotificationsContainer extends Component {
           statusText: "Successfully unsubscribed ",
         });
       })
-      .catch(() => {
+      .catch((e) => {
+        window.alert(e);
         this.setState({
           isLoading: false,
           statusText: "An error occurred ",
