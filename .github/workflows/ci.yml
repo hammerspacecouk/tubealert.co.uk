@@ -6,65 +6,95 @@ on:
   schedule:
     - cron: '0 8 * * 4'  # every thursday morning
 
-on: [push, pull_request]
-
 jobs:
-  serverless:
-    - name: Serverless
-      uses: serverless/github-action@v1.53.0
-
-
-  static_deploy:
-  # Deploy the static assets (1 year lifetime)
-  - provider: s3
-    region: $AWS_REGION
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: $STATIC_BUCKET
-    skip_cleanup: true
-    acl: public_read
-    cache_control: "max-age=31536000"
-    local_dir: build/static
-  # Deploy the static assets (10 mins lifetime)
-  - provider: s3
-    region: $AWS_REGION
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: $STATIC_BUCKET
-    skip_cleanup: true
-    acl: public_read
-    cache_control: "max-age=600"
-    local_dir: build/static-low-cache
-
-
-  serverless_deploy:
-    name: deploy
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - name: serverless deploy
-      uses: serverless/github-action@v3.1
-      with:
-        args: deploy
-      env:
-        TFL_APP_ID: ${{ secrets.TFL_APP_ID }}
-        TFL_APP_KEY: ${{ secrets.TFL_APP_KEY }}
-        GCM_API_KEY: ${{ secrets.GCM_API_KEY }}
-        CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
-        STATIC_HOST: ${{ secrets.STATIC_HOST }}
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
-        # or if using AWS credentials directly
-        # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: Build Prod
+        run: npm run prod
+
+      - name: Build Service Worker
+        run: npm run sw
+
+      - name: Install Prod dependencies
+        run: NODE_ENV=production npm install --production --ignore-scripts --prefer-offline
+
+  # deploy_static:
+  #   needs: [php, javascript]
+
+  # serverless:
+  #   - name: Serverless
+  #     uses: serverless/github-action@v1.53.0
+
+
+  # static_deploy:
+  # # Deploy the static assets (1 year lifetime)
+  # - provider: s3
+  #   region: $AWS_REGION
+  #   access_key_id: $AWS_ACCESS_KEY_ID
+  #   secret_access_key: $AWS_SECRET_ACCESS_KEY
+  #   bucket: $STATIC_BUCKET
+  #   skip_cleanup: true
+  #   acl: public_read
+  #   cache_control: "max-age=31536000"
+  #   local_dir: build/static
+  # # Deploy the static assets (10 mins lifetime)
+  # - provider: s3
+  #   region: $AWS_REGION
+  #   access_key_id: $AWS_ACCESS_KEY_ID
+  #   secret_access_key: $AWS_SECRET_ACCESS_KEY
+  #   bucket: $STATIC_BUCKET
+  #   skip_cleanup: true
+  #   acl: public_read
+  #   cache_control: "max-age=600"
+  #   local_dir: build/static-low-cache
+
+
+  # serverless_deploy:
+  #   name: deploy
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [14.x]
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
+  #   - run: npm ci
+  #   - name: serverless deploy
+  #     uses: serverless/github-action@v3.1
+  #     with:
+  #       args: deploy
+  #     env:
+  #       TFL_APP_ID: ${{ secrets.TFL_APP_ID }}
+  #       TFL_APP_KEY: ${{ secrets.TFL_APP_KEY }}
+  #       GCM_API_KEY: ${{ secrets.GCM_API_KEY }}
+  #       CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+  #       STATIC_HOST: ${{ secrets.STATIC_HOST }}
+  #       PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  #       PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+  #       # or if using AWS credentials directly
+  #       # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: [php, javascript]
