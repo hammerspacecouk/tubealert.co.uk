@@ -11,34 +11,34 @@ const hashString = (input) => {
   return hash;
 };
 
-const VERSION_FORCE = 7;
+const VERSION_FORCE = 8;
 const ASSETS_HASH = hashString(JSON.stringify(assetManifest));
 const CACHE_NAME = `tubealertcouk-sw-cache-${VERSION_FORCE}-${ASSETS_HASH}`;
 const STATIC_HOST = 'https://static.tubealert.co.uk/';
 
 // Perform install steps (cache statics)
 self.addEventListener('install', event => event.waitUntil(
-    caches.open(CACHE_NAME)
-        .then(cache =>
-            cache.addAll([
-              '/',
-              `${STATIC_HOST}${assetManifest['app.css']}?sw`,
-              `${STATIC_HOST}${assetManifest['app.js']}?sw`,
-            ])
-        ).then(() => self.skipWaiting())
+  caches.open(CACHE_NAME)
+    .then(cache =>
+      cache.addAll([
+        '/',
+        `${STATIC_HOST}${assetManifest['app.css']}?sw`,
+        `${STATIC_HOST}${assetManifest['app.js']}?sw`,
+      ])
+    ).then(() => self.skipWaiting())
 ));
 
 
 // clear old cache
 self.addEventListener('activate', event => event.waitUntil(
-    caches.keys().then(keyList => Promise.all(
-        keyList.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-          return null;
-        })
-    ))
+  caches.keys().then(keyList => Promise.all(
+    keyList.map((key) => {
+      if (key !== CACHE_NAME) {
+        return caches.delete(key);
+      }
+      return null;
+    })
+  ))
 ));
 
 // Check cache for values
@@ -79,26 +79,26 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
-    // This looks to see if the target path is already open and
-    // focuses if it is
+  // This looks to see if the target path is already open and
+  // focuses if it is
   event.waitUntil(
-        clients.matchAll({
-          type: 'window'
-        })
-            .then((clientList) => {
-              for (let i = 0; i < clientList.length; i += 1) {
-                const client = clientList[i];
-                const url = client.url;
-                const parts = url.split('/');
-                const path = `/${parts[parts.length - 1]}`;
-                if (path === event.notification.tag && 'focus' in client) {
-                  return client.focus();
-                }
-              }
-              if (clients.openWindow) {
-                return clients.openWindow(event.notification.tag);
-              }
-              return null;
-            })
-    );
+    clients.matchAll({
+      type: 'window'
+    })
+      .then((clientList) => {
+        for (let i = 0; i < clientList.length; i += 1) {
+          const client = clientList[i];
+          const url = client.url;
+          const parts = url.split('/');
+          const path = `/${parts[parts.length - 1]}`;
+          if (path === event.notification.tag && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        if (clients.openWindow) {
+          return clients.openWindow(event.notification.tag);
+        }
+        return null;
+      })
+  );
 });
