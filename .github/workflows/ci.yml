@@ -36,6 +36,8 @@ jobs:
       - name: Install Prod dependencies
         run: NODE_ENV=production npm install --production --ignore-scripts --prefer-offline
 
+        
+
   # deploy_static:
   #   needs: [php, javascript]
 
