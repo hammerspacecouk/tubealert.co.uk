@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<browserconfig>
-    <msapplication>
-        <tile>
-            <square150x150logo src="https://static.tubealert.co.uk/<%= require('../../imgs/windows-squarelogo-150-150.png') %>"/>
-            <TileColor>#3a3a3f</TileColor>
-        </tile>
-    </msapplication>
-</browserconfig>

@@ -1,0 +1,198 @@
+:root {
+	--font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif-light, sans-serif;
+
+	--spacing-unit-small: 8px;
+	--spacing-unit-gap: 16px;
+
+	--color-body-background: #e8e8e8;
+	--color-panel-background: #ffffff;
+	--color-body-text: #424248;
+
+	--color-line-background: #444444;
+	--color-line-foreground: #ffffff;
+
+	--color-line-bakerloo-background: #ae6118;
+	--color-line-bakerloo-foreground: #ffffff;
+
+	--color-line-central-background: #e41f1f;
+	--color-line-central-foreground: #ffffff;
+
+	--color-line-circle-background: #f8d42d;
+	--color-line-circle-foreground: #111111;
+
+	--color-line-district-background: #007229;
+	--color-line-district-foreground: #ffffff;
+
+	--color-line-hammersmith-city-background: #e899a8;
+	--color-line-hammersmith-city-foreground: #111111;
+
+	--color-line-jubilee-background: #686e72;
+	--color-line-jubilee-foreground: #ffffff;
+
+	--color-line-metropolitan-background: #893267;
+	--color-line-metropolitan-foreground: #ffffff;
+
+	--color-line-northern-background: #000000;
+	--color-line-northern-foreground: #ffffff;
+
+	--color-line-piccadilly-background: #0450a1;
+	--color-line-piccadilly-foreground: #ffffff;
+
+	--color-line-victoria-background: #009fe0;
+	--color-line-victoria-foreground: #ffffff;
+
+	--color-line-waterloo-city-background: #70c3ce;
+	--color-line-waterloo-city-foreground: #111111;
+
+	--color-line-elizabeth-background: #6950a1;
+	--color-line-elizabeth-foreground: #ffffff;
+
+	--color-line-london-overground-background: #e86a10;
+	--color-line-london-overground-foreground: #ffffff;
+
+	--color-line-dlr-background: #00bbb4;
+	--color-line-dlr-foreground: #ffffff;
+
+	color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-body-background: #333333;
+		--color-panel-background: #191919;
+		--color-body-text: #fbfbfb;
+		color-scheme: dark;
+	}
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html,
+body {
+	max-width: 100vw;
+	overflow-x: hidden;
+}
+html {
+	min-height: 100%;
+	overflow-y: scroll;
+}
+svg {
+	fill: currentColor;
+}
+
+body {
+	color: var(--color-body-text);
+	background: var(--color-body-background);
+	font-family: var(--font-base);
+}
+
+a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+ul,
+li {
+	list-style: none;
+}
+
+[data-line="bakerloo"] {
+	--color-line-background: var(--color-line-bakerloo-background);
+	--color-line-foreground: var(--color-line-bakerloo-foreground);
+}
+
+[data-line="central"] {
+	--color-line-background: var(--color-line-central-background);
+	--color-line-foreground: var(--color-line-central-foreground);
+}
+
+[data-line="circle"] {
+	--color-line-background: var(--color-line-circle-background);
+	--color-line-foreground: var(--color-line-circle-foreground);
+}
+
+[data-line="district"] {
+	--color-line-background: var(--color-line-district-background);
+	--color-line-foreground: var(--color-line-district-foreground);
+}
+
+[data-line="hammersmith-city"] {
+	--color-line-background: var(--color-line-hammersmith-city-background);
+	--color-line-foreground: var(--color-line-hammersmith-city-foreground);
+}
+
+[data-line="jubilee"] {
+	--color-line-background: var(--color-line-jubilee-background);
+	--color-line-foreground: var(--color-line-jubilee-foreground);
+}
+
+[data-line="metropolitan"] {
+	--color-line-background: var(--color-line-metropolitan-background);
+	--color-line-foreground: var(--color-line-metropolitan-foreground);
+}
+
+[data-line="northern"] {
+	--color-line-background: var(--color-line-northern-background);
+	--color-line-foreground: var(--color-line-northern-foreground);
+}
+
+[data-line="piccadilly"] {
+	--color-line-background: var(--color-line-piccadilly-background);
+	--color-line-foreground: var(--color-line-piccadilly-foreground);
+}
+
+[data-line="victoria"] {
+	--color-line-background: var(--color-line-victoria-background);
+	--color-line-foreground: var(--color-line-victoria-foreground);
+}
+
+[data-line="waterloo-city"] {
+	--color-line-background: var(--color-line-waterloo-city-background);
+	--color-line-foreground: var(--color-line-waterloo-city-foreground);
+}
+
+[data-line="elizabeth"] {
+	--color-line-background: var(--color-line-elizabeth-background);
+	--color-line-foreground: var(--color-line-elizabeth-foreground);
+}
+
+[data-line="london-overground"] {
+	--color-line-background: var(--color-line-london-overground-background);
+	--color-line-foreground: var(--color-line-london-overground-foreground);
+}
+
+[data-line="dlr"] {
+	--color-line-background: var(--color-line-dlr-background);
+	--color-line-foreground: var(--color-line-dlr-foreground);
+}
+
+body {
+	display: grid;
+	grid-template-columns: 320px 1fr;
+	grid-template-rows: 52px 1fr;
+	min-height: 100vh;
+}
+
+header {
+	grid-row: 1 / 2;
+	grid-column: 2 / 2;
+	background: #111;
+}
+
+main {
+	grid-column: 2 / 2;
+	grid-row: 2 / 2;
+}
+
+nav {
+	grid-column: 1 / 2;
+	grid-row: 1 / 3;
+}
