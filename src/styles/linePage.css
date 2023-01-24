@@ -1,0 +1,17 @@
+.linePage__header {
+	padding: 16px;
+	background: var(--color-line-background);
+	color: var(--color-line-foreground);
+}
+
+.linePage__header h1 {
+	font-size: 2.2rem;
+	font-weight: lighter;
+	line-height: 1.2;
+	letter-spacing: -2px;
+}
+@media (min-width: 48em) {
+	.linePage__header h1 {
+		font-size: 3rem;
+	}
+}

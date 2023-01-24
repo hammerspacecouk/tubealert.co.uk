@@ -41,16 +41,7 @@ export default function RootLayout({
 						</symbol>
 					</svg>
 				</div>
-				<header>
-					TubeAlert{" "}
-					<Link href="/settings" title="Settings">
-						Settings
-					</Link>
-				</header>
-				<main>{children}</main>
-				<nav>
-					<Lines />
-				</nav>
+				{children}
 			</body>
 			<Script
 				strategy="afterInteractive"

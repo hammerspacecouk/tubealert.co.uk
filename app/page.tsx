@@ -1,3 +1,9 @@
+import { Layout } from "@/src/components/Layout";
+
 export default () => {
-	return <p>IT IS THE HOMEPAGE</p>;
+	return (
+		<Layout isHomepage>
+			<p>IT IS THE HOMEPAGE</p>
+		</Layout>
+	);
 };

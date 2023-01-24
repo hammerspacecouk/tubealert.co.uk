@@ -1,3 +1,9 @@
+import { Layout } from "@/src/components/Layout";
+
 export default () => {
-	return <h1>That line has not been built</h1>;
+	return (
+		<Layout>
+			<h1>That line has not been built</h1>
+		</Layout>
+	);
 };
